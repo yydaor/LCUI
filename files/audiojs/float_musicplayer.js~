@@ -1,4 +1,4 @@
-﻿//document.write("\
+﻿document.write("\
 	<link type='text/css' rel='stylesheet' href='../files/audiojs/audio.css'> \
 	<script src='../files/audiojs/audio.min.js'></script>\
 	<script src='../files/audiojs/float_area.js'></script>\
