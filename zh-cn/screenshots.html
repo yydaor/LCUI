@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 截图</title>
+<link rel="icon" href="lc-soft.png" type="image/png">
+<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,刘超,开源,C语言" >
+<meta name="description" content="LC-SOFT - 只为兴趣、创意和灵感而生!" >
+<meta name="robots" content="all" >
+<meta name="author" content="LC-Soft" >
+<link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
+</head>
+
+
+  <body style="margin-top: 100px;" class="my_body">
+    <script type="text/javascript" src="../files/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../files/js/ms-script.jsx"></script>
+    <script type="text/javascript" src="../files/js/menu-effect.js"></script>
+    <script type="text/javascript" src="../files/js/titlemenu.zh-cn.js"></script>
+    <script type="text/javascript" src="../files/audiojs/float_musicplayer.js"></script> 
+	<table align="center" width="100%"> 
+	<tr>
+	<td style="padding-top: 30px;">
+    <!-- 上面是标题栏区域 -->
+
+
+
+<table class="my_style" align="center" width="100%">
+  <tbody><tr>
+    <td> 
+      <center><h2>LCUI 相关截图</h2></center>
+	<hr>
+      <table align="center" cellspacing="20">
+        <tbody><tr valign="top">
+          <td>
+            <p>一个使用LCUI实现的Hello World程序，利用了标签部件的文字显示和彩色文字的功能。
+          </p></td>
+          <td>
+            <p>LCUI的进度条部件(Progress Bar)目前有两种风格可用：动态风格和经典风格，前者的效果，和win7中的进度条的效果类似，进度条中会有高亮部分从左自右移动。后者只是简单的绘制了进度条的图形，也就是矩形填充和边框绘制。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <a href="../files/images/helloworld.png">
+              <img alt="helloworld screenshot" src="../files/images/helloworld.png">
+            </a>
+          </td>
+          <td align="center">
+            <a href="../files/images/progressbar-2.gif">
+              <img alt="progressbar screenshot" src="../files/images/progressbar-2.gif">
+            </a>
+          </td>
+        </tr>
+
+        <tr valign="top">
+          <td>
+            <p>标签部件(Label)用来显示文字，可使用不同字体，也可以调整字体大小（单位为像素）。</p>
+			<p>但是，目前能用的且效果好的字体是微软雅黑，由于项目代码的问题，还不能很好的处理其它字体，字体位图的背景尺寸计算不准确，导致使用某些字体后，文字被剃头或者只显示一部分。宋体只有部分能正常显示，英文还好，中文显示不正常。</p>
+          </td>
+          <td>
+            <p>图片框部件(Picture Box)用来显示图片，目前支持的图片格式为：png、jpeg和bmp，可扩展支持更多格式的图片。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <a href="../files/images/label.png">
+              <img alt="label screenshot" src="../files/images/label.png">
+            </a>
+          </td>
+          <td align="center">
+            <a href="../files/images/picturebox.png">
+              <img alt="picturebox screenshot" src="../files/images/picturebox.png">
+            </a>
+          </td>
+        </tr>
+		<tr valign="top">
+          <td>
+            <p>按钮部件(Button)，你可以用鼠标单击它，让程序执行指定操作，该部件利用标签部件显示文字。默认绘制的图形比较简陋，该部件的图形可自定义，你可以使用其它外置图片来替代。</p>
+          </td>
+          <td>
+            <p>小游戏--猜拳(Mora)，用了按钮部件、标签部件和图片框部件，自定义了按钮部件在各个状态时使用的图形，自定义了标签部件中文字大小和颜色。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <a href="../files/images/button.png">
+              <img alt="button screenshot" src="../files/images/button.png">
+            </a>
+          </td>
+          <td align="center">
+            <a href="../files/images/mora.jpg">
+              <img alt="mora screenshot" src="../files/images/mora.gif">
+			  </a>
+          </td>
+        </tr>
+		
+		<tr valign="top">
+          <td>
+            <p>照片查看器，主要使用图片框部件显示图片，用了LCUI自带的图形处理功能：缩放、拉伸、平铺、裁剪。</p>
+          </td>
+          <td>
+            <p>矩形分割，前景矩形在背景矩形上移动，重叠部分会进行分割，将前景矩形分割成小矩形。这个功能对局部区域刷新处理的优化改进有一定作用。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <a href="../files/images/test_LCPV-1.gif">
+              <img alt="photoviewer screenshot" src="../files/images/test_LCPV-1.gif">
+            </a>
+          </td>
+          <td align="center">
+            <a href="../files/images/test_rect_cut.gif">
+              <img alt="test_rect_cut screenshot" src="../files/images/test_rect_cut.gif">
+            </a>
+          </td>
+        </tr>
+		<tr valign="top">
+          <td>
+            <p>复选框部件(CheckBox)，让程序能够根据用户勾选的选项，做相应的工作。</p>
+          </td>
+          <td>
+            <p>单选框部件(RadioButton)，如果有多个具有互斥关系的选项，也就是这几个选项中只能选择一个，那么，可以用它实现，你可为多个单选框创建互斥关系，这样，在这条互斥关系链中的单选框，只能有一个被勾选，其它的都是未勾选状态。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <a href="../files/images/test_checkbox.gif">
+              <img alt="test_checkbox screenshot" src="../files/images/test_checkbox.gif">
+            </a>
+          </td>
+          <td align="center">
+            <a href="../files/images/test_radiobutton.gif">
+              <img alt="test_radiobutton screenshot" src="../files/images/test_radiobutton.gif">
+            </a>
+          </td>
+        </tr>
+
+		<tr valign="top">
+          <td>
+            <p>滑动解锁，拖动滑块至右边，若抵达解锁区域则结束程序，否则滑块会移动至起点;主要是限制了滑块的移动范围，使之只能在一条直线上移动;关联了鼠标拖动事件，这样就能被鼠标拖动，当拖动完后，就会判断滑块当前区域是否与目标区域重叠。</p>
+          </td>
+          <td> 
+			<p>测试各种字体的处理效果，测试程序通过扫描fonts目录，得到字体文件列表，然后循环切换使用不同的字体风格。</p>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center">
+            <a href="../files/images/slide_unlock.gif">
+              <img alt="slide_unlock screenshot" src="../files/images/slide_unlock.gif">
+            </a>
+          </td>
+          <td align="center">
+            <a href="../files/images/test_fonts.gif">
+              <img alt="test_fonts screenshot" src="../files/images/test_fonts.gif">
+            </a>
+          </td>
+        </tr>
+      </tbody></table>
+
+    </td>
+  </tr>
+</tbody></table>
+
+
+
+	
+    <!-- 网页底部的内容 -->
+    <hr>
+    <table class="my_style" width="100%">
+      <tr>
+        <td align="left">
+          网页由
+          <a href="mailto:lc-soft@live.cn">
+            刘超
+          </a>
+          维护
+        </td>
+        <td align="right">
+          <a target="_blank" href="http://validator.w3.org/check/referer">
+            <img border=0 src="http://www.w3.org/Icons/valid-html401-blue" alt="Valid HTML 4.0!"
+            height=31 width=88>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          最后更新: 2012-09-11
+        </td>
+        <td align="right">
+		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
+          <script type="text/javascript" src="../files/js/baidu-code.js">
+          </script>
+		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>
+          <!-- <script src="http://s24.cnzz.com/stat.php?id=3624065&amp;web_id=3624065&amp;show=pic1"
+          type="text/javascript">
+          </script> -->
+        </td>
+      </tr>
+    </table>
+	</td>
+	</tr>
+	</table>
+  </body>
+  
+</html>

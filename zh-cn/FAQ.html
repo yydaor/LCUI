@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GB2312" >
+<title>LCUI &#8250; 常见问题</title>
+<link rel="icon" href="lc-soft.png" type="image/png">
+<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,刘超,开源,C语言" >
+<meta name="description" content="LC-SOFT - 只为兴趣、创意和灵感而生!" >
+<meta name="robots" content="all" >
+<meta name="author" content="LC-Soft" >
+<link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
+</head>
+  <body style="margin-top: 100px;"class="my_body"> 
+    <script type="text/javascript" src="../files/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../files/js/ms-script.jsx"></script>
+    <script type="text/javascript" src="../files/js/menu-effect.js"></script>
+    <script type="text/javascript" src="../files/js/titlemenu.zh-cn.js"></script> 
+  <div class="wp_style" style="padding-top: 30px;"> 
+    <script type="text/javascript" src="../files/audiojs/float_musicplayer.js"></script> 
+
+    <!-- 上面是标题栏区域 -->
+	<center><h2>LCUI 常见问题</h2></center>
+	<hr>
+	<ol class="my_a" style="list-style-type: decimal;">
+	<li><b>我该怎样才能生成 Unix 共享库？</b></li>
+	<p>默认情况下，会建立一个Unix共享库（静态库）， 因此:</p>
+	<p>make distclean<br>
+    ./configure<br>
+    make</p>
+	<li><b>我该如何在 Unix 上安装 LCUI 共享库？</b></li>
+	<p>先用上面的，然后:</p>
+	<p>make install</p>
+	<li><b>哪里有 LCUI 的文档 (man手册，等等)？</b></li>
+	<p>LCUI 的头文件有相关资料，它们在 include/LCUI/ 目录里。<br>
+	LCUI的使用例子在 test/ 目录里， 目前你可以参考这些头文件，源代码，以及测试程序
+	中的代码和注释来了解 LCUI 。</p>
+	<li><b>我在 LCUI 里找到了一个BUG。</b></li>
+	<p>大部分时间，这些问题都是由于不正确使用的 LCUI 而造成的。<br>
+	请尝试编写一个能重现问题的小程序，并发送相应的源代码至 lc-soft@live.cn 给我们。<br>
+	未经事先同意，请勿发送上兆（MB）的数据文件。</p>
+	<li><b>LCUI 会侵犯任何专利吗？</b></li>
+	<p>据我们所知，没有。</p>
+	<li><b>运行configure脚本时中途异常退出。</b></li>
+	<p>请检查 LCUI 的依赖库是否已安装，如果已安装，可在网上搜索相关解决方法。</p>
+	<li><b>LCUI 程序无法运行，错误信息：Permission denied 。</b></li>
+	<p>如果当前账户权限不够，会导致帧缓冲设备无法正常打开，可以使用 sudo 命令在运行 LCUI 时临时提升权限。</p>
+	<li><b>为什么图形界面上的文字会显示成 “□□”？</b></li>
+	<p>请查看程序在初始化时打印的信息，如果字体文件无法正常打开，LCUI 会使用内置的字体位图，但只限ASCII编码范围内的字符，对于中文字符，只能显示成 “□□”，可以通过修改源代码，在初始化前设定默认字体文件的位置，也可以添加环境变量 LCUI_FONTFILE 指定字体文件位置。</p> 
+	</ol>
+
+    <!-- 网页底部的内容 -->
+    <hr>
+    <table class="my_style" width="100%">
+      <tr>
+        <td align="left">
+          网页由
+          <a href="mailto:lc-soft@live.cn">
+            刘超
+          </a>
+          维护
+        </td> 
+        <td align="right">
+          <a target="_blank" href="http://validator.w3.org/check/referer">
+            <img border=0 src="http://www.w3.org/Icons/valid-html401-blue" alt="Valid HTML 4.0!"
+            height=31 width=88>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          最后更新: 2012-09-11
+        </td> 
+        <td align="right">
+		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
+          <script type="text/javascript" src="../files/js/baidu-code.js">
+          </script>
+		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>
+        </td>
+      </tr>
+    </table> 
+<!-- 	<div  style="z-index: 1999; position: fixed; bottom: 0; right:0;margin:auto;">
+	
+		<object name="music_player" id="music_player" width="385px" height="40px"
+									data="http://cloud.kugou.com/singlePlayer/4/365/undefined/1/38EE289D5982805C5C6511A6EEBB4FC5.swf" type="application/x-shockwave-flash">
+										<param name="AllowScriptAccess" value="always">
+										<param name="wmode" value="transparent">
+									</object> 
+	</div> -->
+  </div>
+  </body>
+
+
+
+</html>
+<!-- page-front.tpl -->

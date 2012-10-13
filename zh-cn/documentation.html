@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 文档</title>
+<link rel="icon" href="lc-soft.png" type="image/png">
+<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,刘超,开源,C语言" >
+<meta name="description" content="LC-SOFT - 只为兴趣、创意和灵感而生!" >
+<meta name="robots" content="all" >
+<meta name="author" content="LC-Soft" >
+<link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
+</head>
+
+
+  <body style="margin-top: 100px;" class="my_body">
+    <script type="text/javascript" src="../files/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../files/js/ms-script.jsx"></script>
+    <script type="text/javascript" src="../files/js/menu-effect.js"></script>
+    <script type="text/javascript" src="../files/js/titlemenu.zh-cn.js"></script>
+    <script type="text/javascript" src="../files/audiojs/float_musicplayer.js"></script> 
+	
+	<table align="center" width="100%"> 
+	<tr>
+	<td style="padding-top: 30px;">  
+    <!-- 上面是标题栏区域 -->
+
+<table class="my_style" align="center" width="95%">
+  <tbody><tr>
+    <td><br>
+	<center><h2>LCUI 相关文档</h2></center>
+	<hr>
+<h3>大致流程</h3>
+<ol style="list-style-type: decimal;">
+<li>调用LCUI_Init()函数，进行LCUI的初始化。</li>
+<p>除了初始化相关数据外，主要是让提供相关I/O设备数据处理功能的线程开始工作，输入设备有鼠标、键盘、触屏，而输出设备有显示器。LCUI 会获取输入设备的数据，并处理，LCUI 处理出来的图形数据最终会写入至帧缓冲，让显示器以图形的形式显示帧缓冲里的数据。而 LCUI 在初始化完后，会记录当前程序的相关信息，这些信息在某些地方需要用到。</p>
+
+<li>调用LCUI_Main()函数，进入程序主循环。</li>
+<p>有的GUI是让程序进入主循环，等待核心发给它的消息，分析消息并执行相应任务。LCUI 在经过最初的几次版本更新后，LCUI_Main()函数也得到了简化，以前的有很多行代码，用于处理很多东西，代码缩减后，也就是等LCUI发任务给它执行；这个任务，其实就是个回调函数+两个参数，主要应用在事件处理上，事件触发后，已记录的与该事件关联的回调函数，会被LCUI以任务的形式追加至程序任务队列中，让程序在主循环中执行它。</p>
+</ol>
+<img alt="示例图" src="../files/images/example_img.png"></img>
+<h3>详细说明</h3>
+<ol style="list-style-type: disc;">
+<li><b>鼠标</b></li>
+<p>LCUI在初始化时创建了一个线程，用于处理鼠标输入。主要是读取鼠标设备文件：dev/input/mice，判断鼠标的移动和按键状态；读取到鼠标移动后的位置是相对位置，也就是新位置相对于上次的位置改变了多少，根据这个差值可得知鼠标向哪个方向移动了多少距离，从而使LCUI显示的鼠标游标向相应方向移动相应的距离。鼠标位置改变时会触发鼠标移动事件，鼠标按键状态改变时会触发鼠标按键事件，LCUI提供了相应的函数用于将回调函数与该事件关联，部件的拖动和点击，是靠这类函数实现的。</p>
+
+<li><b>触屏</b></li>
+<p>由于主要是面向嵌入式，而嵌入式设备有的是带触屏的，因此，LCUI也是需要支持触屏输入的。tslib可用于处理触屏输入，为了正常使用触屏，需要先进行笔点校正，可编译test目录下的ts_calibrate.c文件，运行编译出来的可执行文件，进行笔点校正，这个ts_calibrate.c内的源代码修改自tslib的测试程序。程序一般有5个点让你点击，点击完后，tslib会处理这5个点的采样数据，生成校正文件，以后就可以正常使用触屏了，tslib会将触屏点击的位置转换成屏幕坐标，还能得出点击触屏时的压力，压力为0时表示点击已经释放。</p>
+
+<li><b>按键</b></li>
+<p>和鼠标一样，处理按键输入也是在一个线程中进行的，LCUI初始化时，会设定终端属性为无回显、无缓冲模式，该线程会在一个循环中定时检测输入流中是否有数据，有则获取并根据按键键值来处理对应的事件，你可以让一个回调函数与某个键值关联，当按下该键值的按键后，LCUI就会将该回调函数添加至程序任务队列，让它在主循环中执行。该功能还不完善，有待改进。</p>
+
+
+<li><b>图形输出</b></li>
+<p>LCUI的图形输出是通过直接写帧缓冲(FrameBuffer)实现的，LCUI在初始化时，会打开帧缓冲设备文件：/dev/fb0，获取显示器相关信息，并将之映射到内存，往这块内存中写数据，屏幕上就会显示相应的图形。</p>
+<p>电脑显示器的颜色一般为真彩色(32位)，但对于嵌入式设备，有的设备的显示器并一定不是32位，而是24位（RGB888）、16位(RGB565)或8位，当然，8位显示器应该很少见了，对于32位或24位色彩的显示器，LCUI直接赋值就可以了，因为内存中存储的图形数据就是以每个像素的每个通道用8位保存的，一个像素点的颜色用3个字节保存，对于有alpha通道的，是用4个字节保存的。而对于16位或8位，需要进行其它处理。具体可查看LCUI_Main.c文件中的Write_Graph_To_FB()函数的源代码。</p>
+
+
+<li><b>图形处理</b></li>
+<p>LCUI已经实现了图形的旋转、缩放、裁剪和混合这几个基本功能，源代码在LCUI_Graphics.c文件里。目前支持bmp、png和jpeg图片文件的读取，只支持png文件的创建，在以后的更新中会扩展支持读取/创建更多的图片格式，也会增加新的图形处理功能，会考虑参考ImageMagic、mgaview等相关项目的源代码。</p>
+
+<li><b>GUI部件</b></li>
+<p>部件(widget)作为图形界面的基本组成元素，决定了一个GUI程序的功能，目前，LCUI的部件还比较少，有些程序由于缺少所需的部件，某些功能无法正常实现，从而使这些程序无法被开发出来，例如：文本框、选项卡、列表框。</p>
+<p>部件有个部件库，用于记录部件类型，以及相应的回调函数，这些函数有几种，分别用于不同情况，部件的初始化、显示、隐藏、调整大小、绘制等，LCUI 都会在部件库中寻找该类型部件的相应回调函数，未找到则不执行。</p>
+<p>在调用Create_Widget()函数创建部件时，它会根据你指定的类型，在部件库中查找该部件类型的相关数据，查找是区分大小写的；Create_Widget()函数会查找与该部件类型关联的init()函数，用于初始化部件私有数据，这个私有数据的内存地址由一个名为private的void类型指针保存。</p>
+<p>Draw_Widget()、Show_Widget()、Hide_Widget()、Resize_Widget()等函数，也都会在部件库中查找与部件类型关联的函数指针。一般只要为部件添加构造函数和绘制函数这两个即可，如果部件私有数据中的某些变量用到了动态内存，那就需要为部件添加析构函数，用于释放已分配的内存，因为LCUI不知道私有数据是什么类型的，也不知道该如何正确释放，只能在释放private指针前调用析构函数。</p>
+
+<li><b>界面的绘制</b></li>
+<p>每个GUI部件都相当于一个图层，LCUI会记录这些图层的层叠顺序，在LCUI 的0.12.3版中引入了容器这个概念，任何部件都可以作为容器来容纳其它部件，也可以层层嵌套；LCUI在进行屏幕图像更新时，会计算这些部件在容器中的有效显示范围，部件超出它容器范围的那部分区域是不会显示出来的。</p>
+<p>在LCUI初始化时，会创建一个线程，用于执行LCUI_Core()函数，该函数主要负责图形输出，在一个循环内定时做重复的工作。</p>
+<p>处理屏幕图形更新前，会先对每个部件进行更新，如果看了LCUI的源代码，你会发现，Show_Widget()、Hide_Widget()、Resize_Widget()、Draw_Widget()等函数，都有一个和它同名、前面加了个Exec_的函数，前者将后者的函数指针以及参数记录到队列中，等待LCUI根据队列中记录的数据进行部件数据更新，每个部件都有这样的队列。</p>
+<p>更新完后，将每个部件中记录的刷新区域递归转移给父部件，最终会转移至主记录中；之后，会对这些区域进行检测，如果与其它区域重叠或与部件区域重叠，就分割这个区域，处理完后，理论上根记录中的刷新区域是互不重叠且不与任何部件区域重叠的；这个"重叠"指的是两区域只有部分重叠，对于部件区域，普通区域可以被部件区域完全包含，而对于已记录的普通区域，如果一个区域被另一个区域包含，那这个区域会被删除。</p>
+记录的需更新的区域处理完后，就会根据处理后的刷新区域，对屏幕相应区域内的图形进行更新。</p>
+<p>这些用于更新的图形，是经过多个图层合成后的结果，从底层到顶层，记录与刷新区域重叠的部件，之后进行合成。当然，如果有一层图层是不透明的，那么，它下面几层的图层就不会合成了，因为这一层图层已经遮住了底层的图层，没必要把被遮住的图层也进行合成。具体可以查看LCUI_Main.c文件里的LCUI_Core()函数的源代码。</p>
+<p>
+以后的版本更新中，会陆续添加新部件，丰富部件种类。
+</p>
+<li><b>字体</b></li>
+<p>图形界面上显示的文字，是依赖FreeType这个字体引擎提供的API实现的，打开字体文件，获取字形，转换成256级灰度位图，供LCUI绘制文字时使用。由于只是简单的调用了FreeType提供的API，不少功能都没用到，而目前实现的简单功能也存在问题，微软雅黑 字体的效果还比较满意，其它字体就不怎么样了。字体处理相关的源代码在LCUI_Font.c内。</p>
+</ol>
+    </td>
+  </tr>
+</tbody></table>
+	
+    <!-- 网页底部的内容 -->
+    <hr>
+    <table class="my_style" width="100%">
+      <tr>
+        <td align="left">
+          网页由
+          <a href="mailto:lc-soft@live.cn">
+            刘超
+          </a>
+          维护
+        </td>
+        <td align="right">
+          <a target="_blank" href="http://validator.w3.org/check/referer">
+            <img border=0 src="http://www.w3.org/Icons/valid-html401-blue" alt="Valid HTML 4.0!"
+            height=31 width=88>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          最后更新: 2012-09-11
+        </td>
+        <td align="right">
+		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
+          <script type="text/javascript" src="../files/js/baidu-code.js">
+          </script>
+		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>
+          <!-- <script src="http://s24.cnzz.com/stat.php?id=3624065&amp;web_id=3624065&amp;show=pic1"
+          type="text/javascript">
+          </script> -->
+        </td>
+      </tr>
+    </table>
+	</td>
+	</tr>
+	</table>
+  </body>
+
+
+
+</html>
+<!-- page-front.tpl -->

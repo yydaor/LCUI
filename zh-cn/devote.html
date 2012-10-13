@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 贡献</title>
+<link rel="icon" href="lc-soft.png" type="image/png">
+<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,刘超,开源,C语言" >
+<meta name="description" content="LC-SOFT - 只为兴趣、创意和灵感而生!" >
+<meta name="robots" content="all" >
+<meta name="author" content="LC-Soft" >
+<link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
+</head>
+
+  <body style="margin-top: 100px;" class="my_body">
+    <script type="text/javascript" src="../files/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../files/js/ms-script.jsx"></script>
+    <script type="text/javascript" src="../files/js/menu-effect.js"></script>
+    <script type="text/javascript" src="../files/js/titlemenu.zh-cn.js"></script>
+    <script type="text/javascript" src="../files/audiojs/float_musicplayer.js"></script> 
+
+	<table align="center" width="100%"> 
+	<tr>
+	<td style="padding-top: 30px;"> 
+
+<center><h2>贡献</h2></center>	<hr>
+    <!-- 上面是标题栏区域 -->
+	<p style="font-size:11pt">我们已经使用 GitHub 托管 LCUI 项目，您可点击<a href="https://github.com/lc-soft/LCUI">此处</a>进行查看。
+	<p style="font-size:11pt">以下是 LCUI 项目在后续版本更新中需要完成的任务，若您比较了解以下某个任务所涉及到的相关知识，您可以尝试完成这个任务。</p>
+	<table class="wp_table" width="100%" align="center" cellspacing="0">
+	<tr>
+	<td colspan=2 align="center">未来将要完成的任务</td></tr>
+	<tr><td>分类</td><td>任务说明</td></tr>
+	<tr><td>输入处理</td>
+		<td>
+		<ol style="list-style-type: disc;">
+		<li>完善鼠标输入处理，使之支持滚轮操作。</li>
+		<li>完善按键输入处理，能够支持特殊按键，例如：ctrl，shift，alt等按键，并提供类似以下原型的函数：<br>
+		<font color="blue">int key_pressed(int key_code);</font> 用于检测指定键值的按键是否处于按下状态。<br>
+		<font color="blue">int key_free(int key_code);</font> 用于检测指定键值的按键是否处于已释放状态。<br> 
+		</ol>
+		</td>
+	</tr>
+	<tr><td>GUI部件</td>
+		<td>
+		<ol style="list-style-type: disc;">
+		<li>
+		新增文本框（TextBox）部件，用于实现数据录入功能。<br>至于实现方法，可参考其它GUI已实现出来的文本框的效果，分析实现原理，并用代码模拟实现出来。</li>
+		<li>新增列表框（ListBox）部件，需要具备排序功能，可根据选中列中的数据进行升序或降序排列。</li>
+		<li>新增滚动条（ScrollBar）部件，容器内的内容超出显示范围时，可用滚动条来浏览未显示的内容。</li>
+		</ol>
+		待到以上两个部件实现之后，会启动另一个项目：文件管理器，计划在2012年年底之前发布第一个版本。
+		</td>
+	</tr>
+	<tr><td width="70px">2D图形处理</td>
+		<td>
+		<ol style="list-style-type: disc;">
+		<li>支持bmp，jpeg文件的创建。</li>
+		<li>支持gif文件的读取，可正常播放读取出来的动画。</li>
+		<li>提供类似以下原型的函数，能为图形绘制阴影，可选择光照射的角度，阴影的大小，以及阴影的距离。<br><font color="blue">int draw_graph_shadow ( LCUI_Graph *graph, int size, int light_angle, int Distance );</font><br>
+		此功能主要是为了实现文字的阴影、窗口/部件的阴影。</li>
+		<li>提供类似以下原型的函数，能将图形圆角化，也就是将矩形图形的四个直角变为圆角，可通过调整半径来调整圆角化的程度。<br><font color="blue">int round_angles ( LCUI_Graph *graph, int radius );</font></li>
+
+		<li>提供类似以下原型的函数，能为图形描边，可指定边线的大小，能为图形边缘绘制不同粗细的线条，线条颜色也可以自定义，此函数可为字体描边。<br><font color="blue">int draw_edge_line ( LCUI_Graph *graph, int size, LCUI_RGB color );</font></li>
+
+		</ol> 
+		</td>
+	</tr>
+	<tr><td width="70px">字体处理</td>
+		<td>目前对 微软雅黑 字体的支持还比较好，其它字体会存在部分问题，例如：宋体，在某些字体尺寸下，获取的汉字位图有问题，没有成型的汉字。需要解决。 
+		</td>
+	</tr>
+	<tr><td width="70px">音频处理</td>
+		<td>支持wav，mp3格式的音频文件的解码，支持音频输出，可混音播放，可调节音量大小。<br> 
+		</td>
+	</tr>
+	<tr><td width="70px">应用程序</td>
+		<td>开发一些简单的小游戏，例如：扫雷、贪吃蛇、空当接龙、俄罗斯方块等；或者小软件，例如：画图。<br>
+文本框部件实现后，输入法也需要考虑，尤其是拼音输入法，需要设计一个搜索引擎，以及存储汉字信息的数据库，效率要求也很高，不然的话，输入一个拼音字母都要等几秒，那谁还敢用？ 看有什么开源的输入法可以用用。
+		</td>
+	</tr>
+	<tr><td width="70px">其它</td>
+		<td>获取电量信息。</td>
+	</tr>
+	</table> 
+    <!-- 网页底部的内容 -->
+    <hr>
+    <table class="my_style" width="100%">
+      <tr>
+        <td align="left">
+          网页由
+          <a href="mailto:lc-soft@live.cn">
+            刘超
+          </a>
+          维护
+        </td> 
+        <td align="right">
+          <a target="_blank" href="http://validator.w3.org/check/referer">
+            <img border=0 src="http://www.w3.org/Icons/valid-html401-blue" alt="Valid HTML 4.0!"
+            height=31 width=88>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          最后更新: 2012-09-11
+        </td> 
+        <td align="right">
+		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
+          <script type="text/javascript" src="../files/js/baidu-code.js">
+          </script>
+		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>
+          <!-- <script src="http://s24.cnzz.com/stat.php?id=3624065&amp;web_id=3624065&amp;show=pic1"
+          type="text/javascript">
+          </script> -->
+        </td>
+      </tr>
+    </table>
+	</td>
+	</tr>
+	</table> 
+  </body>
+
+
+
+</html>
+<!-- page-front.tpl -->

@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 概述</title>
+<link rel="icon" href="lc-soft.png" type="image/png">
+<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,刘超,开源,C语言" >
+<meta name="description" content="LC-SOFT - 只为兴趣、创意和灵感而生!" >
+<meta name="robots" content="all" >
+<meta name="author" content="LC-Soft" >
+<link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
+<link type="text/css" rel="stylesheet" href="../files/css/overview.css"> 
+</head>
+
+
+  <body style="margin-top: 100px;" class="my_body">
+    <script type="text/javascript" src="../files/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="../files/js/ms-script.jsx"></script>
+    <script type="text/javascript" src="../files/js/menu-effect.js"></script>
+    <script type="text/javascript" src="../files/js/titlemenu.zh-cn.js"></script>
+    <script type="text/javascript" src="../files/audiojs/float_musicplayer.js"></script> 
+	
+<div style="padding-top: 30px;"> 
+    <!-- 上面是标题栏区域 -->
+	
+<div class="wp_style">
+<br>
+<br>
+<h1 id="logo">
+	<a><img alt="LCUI" src="../files/images/lcui-logo.png" width="60" height="60"></a>
+	<br> LC User Interface
+</h1>
+<p style="text-align: center">简单的图形界面库</p>
+
+<h1>前言</h1>
+<p style="text-indent: 2em;">LCUI 对于我来说是一个非常有意义的项目， 它是一个GUI函数库，和GTK、Qt、wxWidget等GUI函数库一样，可为程序的图形界面的实现提供支持；与它们不同的是，LCUI 目前并不成熟，还有许多地方需要更新和完善，提供的图形界面的支持也比较简单。</p>
+<p style="text-indent: 2em;">LCUI 的源代码是公开的，大家都能为 LCUI 添砖加瓦，共同努力完善 LCUI 。开发者和贡献者为 LCUI 奉献了自己宝贵的时间，我们都在致力于让 LCUI 更加优秀。现在，感谢您也参与其中。</p>
+<p style="text-align: right">&#8212; 刘超</p>
+
+<h1>编译与安装</h1>
+<ol style="list-style-type: decimal;">
+	<li>解压LCUI的源码包。<br> 
+	<li>进入解压后得到的新文件夹。</li>
+	<li>运行源码根目录中的configure脚本，对系统环境进行检测。</li>  
+	<li>使用make命令编译 LCUI 的源代码。</li>
+	<li>等待编译成功完成，如果在编译过程中遇到错误，请检查您是否安装了 LCUI 所依赖的函数库。</li>
+	<li>使用make install命令安装 LCUI 的函数库和头文件。</li>
+</ol>	
+	<h2>提醒</h2>
+	<ol style="list-style-type: disc;">
+<li>如果您之前安装的不是新版本，在安装新版本之前，请先卸载旧版本。 </li>
+<li>如果您曾自己编写了用 LCUI 实现图形界面的程序，您可能需要做一些修改以使程序在跨版本更新后正常工作。</li>
+</ol>
+<h1>系统需求</h1>
+<ul style="list-style-type: disc;"> 
+        <li>字体处理： <a target="_blank" href="http://www.freetype.org/">freetype2</a></li>
+        <li>触屏支持： <a>tslib</a></li>
+        <li>线程支持： pthread</li>
+		<li>图片处理： <a target="_blank" href="http://www.libpng.org/">libpng</a> 和 <a target="_blank" href="http://ijg.org/">libjpeg</a></li>
+</ul>
+<p style="text-indent: 2em;">为了您能正常使用LCUI，请先确保您的计算机已经安装了上述的函数库，并保持较新的版本。<br>
+理论上，LCUI 能在 GNU/Linux 系统环境中正常工作，LCUI 的图形界面的显示，需要内核支持 FrameBuffer。</p>
+
+
+<h1>在线资源</h1>
+<p style="text-indent: 2em;">若您遇上文档中未有提及的情况，请首先参考我们为您准备的 LCUI 在线资源：</p>
+<dl>
+	<dt><a target="_blank" href="http://lcui.sourceforge.net/blog/">官方博客</a></dt>
+		<dd>在这里，您能接触到 LCUI 的最新升级信息和相关新闻，建议加入收藏夹。</dd> 
+	<dt><a target="_blank" href="http://bbs.lcui.org/">中文支持论坛</a></dt>
+		<dd>如果感到束手无策，请将问题提交至中文支持论坛。无论求助还是助人，在这里您应该确保自己的问题和答案均准确细致。</dd>
+	<dt><a target="_blank" href="http://qun.qq.com/air/#153022788">交流群</a></dt>
+		<dd>LCUI 也有QQ群用于 LCUI 用户交流以及部分技术支持，群号：153022788</dd>
+</dl>
+
+<h1>最后</h1> 
+<p style="text-indent: 2em;">
+对 LCUI 有任何建议、想法、评论或发现了 bug，请加入 <a target="_blank" href="http://bbs.lcui.org/">中文支持论坛</a>。 </p>
+<p style="text-indent: 2em;">LCUI 没有数百万的市场运作资金，也没有名人赞助，不过我们有更棒的支持，那就是您！如果您喜欢 LCUI，请将它介绍给自己的朋友，或者帮助他人安装一个 LCUI，又或者写一篇关于我们的文章。</p>
+
+<p style="text-indent: 2em;">如果您愿意支持我们的工作，欢迎您对 LCUI 进行 <a target="_blank" href="http://me.alipay.com/lcui">捐赠</a>。</p>
+<h1>版权许可</h1>
+<p style="text-indent: 2em;">LCUI基于 <abbr title="GNU Public License">GPL</abbr> 通用许可协议发布。详见 <a target="_blank" href="licenses.html">许可证</a>。</p> 
+<p style="text-indent: 2em;">如果您发现LCUI项目中的某些地方触犯了别人的专利，请联系我们。</p>
+</div>
+	
+
+    <!-- 网页底部的内容 -->
+    <hr>
+    <table class="my_style" width="100%">
+      <tr>
+        <td align="left">
+          网页由
+          <a href="mailto:lc-soft@live.cn">
+            刘超
+          </a>
+          维护
+        </td>
+        <td align="right">
+          <a target="_blank" href="http://validator.w3.org/check/referer">
+            <img border=0 src="http://www.w3.org/Icons/valid-html401-blue" alt="Valid HTML 4.0!"
+            height=31 width=88>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          最后更新: 2012-09-15
+        </td>
+        <td align="right">
+		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
+          <script type="text/javascript" src="../files/js/baidu-code.js">
+          </script>
+		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>
+          <!-- <script src="http://s24.cnzz.com/stat.php?id=3624065&amp;web_id=3624065&amp;show=pic1"
+          type="text/javascript">
+          </script> -->
+        </td>
+      </tr>
+    </table>
+	</div>
+  </body>
+
+
+
+</html>
+<!-- page-front.tpl -->
