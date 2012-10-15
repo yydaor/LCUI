@@ -23,6 +23,20 @@ html {
 	border: 1px solid #CCC; 
 	margin: 0 0 5px 5px;
 }
+.dynamic_background {
+	border-collapse:collapse;
+}
+.dynamic_background tr:hover{
+	background: #DCF7DD;
+	border: 1px solid #BBD2BC; 
+}
+.dynamic_background tr{ 
+	border: 1px dashed #FFFFFF; 
+}
+
+.dynamic_background a{
+	text-decoration: none;
+}
 
 .secondary {
 	width:100%;

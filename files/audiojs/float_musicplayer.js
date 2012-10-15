@@ -1,4 +1,4 @@
-﻿//document.write("\
+﻿document.write("\
 	<link type='text/css' rel='stylesheet' href='../files/audiojs/audio.css'> \
 	<script src='../files/audiojs/audio.min.js'></script>\
 	<script src='../files/audiojs/float_area.js'></script>\
@@ -9,13 +9,10 @@
       <center><h3>音乐播放器</h3></center>\
       <audio preload></audio>\
       <ol>\
-        <li><a href='#' data-src='../files/music/01.mp3'>义勇军进行曲</a></li> \
-        <li><a href='#' data-src='../files/music/02.mp3'>夏影</a></li> \
-        <li><a href='#' data-src='../files/music/03.mp3'>Secretbase～君がくれたもの</a></li> \
-        <li><a href='#' data-src='../files/music/04.mp3'>ユナイト</a></li> \
-        <li><a href='#' data-src='../files/music/05.mp3'>大雨将至</a></li> \
-        <li><a href='#' data-src='../files/music/06.mp3'>星星</a></li> \
-        <li><a href='#' data-src='../files/music/07.mp3'>Time-Bomb</a></li> \
+        <li><a href='#' data-src='http://www.lcui.org/files/music/summer_shadows.mp3'>Summer Shadows</a></li> \
+        <li><a href='#' data-src='http://www.lcui.org/files/music/the_melody_of_heart.mp3'>心の旋律</a></li> \
+        <li><a href='#' data-src='http://www.lcui.org/files/music/pearl_white_story.mp3'>Pearl White Story</a></li> \
+        <li><a href='#' data-src='http://www.lcui.org/files/music/china_anthem.mp3'>义勇军进行曲</a></li> \
       </ol>\
     </div>\
 	</div>\

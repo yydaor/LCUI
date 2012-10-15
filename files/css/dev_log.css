@@ -1,0 +1,47 @@
+﻿@charset "UTF-8";
+.entry-content{
+font-family:simsun,宋体,微软雅黑,Microsoft Yahei, Arial,Helvetica,sans-serif;
+font-size: 13px;
+}
+.entry-content h3, h2, h1 {
+	font-family:微软雅黑,Microsoft Yahei;
+}
+.entry-content div{
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	border: 1px solid #DFDFDF;
+	padding-top: 10px;
+}
+.entry-content table {
+	border-bottom: 1px solid #DDD;
+	margin: 0 0 1.625em;
+	width: 100%;
+}
+.entry-content td {
+	border-top: 1px solid #DDD;
+}
+
+.entry-content img{
+	max-width:780px; 
+}
+
+.entry-content ul {
+list-style: square;
+}
+
+.wp-caption {
+	background: #EEE; 
+	max-width: 100%; 
+	text-align:center; 
+}
+.wp-caption p{
+padding-bottom: 5px;
+}
+a:focus img[class*="align"], a:hover img[class*="align"], a:active img[class*="align"], a:focus img[class*="wp-image-"], a:hover img[class*="wp-image-"], a:active img[class*="wp-image-"], #content .gallery .gallery-icon a:focus img, #content .gallery .gallery-icon a:hover img, #content .gallery .gallery-icon a:active img {
+	background: #EEE;
+	border-color: #BBB;
+}
+img[class*="align"], img[class*="wp-image-"], #content .gallery .gallery-icon img {
+	border: 1px solid #DDD;
+	padding: 6px;
+}
