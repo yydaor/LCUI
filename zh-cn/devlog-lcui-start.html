@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB2312" >
-<title>LCUI &#8250; ��̬ &#8250; ������־</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 动态 &#8250; 开发日志</title>
 <link rel="icon" href="lc-soft.png" type="image/png">
-<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,����,��Դ,C����" >
-<meta name="description" content="LC-SOFT - ֻΪ��Ȥ���������ж���!" >
+<meta name="keywords" content="GUI,LCSoft,LCDT,LCUI,Embedded,linux,liuchao,opensource,freesoft,C" >
+<meta name="description" content="LCUI 开发之初" >
 <meta name="robots" content="all" >
 <meta name="author" content="LC-Soft" >
 <link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
@@ -20,21 +20,20 @@
 	
 	<div style="padding-top: 30px;"> 
 
-    <!-- �����Ǳ��������� --> 
+    <!-- 上面是标题栏区域 --> 
 <div class="entry-content">
-<center><h1>LCUI ����֮��</h1></center>
+<center><h1>LCUI 开发之初</h1></center>
 <hr>
-<p>Ϊ���Ժ󷽱��дͼ�ν���ĳ������Ӵ���ĸ����ԣ���׼����дһ���ܹ��ṩͨ�õ�API��ʵ��ͼ�ν���ĺ����⣬���������ڵ�����</p>
-<p>�ټ������ҵ�ѧϰ����Ƕ��ʽlinuxϵͳ����û�����õ�GUI�⣬��˵��Qt�������������Qt����Ļ���˵����ʾ������ʱ����ֶδ���ֻ����MessageBox����ʾ���棻</p>
-<p>��GTK�����˱���ɹ��������ұ���������ѧϰ�������е�GTK���QQ�ͻ��ˣ������˲�ϲ����ʱ������gtk��</p>
-<p>����SDL����ͼ�ǿ��ԣ�ʵ�ֽ��滹����Ҫ���Ĺ�������һЩС����ʹ�һ��Ƿ���������</p>
-<p>���գ��һ��Ǿ�����дһ���ʺ�ѧϰ����GUI�⣬�����������ΪLCUI��LC�����ҵ�����ƴ��LiuChao������ĸ��UI��User Interface���û����棩�ļ�ơ�</p>
+<p>为了以后方便编写图形界面的程序，增加代码的复用性，就准备编写一个能够提供通用的API来实现图形界面的函数库，以满足现在的需求。</p>
+<p>再加上在我的学习机（嵌入式linux系统）还没有能用的GUI库，虽说有Qt，但其他编译过Qt程序的机友说在显示父窗口时会出现段错误，只能用MessageBox来显示界面；</p>
+<p>而GTK，有人编译成功过，并且编译了能在学习机上运行的GTK版的QQ客户端，但个人不喜欢花时间折腾gtk；</p>
+<p>还有SDL，画图是可以，实现界面还是需要花的功夫，它的一些小问题使我还是放弃了它。</p>
+<p>最终，我还是决定编写一个适合学习机的GUI库，这个库我命名为LCUI，LC就是我的名字拼音LiuChao的首字母，UI即User Interface（用户界面）的简称。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
-	<div class="ds-thread" data-thread-key="" 
-	data-title="" data-author-key="" data-url=""></div>
+	<div class="ds-thread" data-thread-key="1" data-title="LCUI 开发之初" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/devlog-lcui-start.html"></div>
 	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"lc-soft"};
+	var duoshuoQuery = {short_name:"lc-soft-lcui"};
 	(function() {
 		var ds = document.createElement('script');
 		ds.type = 'text/javascript';ds.async = true;
@@ -45,16 +44,16 @@
 	})();
 	</script>
 <!-- Duoshuo Comment END -->
-    <!-- ��ҳ�ײ������� -->
+    <!-- 网页底部的内容 -->
     <hr>
     <table class="my_style" width="100%">
       <tr>
         <td align="left">
-          ��ҳ��
+          网页由
           <a href="mailto:lc-soft@live.cn">
-            ����
+            刘超
           </a>
-          ά��
+          维护
         </td> 
         <td align="right">
           <a target="_blank" href="http://validator.w3.org/check/referer">
@@ -65,11 +64,11 @@
       </tr>
       <tr>
         <td>
-          ������: 2012-10-14
+          最后更新: 2012-10-23
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
-		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="ͨ��QQ�����߽��н���" title="ͨ��QQ�����߽��н���"></a>
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
           <script type="text/javascript" src="../files/js/baidu-code.js">
           </script>
 		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>

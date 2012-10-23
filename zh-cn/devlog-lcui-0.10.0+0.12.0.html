@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB2312" >
-<title>LCUI &#8250; ��̬ &#8250; ������־</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 动态 &#8250; 开发日志</title>
 <link rel="icon" href="lc-soft.png" type="image/png">
-<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,����,��Դ,C����" >
-<meta name="description" content="LC-SOFT - ֻΪ��Ȥ���������ж���!" >
+<meta name="keywords" content="GUI,LCSoft,LCDT,LCUI,Embedded,linux,liuchao,opensource,freesoft,C" >
+<meta name="description" content="LCUI 0.10.0 & 0.12.0 开发日志" >
 <meta name="robots" content="all" >
 <meta name="author" content="LC-Soft" >
 <link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
@@ -20,27 +20,26 @@
 	
 	<div style="padding-top: 30px;"> 
 
-    <!-- �����Ǳ��������� --> 
+    <!-- 上面是标题栏区域 --> 
 <div class="entry-content">
 <center><h1>LCUI 0.10.0 & 0.12.0</h1></center>
 <hr>
-<p>���������VC�Ĺ������еĴ��ڿؼ���������PictureBox������Label��������Щ������������Լ�������Ҳ���������</p>
-<p>ͷ�ļ��ı�д�����ȷ�����FreeType2��ͷ�ļ���д���Ҳ������#include&lt;XXX_Build.h&gt;��Ҫʹ���ĸ�ͷ�ļ���ĺ�������ʱ��ֱ��ʹ�� #include _XX_XX_H_�꣬����굫��XXX_Build.h�ﶨ��ģ���������һЩ���⣬ͷ�ļ�����ͷ�ļ���ѭ�����������ձ���������ʱһֱ��ѭ����ӡͬһ�����󣬹���������⣬���������ʹ�ú����ͷ�ļ�������</p>
-<p>�ں�����������Ƕ�׹�ϵ�Ľṹ���������������ͷ�ļ���������ᱨ����������һ��ʱ�䣬����ֱ�ӽ��ṹ�弰������ݵĶ���д��һ��ͷ�ļ������ͷ�ļ�д�����������ڽ���ṹ��Ƕ������ʱ����gtk�е����棺������ν��ͷ�ļ���ص�����ģ����ǲο���gtk��ͷ�ļ������ҵ�ͷ�ļ��еĽṹ��Ķ��巽ʽ��΢����һ�£���Ҳֻ�Ǹ���һ�¶��ѡ�</p>
+<p>起初，仿照VC的工具箱中的窗口控件，添加了PictureBox部件、Label部件，这些部件的相关属性及命名，也借鉴了它。</p>
+<p>头文件的编写，我先仿照了FreeType2的头文件编写风格，也就是先#include&lt;XXX_Build.h&gt;，要使用哪个头文件里的函数声明时，直接使用 #include _XX_XX_H_宏，这个宏但是XXX_Build.h里定义的；但遇到了一些问题，头文件包含头文件，循环包含，最终编译器编译时一直在循环打印同一个错误，关于这个问题，解决方法是使用宏进行头文件保护；</p>
+<p>在后来，发现有嵌套关系的结构体如果定义在其它头文件里，编译器会报错；调试了一段时间，决定直接将结构体及相关数据的定义写在一个头文件里，其余头文件写函数声明；在解决结构体嵌套问题时，对gtk感到好奇：它是如何解决头文件相关的问题的？于是参考了gtk的头文件，把我的头文件中的结构体的定义方式稍微改了一下，但也只是改了一下而已。</p>
 <p><span id="more-6"></span></p>
-<p>ͼ�ν��棬������ʾ���ٲ��˵ģ�����ĵ��Լ����Ӻ��٣�ֻ���Լ���FreeTypeԴ��Ŀ¼����ĵ�������Google�������˽������˼���⿴Ҳû�ã���Ҫ�����������ο������ϵ�ʾ������Ƚ��٣��������һɫ�Ļ�ȡ�����������ε�ʾ�����룬���ֶ�������û���(����ͼ��ʾ)��</p>
-<p></p><center><img src="http://www.lcui.org/files/images/devlog/helloworld.gif" alt="hellworld"></center>FreeType��ȡ����������Ҫ�������Ӧ���ַ���unicode���룬��Դ������ʹ�õ���char���ַ���������wchar_t�ͣ�����Ҫʵ��һ�����ܣ���char���ַ����ڵ��ַ�����ת����unicode���벢������wchar_t���ַ�����������iconv���ṩ����غ���ʵ�����ַ�����ת����<p></p>
-<p>ͼ�ε���ʾ������������mgaview����Դ���е�write_to_fb������ʾͼ�Σ���������Ĵ��룬�Լ�����д��һ�������������������������Ļд���ݡ�</p>
-<p>���ʵ����PictureBox������ͼƬ�����Ź��ܻ�δ���ӣ����Ӻ󣬿��Խ���ͼƬ�ķŴ����С�Ĳ�����</p>
-<p>����PictureBox������ʵ�֣�������������Ƭ�鿴�������ǣ���һ���汾����Ƭ�鿴���͵����ˡ�</p>
-<p></p><center><img src="http://www.lcui.org/files/images/devlog/use_lcpv_1.jpg" alt="use_lcpv_1"><img src="http://www.lcui.org/files/images/devlog/use_lcpv_2.jpg" alt="use_lcpv_2"></center><center><img src="http://www.lcui.org/files/images/devlog/use_lcpv_3.jpg" alt="use_lcpv_3"><img src="http://www.lcui.org/files/images/devlog/use_lcpv_4.jpg" alt="use_lcpv_4"></center>�ð汾����Ƭ�鿴��ʹ����Label�����ڴ����ڵ����Ͻ���ʾͼƬ��Ϣ��2����𽥼���Label������alphaֵ��ֱ��Ϊ0����ȫ͸������������ƶ������Χ��i������ͼƬ��Ϣ��ǩ����͸�����������ܷŴ����СͼƬ����Ϊû�м���ͼ�������㷨��PictureBox�����޷���ͼƬʹ��ͼ�������㷨��<p></p>
-<p>�������ϰ汾��LCUI��Ŀ������̣�û�������˵����</p>
+<p>图形界面，字体显示是少不了的，相关文档以及例子很少，只有自己看FreeType源码目录里的文档，借助Google翻译来了解大致意思，光看也没用，需要代码例子来参考，网上的示例代码比较少，大多是清一色的获取单个文字字形的示例代码，文字对齐问题没解决(如下图所示)。</p>
+<p></p><center><img src="http://www.lcui.org/files/images/devlog/helloworld.gif" alt="hellworld"></center>FreeType获取字体字形需要该字体对应的字符的unicode编码，而源代码中使用的是char型字符串，不是wchar_t型，这需要实现一个功能：将char型字符串内的字符编码转换成unicode编码并保存至wchar_t型字符串。我用了iconv库提供的相关函数实现了字符编码转换。<p></p>
+<p>图形的显示，不再是利用mgaview程序源码中的write_to_fb函数显示图形，借鉴了它的代码，自己重新写了一个函数，可以用这个函数往屏幕写内容。</p>
+<p>随后，实现了PictureBox部件，图片的缩放功能还未添加，添加后，可以进行图片的放大和缩小的操作。</p>
+<p>由于PictureBox部件的实现，我又想做个照片查看器，于是，第一个版本的照片查看器就诞生了。</p>
+<p></p><center><img src="http://www.lcui.org/files/images/devlog/use_lcpv_1.jpg" alt="use_lcpv_1"><img src="http://www.lcui.org/files/images/devlog/use_lcpv_2.jpg" alt="use_lcpv_2"></center><center><img src="http://www.lcui.org/files/images/devlog/use_lcpv_3.jpg" alt="use_lcpv_3"><img src="http://www.lcui.org/files/images/devlog/use_lcpv_4.jpg" alt="use_lcpv_4"></center>该版本的照片查看器使用了Label部件在窗口内的左上角显示图片信息，2秒后，逐渐减少Label部件的alpha值，直到为0（完全透明），方向键移动浏览范围，i键调出图片信息标签（不透明）。还不能放大和缩小图片，因为没有加入图像缩放算法，PictureBox部件无法对图片使用图像缩放算法。<p></p>
+<p>以上是老版本的LCUI库的开发过程，没做过多的说明。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
-	<div class="ds-thread" data-thread-key="" 
-	data-title="" data-author-key="" data-url=""></div>
+	<div class="ds-thread" data-thread-key="2" data-title="LCUI 0.10.0 & 0.12.0" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/devlog-lcui-0.10.0+0.12.0.html"></div>
 	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"lc-soft"};
+	var duoshuoQuery = {short_name:"lc-soft-lcui"};
 	(function() {
 		var ds = document.createElement('script');
 		ds.type = 'text/javascript';ds.async = true;
@@ -51,16 +50,16 @@
 	})();
 	</script>
 <!-- Duoshuo Comment END -->
-    <!-- ��ҳ�ײ������� -->
+    <!-- 网页底部的内容 -->
     <hr>
     <table class="my_style" width="100%">
       <tr>
         <td align="left">
-          ��ҳ��
+          网页由
           <a href="mailto:lc-soft@live.cn">
-            ����
+            刘超
           </a>
-          ά��
+          维护
         </td> 
         <td align="right">
           <a target="_blank" href="http://validator.w3.org/check/referer">
@@ -71,11 +70,11 @@
       </tr>
       <tr>
         <td>
-          ������: 2012-10-14
+          最后更新: 2012-10-23
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
-		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="ͨ��QQ�����߽��н���" title="ͨ��QQ�����߽��н���"></a>
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
           <script type="text/javascript" src="../files/js/baidu-code.js">
           </script>
 		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>

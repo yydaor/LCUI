@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB2312" >
-<title>LCUI &#8250; ��̬ &#8250; ������־</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 动态 &#8250; 开发日志</title>
 <link rel="icon" href="lc-soft.png" type="image/png">
-<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,����,��Դ,C����" >
-<meta name="description" content="LC-SOFT - ֻΪ��Ȥ���������ж���!" >
+<meta name="keywords" content="GUI,LCSoft,LCDT,LCUI,Embedded,linux,liuchao,opensource,freesoft,C" >
+<meta name="description" content="LCUI 0.12.6 开发日志" >
 <meta name="robots" content="all" >
 <meta name="author" content="LC-Soft" >
 <link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
@@ -20,188 +20,242 @@
 	
 	<div style="padding-top: 30px;"> 
 
-    <!-- �����Ǳ��������� --> 
+    <!-- 上面是标题栏区域 --> 
 <div class="entry-content">
 <center><h1>LCUI 0.12.6</h1></center>
 <hr>
 		<h2>2012-9-12</h2>
-<p>���㽫LCUI��widget����������ʽ�����html ��&nbsp;CSS ��ǩ������������Ȼ�����Ӧ����widget ��C++���ϡ�</p>
+<p>打算将LCUI的widget属性命名方式，搞成html 的&nbsp;CSS 标签属性那样，当然，这会应用在widget 的C++类上。</p>
 <h2>2012-9-13</h2>
-<p>Ϊ�����ư������룬�о�linux/input.h�еĺ���������</p>
-<p>ʹ�� cat /proc/bus/input/devices ���Կ���ÿ��eventX��ʲô�豸���¼�����Դ�����У�</p>
-<p>��������һ�£�û�������������˵���������룬�����ģ�ⰴ�����룬д���������¼������ǣ�����д���ݡ��ĳɡ������ݡ������Ե��豸��/dev/input/event3��������κ�Ч��������printf������ӡ��Ϣ��������ˣ�������Ϊ�����뻺��Ĺ�ϵ������fflush����������뻺�壬���������֮��������LCUI�Դ���Set_Raw���������ն�Ϊ�޻���ģʽ��fflush�����Ͳ�Ҫ�ˣ��ٴβ��ԣ����������</p>
-<p>Ч���Ƚ����⣬���ŵ�ѧϰ���ϲ���ʱ������ѧϰ���õ���/dev/input/event0����ûʲô�󰭣����ǣ��޷��ж�ĳ��Ϊ����ס��״̬��ֻ�С����¡��͡��ͷš�����סĳ����ʱ���������������ѡ���ס��״̬ʶ����ˡ����¡��͡��ͷš�������״̬��</p>
+<p>为了完善按键输入，研究linux/input.h中的函数声明。</p>
+<p>使用 cat /proc/bus/input/devices 可以看到每个eventX是什么设备的事件，电源键都有！</p>
+<p>网上找了一下，没看到几个结果是说读按键输入，大多是模拟按键输入，写按键输入事件，于是，将“写数据”改成“读数据”，测试的设备是/dev/input/event3，结果无任何效果；加了printf函数打印信息后，有输出了，个人认为是输入缓冲的关系，改用fflush函数清空输入缓冲，结果正常。之后，又用了LCUI自带的Set_Raw函数设置终端为无缓冲模式，fflush函数就不要了，再次测试，结果正常。</p>
+<p>效果比较满意，但放到学习机上测试时，发现学习机用的是/dev/input/event0，这没什么大碍，可是，无法判断某个为“按住”状态，只有“按下”和“释放”，按住某个键时，结果表明，程序把“按住”状态识别成了“按下”和“释放”这两个状态。</p>
 <p>&nbsp;</p>
 <h2>2012-9-14</h2>
-<p>�ı�����Ʒ�����<br>
-�ı���Ҫ֧�ֲ�ͬ��С����ͬ���塢��ͬ��ɫ��������ʾ��<br>
-��һ���ṹ�屣���ַ����Լ�ָ����ַ����Ե�ָ�롣<br>
-�ַ����԰�������ɫ������ɫ���������͡������С�����塢б�塢�»��ߡ�</p>
-<p>���ǵ�����༭�����õ��ı�����ô���ı���Ҫ��һ����¼�ܹ�������Щ�ַ���Ҫʹ��ʲô��ɫ��ʲô���塢ʲô����ɫ�����ݡ�<br>
-�Ƿ��Զ����С�<br>
-��һ���ṹ���¼�������λ�á����ַ����е�λ�á����ȡ���˸Ƶ�ʣ���ɾ����ʱ���Թ��λ��Ϊ�������Ը�λ�õ��ַ�������ɾ��֮����Զ��������λ�á�<br>
-�ı����ܹ���Ӧ����¼���</p>
-<p>��Ҫ��¼ÿһ�����ֵĸ߶ȣ� ��Ϊ��һ�е����ֵĴ�С���ܲ�ͳһ��</p>
+<p>文本框设计方案：<br>
+文本框要支持不同大小、不同字体、不同颜色的文字显示。<br>
+用一个结构体保存字符码以及指向该字符属性的指针。<br>
+字符属性包括：颜色、背景色、字体类型、字体大小、粗体、斜体、下划线。</p>
+<p>考虑到代码编辑器会用到文本框，那么，文本框要有一个记录能够保存哪些字符串要使用什么颜色、什么字体、什么背景色等数据。<br>
+是否自动换行。<br>
+用一个结构体记录光标的相对位置、在字符串中的位置、长度、闪烁频率，增删文字时，以光标位置为基础，对该位置的字符进行增删，之后会自动调整光标位置。<br>
+文本框能够响应鼠标事件。</p>
+<p>需要记录每一行文字的高度， 因为这一行的文字的大小可能不统一。</p>
 <p>&nbsp;</p>
 <h2>2012-9-15</h2>
-<p>�о��ı���������ʽ����������Դ�ı���һЩ��������ʽ���еĻ���ֻҪ��ɾһ���֣���ҪҪ�ƶ�����ֺ���������֡�</p>
-<p>����ʵ��TextBox��������ʽ��ǩ�������ܣ� ֮ǰ��Label������ֻ֧��&lt;color&gt;��ǩ�������ı���ɫ����TextBox������ֻ��֧�������ǩ������&lt;size&gt;, &lt;family&gt;, &lt;style&gt;, &lt;weight&gt;, &lt;decoration&gt;��5����ǩ����TextBox������ɺ�Label����������Ҫ����һ�θ�д��</p>
+<p>感觉文本框用链表式队列来储存源文本好一些，用数组式队列的话，只要增删一个字，都要要移动这个字后面的所有字。</p>
+<p>正在实现TextBox部件的样式标签处理功能， 之前的Label部件，只支持&lt;color&gt;标签来设置文本颜色，而TextBox部件不只是支持这个标签，还有&lt;size&gt;, &lt;family&gt;, &lt;style&gt;, &lt;weight&gt;, &lt;decoration&gt;这5个标签，在TextBox部件完成后，Label部件可能需要进行一次改写。</p>
 <h2>2012-9-17</h2>
-<p>������������ģ�飬�������̾��������� ����ƺ����ݽṹ��Ȼ�������غ����ӿڣ�������д������ʵ�֣���д������ʵ��ʱ����ʱ������ˣ��ͻ��������������ӿڣ��޸�һ�����ݽṹ��</p>
-<p>�Ѿ��������е�TextBox������Դ�����ϴ���github.com��<a href="https://github.com/lc-soft/LCUI/commit/48f37be24b64782dd54f33bb0528bd04a748d196#L12R0" target="_blank">�ɵ���鿴</a>��</p>
+<p>现在新增功能模块，大致流程就是这样： 先设计好数据结构，然后设计相关函数接口，最后就是写函数的实现，在写函数的实现时，有时灵感来了，就会新增几个函数接口，修改一下数据结构。</p>
+<p>已经将开发中的TextBox部件的源代码上传至github.com，<a href="https://github.com/lc-soft/LCUI/commit/48f37be24b64782dd54f33bb0528bd04a748d196#L12R0" target="_blank">可到这查看</a>。</p>
 <h2>2012-9-19</h2>
-<p>Ϊ������������ʽ����ģʽ������������ʽ������ʽ������ģʽ֮�����ѡ�񣬸��и����ص㡣</p>
-<p>����������ɣ������ӿ���û�䣬�еĺ����Ĳ������Ƕ���˸�const ��<a href="https://github.com/lc-soft/LCUI/commit/4a8be9555e36e64047eec3ef40d0f16235a61c47" target="_blank">�뿴����</a>������BUG���ȴ��޸���</p>
+<p>为队列添加链表式储存模式，可以在数组式和链表式这两种模式之间进行选择，各有各的特点。</p>
+<p>代码添加完成，函数接口名没变，有的函数的参数就是多加了个const ，<a href="https://github.com/lc-soft/LCUI/commit/4a8be9555e36e64047eec3ef40d0f16235a61c47" target="_blank">请看这里</a>，还有BUG，等待修复。</p>
 <p>&nbsp;</p>
 <h2>2012-9-20</h2>
-<p>����һ�����Ժ�����޸ĵĶ��д����Ѿ��ܹ����������ˣ�<a href="https://github.com/lc-soft/LCUI/commit/4006c09229744c3905ce56bf48b159d390e57ffa" target="_blank">�ɿ�����</a>��</p>
-<p>���Եķ�������Ҫ�Ƿ��������ĺ�����Ȼ�����޸�ǰ���ݵĺ������������������û���⣬��ô����������������⣬Ȼ���º�����ɺ������жԱȣ����º������������⣬����������������Ҳ�����ò��Գ�����Զ��е���Ҫ�����Ƿ��쳣��</p>
-<p>���е�����ɾ���������˵����⣬��Ҫ�����޸���</p>
-<p><a href="https://github.com/lc-soft/LCUI/commit/da7ee17af196abf02fadcfd8da5f1f7a53673b2c" target="_blank">�Ѿ������޸�</a>��ֻ���޸���һ��������Ч�Լ�⣬��Ч���˳���������Ȼ�������ֻ���ٸ�һ�¡�</p>
-<p>׼������ʵ���ı��򡣡���</p>
+<p>经过一番调试后，这次修改的队列处理已经能够正常工作了，<a href="https://github.com/lc-soft/LCUI/commit/4006c09229744c3905ce56bf48b159d390e57ffa" target="_blank">可看这里</a>。</p>
+<p>调试的方法，主要是分析出错的函数，然后用修改前备份的函数代替它，测试如果没问题，那么就是这个函数有问题，然后将新函数与旧函数进行对比，看新函数哪里有问题，有则进行修正。最后也就是用测试程序测试队列的主要功能是否异常。</p>
+<p>队列的数据删除函数出了点问题，需要进行修复。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/da7ee17af196abf02fadcfd8da5f1f7a53673b2c" target="_blank">已经进行修复</a>。只是修改了一下数据有效性检测，无效则退出函数，居然会出错，只好再改一下。</p>
+<p>准备继续实现文本框。。。</p>
 <p>&nbsp;</p>
-<p>��������һ����ҳ����Ŀ��ҳ��windowsƽ̨�ϣ���IE9��Chrome��������ʱ�����������ֲ������в������֣�������FireFox �� Opera�������ֻ�ܿ��������á�����</p>
-<p>�����ǻ������޸ĵ���ҳ��������⣬������ȥaudiojs�ٷ���վ����audiojs����ѹ����������������index.html��������������ɣ�FireFox �� Opera��������ܲ������֣���֪Ϊʲô��ͬ����һ����ҳ�������Ĺٷ���վ�Ͽ��������������֣����ص����ص�ȴ���ܣ��ѵ�����û�в���ѹ����������ļ���</p>
-<p>IE�������Chrome�������ʾ��Ч����һ�����������ֲ�������</p>
-<p><a href="http://lcui.org/files/images/devlog/musicplayer_chrome.png"><img class="alignnone" title="Chrome����Ч��ͼ" src="http://lcui.org/files/images/devlog/musicplayer_chrome.png" alt="" width="349" height="233"></a><a href="http://lcui.org/files/images/devlog/musicplayer_IE9.png"><img class="alignnone" title="IE9����Ч��ͼ" src="http://lcui.org/files/images/devlog/musicplayer_IE9.png" alt="" width="339" height="223"></a></p>
-<p>font-family��monospace��Chrome����ʾ�ú�����ϸ����IE9��е㰵���е����&lt;li&gt;��ǩ��Ч��Ҳ�е���죬���ڱ�ź���Ŀ�����IE9��Chrome����һЩ��֮ǰ��IE9����ԣ�������������ʾʱ��û���ˣ����˲²��������Ű�����⣬ʹ��IE�Դ��Ĺ��߲鿴Ԫ�أ�����ʱ����ʾ������ȥ�ˣ�����padding��margin��������ʾ�����ˡ�</p>
-<p>�ڲ�����ҳЧ���Ĺ����У�����FireFox�ġ��鿴Ԫ�ء����ܵ�3D��ͼ���������Կ�����������Ĳ��˳��</p>
-<div class="wp-caption alignnone" style="width: 842px"><a href="http://lcui.org/files/images/devlog/homepage-3Dview.png"><img title="FireFox��3D��ͼЧ��" src="http://lcui.org/files/images/devlog/homepage-3Dview.png" alt="" ></a><p class="wp-caption-text">FireFox��3D��ͼЧ��</p></div>
+<p>又折腾了一下主页，项目主页在windows平台上，用IE9和Chrome浏览器浏览时，可以在音乐播放器中播放音乐，但改用FireFox 和 Opera浏览器后，只能看，不能用。。。</p>
+<p>本来是怀疑我修改的网页代码的问题，又重新去audiojs官方网站下载audiojs，解压后用浏览器打开里面的index.html，结果，问题依旧，FireFox 和 Opera浏览器不能播放音乐；不知为什么，同样是一张网页，在它的官方网站上可以正常播放音乐，下载到本地的却不能，难道作者没有测试压缩包里面的文件？</p>
+<p>IE浏览器和Chrome浏览器显示的效果不一样，比如音乐播放器：</p>
+<p><a href="http://lcui.org/files/images/devlog/musicplayer_chrome.png"><img class="alignnone" title="Chrome测试效果图" src="http://lcui.org/files/images/devlog/musicplayer_chrome.png" alt="" width="349" height="233"></a><a href="http://lcui.org/files/images/devlog/musicplayer_IE9.png"><img class="alignnone" title="IE9测试效果图" src="http://lcui.org/files/images/devlog/musicplayer_IE9.png" alt="" width="339" height="223"></a></p>
+<p>font-family是monospace，Chrome里显示得很亮很细，而IE9里，有点暗且有点宽；&lt;li&gt;标签的效果也有点差异，对于标号和条目间隔，IE9比Chrome更宽一些。之前再IE9里测试，进度条边上显示时间没有了，个人猜测是由于排版的问题，使用IE自带的工具查看元素，发现时间显示在下面去了，调整padding和margin后，终于显示出来了。</p>
+<p>在测试网页效果的过程中，发现FireFox的“查看元素”功能的3D视图不错，可以看到各个区块的层叠顺序。</p>
+<div class="wp-caption alignnone" style="width: 842px"><a href="http://lcui.org/files/images/devlog/homepage-3Dview.png"><img title="FireFox的3D视图效果" src="http://lcui.org/files/images/devlog/homepage-3Dview.png" alt="" ></a><p class="wp-caption-text">FireFox的3D视图效果</p></div>
 <p>&nbsp;</p>
-<p>��ҳ�ϵ��Ǹ���ť����webkit��������������ʾ��Ч�������������������ȴ������������ͼ��ʾ��</p>
-<p><a href="http://lcui.org/files/images/devlog/btn_chrome.png"><img class="alignnone" title="webkit��������������ʾ�İ�ť" src="http://lcui.org/files/images/devlog/btn_chrome.png" alt="" width="207" height="217"></a><a href="http://lcui.org/files/images/devlog/btn_IE9.png"><img class="alignnone" title="��webkit������������ʾ�İ�ť" src="http://lcui.org/files/images/devlog/btn_IE9.png" alt="" width="204" height="218"></a></p>
-<p>��ťʹ����linear-gradient��Ҳ����CSS3�����Խ���Ч�������������Բ��������������ͨ�ã�Opera��Ҫ��-o-linear-gradient��FireFox����-moz-linear-gradient��Chrome����-webkit-linear-gradient��IE��֧�֣���Ҫ��������������ֻ����һ��������transition��������ʵ�ֹ���Ч����div���ƶ���������ʵ�ֵġ�</p>
-<p>������˹������վ��Ȼ�����޸���һ���Լ�����Ŀ��ҳ������</p>
-<p><a href="http://www.lcui.org/files/images/devlog/homepage-catch.jpg"><img class="alignnone" title="��ҳ��ͼ" src="http://www.lcui.org/files/images/devlog/homepage-catch.jpg" alt="" width="450" height="219"></a></p>
+<p>主页上的那个按钮，在webkit引擎的浏览器中显示的效果正常，其它浏览器中却不正常，如下图所示：</p>
+<p><a href="http://lcui.org/files/images/devlog/btn_chrome.png"><img class="alignnone" title="webkit引擎的浏览器中显示的按钮" src="http://lcui.org/files/images/devlog/btn_chrome.png" alt="" width="207" height="217"></a><a href="http://lcui.org/files/images/devlog/btn_IE9.png"><img class="alignnone" title="非webkit引擎的浏览器显示的按钮" src="http://lcui.org/files/images/devlog/btn_IE9.png" alt="" width="204" height="218"></a></p>
+<p>按钮使用了linear-gradient，也就是CSS3的线性渐变效果，发现这属性不在所有浏览器中通用，Opera里要用-o-linear-gradient，FireFox里用-moz-linear-gradient，Chrome里用-webkit-linear-gradient，IE不支持，需要用其它方法，不只是这一个，比如transition，它用于实现过渡效果，div的移动就是用它实现的。</p>
+<p>进了兔斯基的网站，然后，又修改了一下自己的项目主页。。。</p>
+<p><a href="http://www.lcui.org/files/images/devlog/homepage-catch.jpg"><img class="alignnone" title="主页截图" src="http://www.lcui.org/files/images/devlog/homepage-catch.jpg" alt="" width="450" height="219"></a></p>
 <p>&nbsp;</p>
 <h2>2012-9-21</h2>
-<p>�޸������ĵ����ļ���ΪӢ�ģ��������ֵ��ļ����ڴ��ѹ����������ƽ̨�Ͻ�ѹ��������룬������linux�´��ѹ������windows�½�ѹ�����������룬ͬ������windows�´��ѹ������linux�½�ѹҲ����������⡣</p>
-<p>�����ı���ò����Ҫ��һ���⣬��¼�����ļ����������������ʹ��&lt;family&gt;��ǩָ���ı�����ĳ���ı���������ʱ���͸���������������ڿ��в�����֮��Ӧ�������ļ�������ҵ��󣬾�ʹ������������ȡ���Ρ�</p>
+<p>修改中文文档的文件名为英文，包含汉字的文件名在打包压缩后，在其它平台上解压会出现乱码，比如在linux下打包压缩，在windows下解压，中文名乱码，同样，在windows下打包压缩，在linux下解压也会出现这问题。</p>
+<p>对于文本框，貌似需要用一个库，记录字体文件句柄与字体族名，使用&lt;family&gt;标签指定文本框中某段文本的字体族时，就根据这个字体族名在库中查找与之对应的字体文件句柄，找到后，就使用这个句柄，获取字形。</p>
 <h2>2012-9-22</h2>
-<p>�����ı���ʱ�����ֶ��д����ϳ���ë�������ݴ�����к���ȡ����������һ�����������Ժ��֣���������memcpy( p-&gt;data, data, queue-&gt;element_size ); ��ȴд���ˣ�memcpy( p-&gt;data, data, &nbsp;sizeof(queue-&gt;element_size) ); ���ֲ�������ǰ�벿��һ������벿���쳣��</p>
-<p>�����ӣ����뻹����Ҫ����һ�ι淶�������Ժ���ʱ����˵��</p>
-<p>�ı���Ļ��ƹ����Ѿ���ɣ���;����ͼ�δ��������СBUG����ͼ�ν��С�д������ǰ��û��ʹ�á�д�����������ݣ�������û�н��н�����Ҳ�޷�����ͼ��������ԣ�����ͼ�δ���ʱ�����˴�����жϣ�����ʹ���Ƶ��ı����޷���ʾ��<a href="https://github.com/lc-soft/LCUI/commit/075c88e6ca8946021bad2f38f15e88bd58b09496" target="_blank">�������ɲ鿴���Ķ��Ĵ���</a>��</p>
-<p>�������ı���Ľ�ͼ��</p>
-<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-40.png"><img class="alignnone" title="�ı���" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-40.png" alt="" width="320" height="240"></a></p>
-<p>ֻʵ�����ı�λͼ�Ļ��ƣ��ı����롢�Զ����С���ꡢ�������Ȼ�δ���ӣ�������ʱ������һЩ���⣺</p>
-<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-50.png"><img class="alignnone" title="�ֲ�ˢ���쳣" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-50.png" alt="" width="320" height="240"></a></p>
-<p>��ť��������ˢ�µģ����ûˢ�£�ֻ��������ƶ�ʱˢ������귶Χ�ڵ�ͼ�Ρ�</p>
-<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-06.png"><img class="alignnone" title="���˼�����" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-06.png" alt="" width="320" height="240"></a></p>
-<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-14.png"><img class="alignnone" title="���˺ܶ���" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-14.png" alt="" width="320" height="240"></a></p>
-<p>�����쳣�����������ϵ��ֶ��������ˡ�</p>
-<p>���˲²���ʵ���ı���Ĵ����������ݷ���Խ�磬ʹLCUI�����Ĺ��ܷ����쳣��֮ǰ�ڲ���PictureBox����ʱ���ֹ��������⡣</p>
-<p>�������ԣ����ְ�TextBox_Get_Char_Bitmap ( &amp;char_data );����ע�͵���û���������⣬�������ж�β��Գ������쳣����Ҫ��������λͼ�Ļ�ȡ����ʲô���⡣</p>
+<p>测试文本框时，发现队列处理上出了毛病，数据存入队列后，再取出来，内容一样，经过调试后发现，本来是用memcpy( p-&gt;data, data, queue-&gt;element_size ); 我却写成了：memcpy( p-&gt;data, data, &nbsp;sizeof(queue-&gt;element_size) ); ，怪不得数据前半部分一样，后半部分异常。</p>
+<p>看样子，代码还是需要进行一次规范化，等以后有时间再说。</p>
+<p>文本框的绘制功能已经完成，中途发现图形处理方面的小BUG，对图形进行“写”操作前，没有使用“写”锁锁定数据，操作后没有进行解锁，也无法更新图形相关属性，导致图形处理时进行了错误的判断，最终使绘制的文本框无法显示，<a href="https://github.com/lc-soft/LCUI/commit/075c88e6ca8946021bad2f38f15e88bd58b09496" target="_blank">点击这里可查看被改动的代码</a>。</p>
+<p>以下是文本框的截图：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-40.png"><img class="alignnone" title="文本框" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-40.png" alt="" width="320" height="240"></a></p>
+<p>只实现了文本位图的绘制，文本输入、自动换行、光标、滚动条等还未添加，但测试时发现了一些问题：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-50.png"><img class="alignnone" title="局部刷新异常" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-08-50.png" alt="" width="320" height="240"></a></p>
+<p>按钮本该整体刷新的，结果没刷新，只是在鼠标移动时刷新了鼠标范围内的图形。</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-06.png"><img class="alignnone" title="少了几个字" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-06.png" alt="" width="320" height="240"></a></p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-14.png"><img class="alignnone" title="少了很多字" src="http://www.lcui.org/files/images/devlog/2012-09-22-17-09-14.png" alt="" width="320" height="240"></a></p>
+<p>字数异常，连标题栏上的字都出问题了。</p>
+<p>个人猜测是实现文本框的代码中有数据访问越界，使LCUI其它的功能发生异常，之前在测试PictureBox部件时出现过类似问题。</p>
+<p>经过测试，发现把TextBox_Get_Char_Bitmap ( &amp;char_data );这行注释掉后，没有上述问题，往复运行多次测试程序，无异常，需要看看字体位图的获取上有什么问题。</p>
 <p>&nbsp;</p>
 <h2>2012-9-23</h2>
-<p>������һ�죬Ϊ����ֲЩ������Ŀ���豸�У�configure���е������Ҫ����config.h�ļ���ȴ����������Ϣ��</p>
+<p>折腾了一天，为了移植些软件到目标设备中，configure运行到最后，正要创建config.h文件，却出现以下信息：</p>
 <p>config.status: creating config.h<br>
 config.status: config.h is unchanged</p>
-<p>libtool��libiconv��libjpeg��������Դ����Ҳ������������ڱ���ʱ���Ҳ���config.h�ļ���������<br>
-ֱ���ֶ�����config.h�ļ���������libjpeg�����ԣ������������ľͲ����ˣ�config.h��û�ж�����Ӧ�꣬Դ�ļ������õ�����Щ�ꡣ</p>
-<p>�����ҵ�lcui����Ҫconfig.h����ȫ���������˳����װ��</p>
-<p>�����޸�config.status��Ĵ���󣬲�����������config.h��</p>
-<p>����Ŀ���豸��root�������ÿռ��٣�ֻ�м���MB��ʣ��ռ䲻��10MB�������Ҵ����˸�root.ext2�ļ���512MB��С����ʽ����ext2��Ȼ�����������<br>
-�����洴����usr�ļ��У���ͬ�ܹ�����һ���豸��ѧϰ�������include��share���ļ��и��Ƶ���usr�ļ����usr/include���ļ���Ҳ���ص���/usr/�¡�</p>
-<p>����freetype2ʱ��configure���������У�ֱ�ӱ���˵ȱ��Make�����֧�ֻ�����</p>
-<p>����autogen.shҲ����������ȱ����ʲô��</p>
-<p>�����󽻲���룬����������ϵ��ȥ����GNU Guile����Guile����libgmp��&nbsp;libiconv��&nbsp;libintl��libltdl��libunistring��libgc��libffi��������Щ����������configure���ǲ�ͨ�������Ǿͷ����ˡ�</p>
+<p>libtool，libiconv，libjpeg这三个的源代码也是这样，搞得在编译时因找不到config.h文件而报错；<br>
+直接手动创建config.h文件话，对于libjpeg还可以，但对于其它的就不行了，config.h中没有定义相应宏，源文件中又用到了这些宏。</p>
+<p>还好我的lcui不需要config.h，补全了依赖库后顺利安装。</p>
+<p>在我修改config.status里的代码后，才能正常生成config.h。</p>
+<p>由于目标设备的root分区可用空间少，只有几百MB，剩余空间不足10MB，于是我创建了个root.ext2文件，512MB大小，格式化成ext2，然后挂载了它；<br>
+在里面创建了usr文件夹，把同架构的另一个设备（学习机）里的include，share等文件夹复制到了usr文件夹里，usr/include等文件夹也挂载到了/usr/下。</p>
+<p>编译freetype2时连configure都不能运行，直接报错说缺少Make程序或支持环境。</p>
+<p>运行autogen.sh也出错，好像缺少了什么。</p>
+<p>搞得最后交叉编译，由于依赖关系，去编译GNU Guile，而Guile依赖libgmp，&nbsp;libiconv，&nbsp;libintl，libltdl，libunistring，libgc，libffi，补充了些依赖软件后，configure还是不通过，于是就放弃了。</p>
 <p>&nbsp;</p>
 <h2>2012-9-24</h2>
-<p>�ڿ���GNU��ҳ�ϵ�һЩ���º󣬾��޸�LCUI��ҳ������Щ���ݡ�</p>
-<p>���豸�ϲ���LCUI����ʾ����16λ�������ƶ���Ĳ�������ͼ����ʾ�쳣�������������ǿ�������Ļͼ�����������⣬��Ļ��16λ�ģ���ô���ص��RGBɫ��ֵ������16λ��ʾ�ģ���LCUIȴ��16λ��24λ������������ͼ����ʾ�쳣��</p>
-<p>������Ƭ�鿴��������Load_Image()���������⡣LCUI�˳�ʱ���ֶδ���</p>
-<p>ָ������������Ҫ�ٳ���sizeof(ָ������)������:</p>
-<p>wchar_t src[10]=L��abcdeg��, *p, *q;<br>
+<p>在看了GNU主页上的一些文章后，就修改LCUI主页，添加些内容。</p>
+<p>在设备上测试LCUI，显示器是16位，窗口移动后的残余区域图形显示异常，经分析发现是拷贝的屏幕图形数据有问题，屏幕是16位的，那么像素点的RGB色彩值就是以16位表示的，而LCUI却把16位当24位来处理，导致图形显示异常。</p>
+<p>测试照片查看器，发现Load_Image()函数有问题。LCUI退出时出现段错误。</p>
+<p>指针间相减，不需要再除以sizeof(指针类型)，比如:</p>
+<p>wchar_t src[10]=L”abcdeg”, *p, *q;<br>
 p = src;<br>
 q = &amp;src[5];</p>
-<p>q-p�͵���5��Ҳ��������Ԫ�ظ�����֮ǰ��һֱ��Ϊ��ֱ����ָ���ڵĵ�ַ��������</p>
-<p>�����־���һ�����⣺</p>
-<p>���ı���������һ���ı���&lt;color=255,0,0&gt;��ɫ����&lt;/color&gt;��ͨ����</p>
-<p>Ȼ���أ�����һ���ı�����Ϊ��&lt;color=255,0,0&gt;��ɫ���� ��������&lt;/color&gt;��ͨ����</p>
-<p>����δ����أ����ɫ���֣�Ŀǰ�Ĵ�����ʽֻ����������ʱ�������ı���������ʽ��������������������ֲ����ɺ�ɫ�������ÿ�θ����ı�ʱͳһ������Щ���ֵ���ʽ����Ȼ�ܴﵽЧ�������ǣ������10000�����ϵ������أ��ǲ�����ÿ�޸�һ���ֶ�Ҫ����һ���أ���Խ�࣬��ʱԽ�����Ῠ�١�</p>
-<p>����ʱ������������ʽ�Ĵ������ѻ���������ɺ��ٿ��ǡ�</p>
+<p>q-p就等于5，也就是相差的元素个数，之前还一直以为是直接拿指针内的地址编号相减。</p>
+<p>现在又纠结一个问题：</p>
+<p>往文本框里添加一段文本：&lt;color=255,0,0&gt;红色文字&lt;/color&gt;普通文字</p>
+<p>然后呢，插入一段文本，变为：&lt;color=255,0,0&gt;红色文字 新增文字&lt;/color&gt;普通文字</p>
+<p>该如何处理呢？这彩色文字，目前的处理方式只是在添加它时处理新文本的字体样式，处理结果就是新增文字不会变成红色，如果是每次更新文本时统一处理这些文字的样式，虽然能达到效果，但是，如果有10000行以上的文字呢？那不就是每修改一个字都要遍历一次呢？字越多，耗时越长，会卡顿。</p>
+<p>先暂时不考虑字体样式的处理，把基本功能完成后再考虑。</p>
 <p>&nbsp;</p>
 <h2>2012-9-26</h2>
-<p>��CSDN�Ͽ���ĳ���ѵ����£�����ôһ�λ�����unix����������˼�룺1.����ֻ��һ�����飻2.����֮����Эͬ������3���������ı�������Ϊ����һ��ͨ�õĽӿڡ������ٿ�����֮ǰд�Ĵ��룬��ȷ���ң�LCUI��Դ������Ҫ�������¹滮��</p>
-<p>֮ǰ�������һЩ��LCUI��Դ��Ŀ¼�ṹ�����������ģ�<br>
+<p>在CSDN上看了某网友的文章，有这么一段话：“unix有三个基本思想：1.程序只做一件事情；2.程序之间能协同工作；3，程序处理文本流，因为它是一个通用的接口。”，再看看我之前写的代码，的确很乱，LCUI的源代码需要进行重新规划；</p>
+<p>之前就想好了一些，LCUI的源码目录结构大致是这样的：<br>
 /<br>
 ../src/<br>
-../��/bmp/ &nbsp;(ͼƬ�ļ��Ķ�ȡ/д��)<br>
-../��/draw/ ��ͼ�λ��ƣ�<br>
-../��/font/ �����崦����<br>
-../��/gui/ &nbsp;��һЩ�ֳɵ�ͼ�ν��棬����MessageBox����ɫѡ������ѡ��ȣ�<br>
-../��/input/ �����������豸��������ݣ�������ꡢ���������̵ȣ�<br>
-../��/loadso/ ����̬��Ĳ�����<br>
-../��/��../dlopen.c<br>
-../��/output/ �����������һ����ͼ�����ݣ�<br>
-../��/����/framebuffer.c ��ͨ��֡������ʾͼ�Σ�<br>
-../��/����/x11.c ��ͨ��X Windowϵͳ��ʾͼ�Σ�<br>
-../��/thread/ ���߳�֧�֣�<br>
-../��/����/pthread.c<br>
-../��/widget/ ��GUI������</p>
-<p>����LCUI���������X11���������У���ô����ʹ��X11����ͼ�������Ҳ���Ǵ��������ڣ���ͼ����������������<br>
-��������ַ�����̨ģʽ�����У���ֱ��ʹ��FrameBuffer��<br>
-��ô��LCUI�������֪���Լ��������ֻ����������أ�������Բο�SDL��Դ���롣</p>
-<p>widget�����ԣ��ο�html��ǩ��css���ԣ�����padding��margin��position��x-index��display�����ԣ�ʡ���Լ��������Ե������ˣ���Щ������������Ч����Ҳ֪�������㲻֪������д��������������ԣ�����ʵ���������Ǻ��ѡ�</p>
+../…/bmp/ &nbsp;(图片文件的读取/写入)<br>
+../…/draw/ （图形绘制）<br>
+../…/font/ （字体处理）<br>
+../…/gui/ &nbsp;（一些现成的图形界面，例如MessageBox、颜色选择、字体选择等）<br>
+../…/input/ （处理输入设备输入的数据，例如鼠标、触屏、键盘等）<br>
+../…/loadso/ （动态库的操作）<br>
+../…/…../dlopen.c<br>
+../…/output/ （数据输出，一般是图形数据）<br>
+../…/……/framebuffer.c （通过帧缓冲显示图形）<br>
+../…/……/x11.c （通过X Window系统显示图形）<br>
+../…/thread/ （线程支持）<br>
+../…/……/pthread.c<br>
+../…/widget/ （GUI部件）</p>
+<p>对于LCUI程序，如果在X11环境下运行，那么，就使用X11进行图形输出，也就是创建个窗口，把图形数据输出到窗口里；<br>
+如果是在字符控制台模式下运行，就直接使用FrameBuffer。<br>
+那么，LCUI程序如何知道自己是在哪种环境下运行呢？这个可以参考SDL的源代码。</p>
+<p>widget的属性，参考html标签的css属性，添加padding，margin，position，x-index，display等属性，省得自己纠结属性的命名了，这些属性所产生的效果我也知道，就算不知道可以写代码用浏览器测试，所以实现起来不是很难。</p>
 <p>&nbsp;</p>
 <h2>2012-9-27</h2>
-<p>�������Ƚϴ���Ҫ�ָ�Դ�ļ�������Դ���롣�Ȳ���Դ��������޸ģ��������ʱ�������⡣</p>
+<p>工作量比较大，需要分割源文件，整理源代码。先不对源代码进行修改，以免测试时出现问题。</p>
 <h2>2012-9-28</h2>
-<p>Դ����ָ��Ѿ�������ɣ�ʣ�µľ�������ͷ�ļ�������ϸ�ڡ�</p>
-<p>ͷ�ļ��Ѿ�������ɣ����Գ�������ʱ�����쳣����Ҫ�����</p>
+<p>源代码分割已经基本完成，剩下的就是整理头文件，完善细节。</p>
+<p>头文件已经整理完成，测试程序运行时还有异常，需要解决。</p>
 <p>&nbsp;</p>
 <h2>2012-9-30</h2>
-<p><a href="https://github.com/lc-soft/LCUI/commit/db1d4fe6436751e16e46275ab7860df4a4d5a607" target="_blank">���������λͼ�쳣������</a>�����˹���������FontBMP_Free()������Ե�ʣ���Ұָ���ͷ��ˣ������ȡ����λͼʱ�ͳ��������ˡ��޸Ĵ���󣬶�β��ԣ�û�쳣��</p>
-<p>��Ҫ����һ��˼·���Ͼ���һ��ʱ��û���ı����ˣ����ڲ�֪�Ӻο�ʼ��</p>
-<p>&lt;color&gt;��ǩӦ��Ҫ֧��#abc,#fb89cc��֮���ɫ�ʱ�ʾ��</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/db1d4fe6436751e16e46275ab7860df4a4d5a607" target="_blank">解决了字体位图异常的问题</a>，个人估计是用了FontBMP_Free()函数的缘故，把野指针释放了，结果获取字体位图时就出现问题了。修改代码后，多次测试，没异常。</p>
+<p>需要整理一下思路，毕竟有一段时间没搞文本框了，现在不知从何开始。</p>
+<p>&lt;color&gt;标签应该要支持#abc,#fb89cc等之类的色彩表示。</p>
 <h2></h2>
 <h2>2012-10-1</h2>
-<p>����������λͼ�Ĵ������ܡ�</p>
+<p>正调整字体位图的处理功能。</p>
 <h2>2012-10-2</h2>
-<p>Ŀǰ���ھ���FreeType2���ֿ���һ��������FreeType2�ĵ������ֳ���glyph-&gt;bitmap_top�����и�glyph-&gt;bitmap_left���ֲ������ĵĶ��ź�Ӣ�ĵĶ���ռ�Ŀ��ȶ�һ����ԭ����û������glyph-&gt;left��ֵ���������εľ��롣</p>
+<p>目前正在纠结FreeType2，又看了一下中译版的FreeType2文档，发现除了glyph-&gt;bitmap_top，还有个glyph-&gt;bitmap_left，怪不得中文的逗号和英文的逗号占的宽度都一样，原来是没有利用glyph-&gt;left的值来调整字形的距离。</p>
 <h2>2012-10-3</h2>
-<p>����ʱ����Label�����Ļ��ƹ��ܣ���TextBox�������ı����ƹ�����ɺ�����Label����ʹ��TextBox���ı����ƹ��ܡ�</p>
-<p>�ı���ֳ�����ͼ�㣺���� + �ı���������ÿ�λ����ı�ʱ���Ͳ����ػ汳���ˡ�</p>
-<p>������LCUI�ܹ���ϵͳĿ¼��ɨ�������ļ�������Ubuntu�����������ļ���/usr/share/fonts/ Ŀ¼�£���ô���ͱ����ļ�Ŀ¼���Ҹ����ʵ����塣</p>
-<p>Label��TextBox����������ʾ�ı��ģ�ֻ���������߿��Ա༭�ı����ݣ����ǵ�windows�ϵ�Label�ؼ��ڵ��ı�����ѡ�к͸��ƣ���ô����Label��TextBox����ʹ��ͬһ���ı�λͼ����ģ�顣</p>
+<p>先暂时禁用Label部件的绘制功能，等TextBox部件的文本绘制功能完成后，再让Label部件使用TextBox的文本绘制功能。</p>
+<p>文本框分成两个图层：背景 + 文本，这样，每次绘制文本时，就不必重绘背景了。</p>
+<p>打算让LCUI能够在系统目录中扫描字体文件，比如Ubuntu，它的字体文件在/usr/share/fonts/ 目录下，那么，就遍历文件目录，找个合适的字体。</p>
+<p>Label和TextBox部件都是显示文本的，只不过，后者可以编辑文本内容，考虑到windows上的Label控件内的文本可以选中和复制，那么就让Label和TextBox部件使用同一个文本位图处理模块。</p>
 <h2>2012-10-4</h2>
-<p>ʹ������ı���&lt;color=#FF0000&gt;1&lt;color=#0000FF&gt;2&lt;/color&gt;3&lt;/color&gt;4</p>
-<p>������ 1 �� 3���ɺ�ɫ�� 2 �����ɫ����4��Ĭ�ϵĺ�ɫ�����Խ��ֻ��1��2����ɫ��34��Ĭ�ϵĺ�ɫ���������Ǵ���&lt;/color&gt;���ǩ�ǳ������⡣</p>
-<p>�����ѽ����ԭ�������������wchar_t *get_style_endtag ( wchar_t *str, char *out_tag_name ); ��������û���жϷ���ֵ�Ƿ�ΪNULL��ֱ����strcmp�Ա�&lt;/color&gt;��out_tag_name����get_style_endtag�ڷ���NULLǰ��û������ַ�out_tag_name�����ݣ�out_tag_name�����ޱ仯��������ɾ��ǩ���ݡ�</p>
-<p><a href="http://www.lcui.org/files/images/devlog/2012-10-04-15-28-36.png"><img class="alignnone" title="�ı���Ч��ͼ" src="http://www.lcui.org/files/images/devlog/2012-10-04-15-28-36.png" alt="" width="320" height="240"></a></p>
-<p>���������ǹ����ʾ�ˣ�����ܹ���˸��ò����Ҫһ����ʱ����ÿ��Mʱ����ʾ��꣬ÿ��Nʱ�����ع�ꣻ</p>
-<p>��궨λ�Ǹ����⡣����</p>
-<p>��TextBox������Ϊ�ı�ͼ������������ı�ͼ�����Ϊ��꣨һ��widget����������</p>
-<p>�Ǹ��ı�ͼ���ȡʲô�����أ�Text Surface��Text Layer�������С�����</p>
+<p>使用这段文本：&lt;color=#FF0000&gt;1&lt;color=#0000FF&gt;2&lt;/color&gt;3&lt;/color&gt;4</p>
+<p>理论上 1 和 3会变成红色， 2 变成蓝色，而4是默认的黑色，测试结果只有1和2变了色，34是默认的黑色，看样子是处理&lt;/color&gt;这标签是出了问题。</p>
+<p>问题已解决，原因是这个函数：wchar_t *get_style_endtag ( wchar_t *str, char *out_tag_name ); 调用它后，没有判断返回值是否为NULL，直接用strcmp对比&lt;/color&gt;和out_tag_name，而get_style_endtag在返回NULL前又没有清空字符out_tag_name的内容，out_tag_name内容无变化，导致误删标签数据。</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-04-15-28-36.png"><img class="alignnone" title="文本框效果图" src="http://www.lcui.org/files/images/devlog/2012-10-04-15-28-36.png" alt="" width="320" height="240"></a></p>
+<p>接下来就是光标显示了，光标能够闪烁，貌似需要一个定时器，每隔M时间显示光标，每隔N时间隐藏光标；</p>
+<p>光标定位是个问题。。。</p>
+<p>将TextBox部件作为文本图层的容器，而文本图层就作为光标（一个widget）的容器。</p>
+<p>那个文本图层该取什么名字呢？Text Surface？Text Layer？纠结中。。。</p>
 <p>&nbsp;</p>
 <h2>2012-10-5</h2>
-<p>�ı�������ı�λͼ�����Ĵ��뻮����fontĿ¼�����������+����λͼ������</p>
-<p>������һЩ������</p>
-<p>�����޸�Label������Դ���룬ԭ�еĲ�ɫ�ı������Լ�&lt;color&gt;��ǩ�����ļ����д���������ˣ�ɾ��֮��</p>
+<p>文本框里的文本位图处理的代码划分至font目录里，这属于文字+字体位图处理。</p>
+<p>正添加一些函数。</p>
+<p>正在修改Label部件的源代码，原有的彩色文本绘制以及&lt;color&gt;标签处理的几百行代码就作废了，删除之。</p>
 <h2>2012-10-7</h2>
-<p>Label������Դ�����Ѿ��޸ģ�ԭ�еĲ�ɫ�ı���Ⱦ�����Ѿ�ɾ���������������ı�λͼ�������ܣ��ù���֮ǰ��д��TextBox�����Ĵ�����ģ�������������ˡ�</p>
-<p>�����޸����ݿ�<a href="https://github.com/lc-soft/LCUI/commit/e64623f55b0862c50930bbbb8b93012214f807ce" target="_blank">�鿴����</a>��</p>
-<p>���޸�Label������Դ����Ĺ����У�Ҳ�������ı�λͼ���������ϵ�һЩ���⡣</p>
+<p>Label部件的源代码已经修改，原有的彩色文本渲染代码已经删除，改用新增的文本位图处理功能，该功能之前是写在TextBox部件的代码里的，后来分离出来了。</p>
+<p>具体修改内容可<a href="https://github.com/lc-soft/LCUI/commit/e64623f55b0862c50930bbbb8b93012214f807ce" target="_blank">查看这里</a>。</p>
+<p>在修改Label部件的源代码的过程中，也纠正了文本位图处理功能上的一些问题。</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<h2> 2012-10-8 �� 2012-10-13</h2>
-<p>����blog.lcui.org�޷����ʣ�û�иö�ʱ���¼����־��ֻ������10��7�յ���־������֮ǰsourceforge.net�ϻ����Ҵ��wordpress��FTP�ϴ����빤�߲�������ò����������ָ���������ݡ�</p>
-<p>����ͼƬ�ڱ������б��ݣ������޷�ʹ�ö���û����Ӱ�졣</p>
-<p>github��Ҳ���˸���ҳ��</p>
-<p>���ʱ����ֻ���о��˸�˹ģ���㷨�����Ǵ���ǰ��ͼ��</p>
-<p><a href="http://www.lcui.org/files/images/devlog/gaussian_blur_before.png"><img class="alignnone" title="��˹ģ������ǰ" src="http://www.lcui.org/files/images/devlog/gaussian_blur_before.png" alt="" width="256" height="256" /></a></p>
-<p>sigma ��Ϊ 20����˹ģ��������</p>
-<p><a href="http://www.lcui.org/files/images/devlog/gaussian_blur_after.png"><img class="alignnone" title="��˹ģ��������" src="http://www.lcui.org/files/images/devlog/gaussian_blur_after.png" alt="" width="256" height="256" /></a></p>
-<p>Label���� �� �ı�ͼ��Ĵ��������޸ģ�����ɵ�github�ϲ鿴�����ύ��¼��</p>
+<h2> 2012-10-8 至 2012-10-13</h2>
+<p>由于blog.lcui.org无法访问，没有该段时间记录的日志，只备份了10月7日的日志，还好之前sourceforge.net上还有我搭建的wordpress，FTP上传导入工具插件，启用插件后，在上面恢复了这个备份。</p>
+<p>各种图片在本地上有备份，博客无法使用对我没多大的影响。</p>
+<p>github上也建了个主页。</p>
+<p>这段时间内只是研究了高斯模糊算法，这是处理前的图像：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/gaussian_blur_before.png"><img class="alignnone" title="高斯模糊处理前" src="http://www.lcui.org/files/images/devlog/gaussian_blur_before.png" alt="" width="256" height="256" ></a></p>
+<p>sigma 设为 20，高斯模糊处理后：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/gaussian_blur_after.png"><img class="alignnone" title="高斯模糊处理后" src="http://www.lcui.org/files/images/devlog/gaussian_blur_after.png" alt="" width="256" height="256" ></a></p>
+<p>Label部件 和 文本图层的处理做了修改，具体可到github上查看代码提交记录。</p>
 <h2> 2012-10-14</h2>
-<p>Ϊ�˱��������������Ŀ��ҳ�����ӿ�����־�ľ�̬htmlҳ�棬��ҳҲ��֮����Щ�޸ġ�</p>
-<p>��Ŀ��ҳ�����ֲ������е������б������޸ġ�</p>
-			</div>
+<p>为了保险起见，已在项目主页上添加开发日志的静态html页面，主页也随之做了些修改。</p>
+<p>项目主页的音乐播放器中的音乐列表做了修改。</p>
+<h2>2012-10-15</h2>
+<p>正准备添加滚动条。</p>
+<p>文本图层的部分字体位图绘制不完全，少了一行像素，如下图所示，“/* 最经典的C语言代”这行文本位图少了一行像素。</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-15-17-26-45.png"><img class="alignnone" title="截图" src="http://www.lcui.org/files/images/devlog/2012-10-15-17-26-45.png" alt="" width="320" height="240" ></a></p>
+<h2>2012-10-16</h2>
+<p>由于在绘制字体位图前，需要将能容纳该字体的最大区域的alpha通道填充为0，导致之前绘制的上一行文本位图的最后一行像素被填充掉了。该最大区域的尺寸，只是用当前 字体像素+2 得出的，是一个正方形。</p>
+<p>修改一下，在文字改变或大小改变时，将当前文字所在区域添加至队列，等待将这些区域的alpha通道填充为0.</p>
+<p>又发现一个问题，由4改变至其它窄一些的字后，会留有残余图形；调试时，打印的信息表明有些变量未赋初始值，字体位图转移后，又初始化源字体位图，尺寸为0，导致坐标计算错误，添加了错误的刷新区域；修改的代码<a href="https://github.com/lc-soft/LCUI/commit/345e0bf80cf4933569343b14ecbdddf6b9d68c96#L3R882" target="_blank">可到这查看</a>。</p>
+<p>源文件的编码是GB2312.，转换成了UTF-8.</p>
+<p>发现不能连续换多行，用了几个换行符 \n  ，也只换一行。</p>
+<p>OK，已完成，在调用TextLayer_Text_Add_NewRow()函数更新每一行尺寸时，初始最大高度为当前文本风格设定的字体尺寸+2；</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-16-21-50-27.png"><img class="alignnone" title="连续换行" src="http://www.lcui.org/files/images/devlog/2012-10-16-21-50-27.png" alt="" width="320" height="240" ></a></p>
+<p>&nbsp;</p>
+<h2>2012-10-17</h2>
+<p>纠结滚动条的设计，能够设置滚动条是纵向还是横向，是纵向的话，高度与容器高度一致，横向的话，宽度与容器宽度一致，但是，怎么实现呢？貌似需要添加一些属性。</p>
+<p>另外，要设计一个函数，这个函数能够添加指定容器内的部件，使滚动条在移动时，该容器内的部件能够一同移动；但是，若容器内有多个滚动条，移动时，哪个滚动条该被移动？各种纠结，不知如何用语言描述纠结的问题。</p>
+<h2>2012-10-18</h2>
+<p>部件的尺寸、位置可以用浮点数，限制尺寸可以只限制宽或高，当使用浮点数时，尺寸和位置需根据容器的尺寸x浮点数确定，这个浮点数其实是代表百分比，该设计参考了html元素的css属性，比如div元素，width=50px是宽为50像素，width=50%那就是宽为容器宽度的一半。<br >
+其实，C++的重载函数蛮有用的，假设要设定部件尺寸，有这么些尺寸：<br >
+宽为100px，高为80%<br >
+宽为50%，高为100%<br >
+宽高都为100px<br >
+宽高都为100%<br >
+用C的话，函数名要4个，用C++的话，可用同名函数，参数类型可以不一样。<br >
+好吧，参数都用字符串，处理是判断字符内容即可。</p>
+<p>部件数据结构需要修改，分为两类成员：<br >
+基本属性，比如已经计算出的坐标位置、尺寸。<br >
+附加属性，比如：位置限制范围，尺寸限制范围，这些属性影响基本属性，因为有的是描述性的，尤其是使用百分比，需要经过计算。</p>
+<p>添加一个结构体，用于同时存储整型和浮点型数据，类型名定为：comb_t ，也就是复合类型。</p>
+<p>部件的属性，还是参考QT、VC的设计。</p>
+<p>添加属性：auto_size_mode，用于指定部件的自动尺寸调整的模式，有两个值：grow_only（只增加）和grow_and_shrink（增加和缩小）。</p>
+<p>添加属性：Dock，用于指定部件的停靠位置，有上、下、左、右、填充、无。</p>
+<h2>2012-10-21</h2>
+<p>LCUI_Widget结构体已经修改完毕，相关函数的代码也已修改完毕，修改过程中所产生的BUG已被处理。</p>
+<p>开始实现文本图层的缺省文本样式设置。</p>
+<p>已基本完成，效果图如下：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-21-17-52-51.png"><img class="alignnone" title="Label部件的BUG" src="http://www.lcui.org/files/images/devlog/2012-10-21-17-52-51.png" alt="" width="320" height="240" /></a></p>
+<p>缺省字体大小设置为20像素，没设置颜色的文本的大小是12像素，而彩色文本的大小却是20像素。</p>
+<p>处理效果还不错，即使是不同大小的字体，排列得也比较整齐，看来，可以加入&lt;size&gt;标签的支持。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/5d595f2663189049173c2ac4a4c9c2b0c53743c8" target="_blank">combo_t更名为PX_P_t，新增PX_PT_t类型</a>；PX是pixel，P是percent，也就是用于表示像素数或百分比，部件的位置和尺寸可以用具体像素数或百分比表示。PX_PT_t类型用于表示字体大小，因为字体大小单位有两个：像素 和 点数。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/8406ad178d78f49a11817acc43e5c6d8b950f554" target="_blank">已经添加&lt;size&gt;标签的支持</a>，可以用该标签设定指定段文本的字体大小，效果如图所示：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-21-20-46-55.png"><img class="alignnone" title="字体粘贴位置有小问题" src="http://www.lcui.org/files/images/devlog/2012-10-21-20-46-55.png" alt="" width="320" height="240" /></a></p>
+<p>字体位置还有点小问题。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/b088c56b3c287b8c3a56288432ab49507599882e" target="_blank">调整了字体位图粘贴位置</a>，之前是根据当前字体大小最大高度（当前像素+2）计算的，现在改为根据当前文本行最大高度来计算，最终效果图如下所示：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-21-21-00-42.png"><img class="alignnone" title="正常效果" src="http://www.lcui.org/files/images/devlog/2012-10-21-21-00-42.png" alt="" width="320" height="240" /></a></p>
+<p>&nbsp;</p>
+<h2> 2012-10-22</h2>
+<p>开始实现部件的dock属性，还有以百分比为单位的部件尺寸的处理。</p>
+<p>在测试dock属性时，发现下划线 ‘_’ 没有显示出来，切换几个dock属性后程序崩溃。</p>
+<p>调试结果表明，是图像引用出现问题，引用区域不在图像的有效范围内，<a href="https://github.com/lc-soft/LCUI/commit/ad45a5d10cc35b01a9c9b8cce9fd047df5bae99a" target="_blank">现在已经纠正</a>。</p>
+<p>打印了下划线 ‘_’的位图信息，发现它的top值为-1，怪不得没有在区域内绘制，因为最大高度减去 -1，已经超出这个区域了，解决方法就是改成：<a href="https://github.com/lc-soft/LCUI/commit/6503e198cae60dfb5a359b5eb37b07e6a3830748" target="_blank">最大高度-1 &#8211; top</a>。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/927e9fa7ffda70299ae921c96ed9385b7e61b80a#L4R1" target="_blank">测试程序已经添加</a>，效果如下图所示：</p>
+<p><img class="alignnone" title="测试widget的dock属性" src="http://www.lcui.org/files/images/devlog/test_widget_dock.gif" alt="" width="320" height="240" /></p>
+<p>计划添加padding和margin属性的处理。</p>
+</div>
+
 <!-- Duoshuo Comment BEGIN -->
-	<div class="ds-thread" data-thread-key="" 
-	data-title="" data-author-key="" data-url=""></div>
+	<div class="ds-thread" data-thread-key="7" data-title="LCUI 0.12.6" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/devlog-lcui-0.12.6.html"></div>
 	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"lc-soft"};
+	var duoshuoQuery = {short_name:"lc-soft-lcui"};
 	(function() {
 		var ds = document.createElement('script');
 		ds.type = 'text/javascript';ds.async = true;
@@ -212,16 +266,17 @@ q = &amp;src[5];</p>
 	})();
 	</script>
 <!-- Duoshuo Comment END -->
-    <!-- ��ҳ�ײ������� -->
+
+    <!-- 网页底部的内容 -->
     <hr>
     <table class="my_style" width="100%">
       <tr>
         <td align="left">
-          ��ҳ��
+          网页由
           <a href="mailto:lc-soft@live.cn">
-            ����
+            刘超
           </a>
-          ά��
+          维护
         </td> 
         <td align="right">
           <a target="_blank" href="http://validator.w3.org/check/referer">
@@ -232,11 +287,11 @@ q = &amp;src[5];</p>
       </tr>
       <tr>
         <td>
-          ������: 2012-10-14
+          最后更新: 2012-10-23
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
-		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="ͨ��QQ�����߽��н���" title="ͨ��QQ�����߽��н���"></a>
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
           <script type="text/javascript" src="../files/js/baidu-code.js">
           </script>
 		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>

@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB2312" >
-<title>LCUI &#8250; ��̬ &#8250; ������־</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
+<title>LCUI &#8250; 动态 &#8250; 更新日志</title>
 <link rel="icon" href="lc-soft.png" type="image/png">
-<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,����,��Դ,C����" >
-<meta name="description" content="LC-SOFT - ֻΪ��Ȥ���������ж���!" >
+<meta name="keywords" content="GUI,LCSoft,LCDT,LCUI,Embedded,linux,liuchao,opensource,freesoft,C" >
+<meta name="description" content="LCUI 更新日志" >
 <meta name="robots" content="all" >
 <meta name="author" content="LC-Soft" >
 <link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
@@ -20,44 +20,57 @@
 	
 	<div style="padding-top: 30px;"> 
 
-    <!-- �����Ǳ��������� --> 
+    <!-- 上面是标题栏区域 --> 
 <div class="entry-content">
-<center><h1>���¼�¼</h1></center><hr>
-<h3 id="0.12.5">0.12.4 �� 0.12.5 ֮��ı仯</h3> 
+<center><h1>更新记录</h1></center><hr>
+<h3 id="0.12.5">0.12.4 和 0.12.5 之间的变化</h3> 
 <ul>
-<li>���ֹ���ģ������C++�࣬��ʹ��C++�ķ�ʽ���ã�������ο�helloworld2.cpp�����ݡ�</li>
-<li>����ActiveBox������������ʵ�ּ򵥵Ķ�֡ͼ��������л���ʾ��</li>
-<li>��������Ļͼ�ε�ˢ�·�����</li>
-<li>������Ƕ�׶�㴰��ʱ���϶��Ӵ�����ʧ�����⣬ԭ�����Ӵ���λ�ü������</li>
-<li>�Ż���ͼ�ε�Alpha��ϴ�����Ч������������</li>
-<li>���ͼ������һЩ���⡣</li>
-<li>ͼ��֧�֡����á����ܣ�������һ��ͼ���е�ָ�������ͼ�����ݣ������ͼ���вü���</li>
-<li>�������PictureBox�����ߴ粻����0ʱ�����ֵ�һЩ���⡣</li>
-<li>��PictureBox����δ�趨ͼ�������£��������óߴ�ģʽʱ�����ٳ��ֶδ���</li>
-<li>���ƶಿ��Ƕ��ʱ��ͼ����ʾ������</li>
-<li>���Ʋ����ƶ�ʱ������ˢ�´�����</li>
-<li>�����ļ�λ�á�FrameBuffer�豸����֧���û����������á�</li>
-<li>����߳������ȴ��Լ�������д�������⣬��������LCUI�˳�ʱ���֡�</li>
+<li>部分功能模块添加C++类，可使用C++的方式调用，具体请参考helloworld2.cpp的内容。</li>
+<li>添加ActiveBox部件，用它可实现简单的多帧图像的连贯切换显示。</li>
+<li>完善了屏幕图形的刷新方法。</li>
+<li>纠正在嵌套多层窗口时，拖动子窗口消失的问题，原因是子窗口位置计算错误。</li>
+<li>优化了图形的Alpha混合处理，效率有所提升。</li>
+<li>解决图像处理的一些问题。</li>
+<li>图像支持“引用”功能，可引用一个图像中的指定区域的图形数据，无需从图像中裁剪。</li>
+<li>解决了在PictureBox部件尺寸不大于0时所出现的一些问题。</li>
+<li>在PictureBox部件未设定图像的情况下，对其设置尺寸模式时不会再出现段错误。</li>
+<li>完善多部件嵌套时的图形显示处理。</li>
+<li>完善部件移动时的区域刷新处理。</li>
+<li>字体文件位置、FrameBuffer设备、等支持用环境变量设置。</li>
+<li>解决线程阻塞等待自己解锁读写锁的问题，该问题在LCUI退出时出现。</li>
 </ul> 
-<h3 id="0.12.4">0.12.3 �� 0.12.4 ֮��ı仯</h1>
+<h3 id="0.12.4">0.12.3 和 0.12.4 之间的变化</h1>
 <ul>
-<li>������Ƕ�׶��������������ͼ����ʾ�ϵ����⡣</li>
-<li>������ͼ����ʾ������ʽ��������ͼ��ˢ���ٶȻ�����������</li>
-<li>���ֺ����Լ����ݽṹ�����޸ġ�</li>
-<li>����RadioButton������CheckBox������</li>
-<li>�¼����������޸ģ����� ����ƶ�/����¼� �� �����϶��¼� �Ĺ������ܡ�</li>
-<li>ͼ�����������˶�д�����ܣ��Ա������ݣ��������̶߳���ͬʱ���ж�/д��</li>
-<li>ͷ�ļ������޸ģ�ʹ��LCUI��ĺ���ʱ��������Ҫ������Ӧ��ͷ�ļ���</li>
-<li>ͼ��������������޸ģ������ϣ�֧���ڷ�24��32λɫ����ʾ������ʾͼ�Ρ�</li>
-<li>�ϲ��˲���Դ���ļ��е�Դ���롣</li>
-<li>configure.ac�Լ�README�ļ������޸ġ�</li>
+<li>纠正了嵌套多个部件所产生的图形显示上的问题。</li>
+<li>更改了图形显示处理方式，理论上图形刷新速度会有所提升。</li>
+<li>部分函数以及数据结构做了修改。</li>
+<li>新增RadioButton部件和CheckBox部件。</li>
+<li>事件机制做了修改，添加 鼠标移动/点击事件 和 部件拖动事件 的关联功能。</li>
+<li>图形数据添加了读写锁功能，以保护数据，避免多个线程对其同时进行读/写。</li>
+<li>头文件做了修改，使用LCUI库的函数时，可能需要包含相应的头文件。</li>
+<li>图形输出功能做了修改，理论上，支持在非24和32位色的显示器上显示图形。</li>
+<li>合并了部分源码文件中的源代码。</li>
+<li>configure.ac以及README文件做了修改。</li>
 </ul> 
 </div> 
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript">
+var uyan_config = {
+     'title':'LCUI 更新日志', 
+     'url':'http://www.lcui.org/zh-cn/updatelog.html', 
+     'pic':'http://github.lcui.org/files/images/lc-soft-logo.png', 
+     'du':'lcui.org www.lcui.org github.lcui.org', 
+     'su':'0' 
+};
+</script>
+<script type="text/javascript" id="UYScript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=1670642" async=""></script>
+<!-- UY END -->
+
 <!-- Duoshuo Comment BEGIN -->
-	<div class="ds-thread" data-thread-key="" 
-	data-title="" data-author-key="" data-url=""></div>
+<!-- 	<div class="ds-thread" data-thread-key="0" data-title="LCUI Update Log" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/updatelog.html"></div>
 	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"lc-soft"};
+	var duoshuoQuery = {short_name:"lc-soft-lcui"};
 	(function() {
 		var ds = document.createElement('script');
 		ds.type = 'text/javascript';ds.async = true;
@@ -66,18 +79,18 @@
 		(document.getElementsByTagName('head')[0] 
 		|| document.getElementsByTagName('body')[0]).appendChild(ds);
 	})();
-	</script>
+	</script> -->
 <!-- Duoshuo Comment END -->
-    <!-- ��ҳ�ײ������� -->
+    <!-- 网页底部的内容 -->
     <hr>
     <table class="my_style" width="100%">
       <tr>
         <td align="left">
-          ��ҳ��
+          网页由
           <a href="mailto:lc-soft@live.cn">
-            ����
+            刘超
           </a>
-          ά��
+          维护
         </td> 
         <td align="right">
           <a target="_blank" href="http://validator.w3.org/check/referer">
@@ -88,11 +101,11 @@
       </tr>
       <tr>
         <td>
-          ������: 2012-10-14
+          最后更新: 2012-10-23
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
-		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="ͨ��QQ�����߽��н���" title="ͨ��QQ�����߽��н���"></a>
+		  <img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45" alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流"></a>
           <script type="text/javascript" src="../files/js/baidu-code.js">
           </script>
 		  <script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1" type="text/javascript"></script>
