@@ -24,25 +24,16 @@
 <div class="entry-content">
 <center><h1>LCUI 开发之初</h1></center>
 <hr>
-<p>为了以后方便编写图形界面的程序，增加代码的复用性，就准备编写一个能够提供通用的API来实现图形界面的函数库，以满足现在的需求。</p>
+		<p>为了以后方便编写图形界面的程序，增加代码的复用性，就准备编写一个能够提供通用的API来实现图形界面的函数库，以满足现在的需求。</p>
 <p>再加上在我的学习机（嵌入式linux系统）还没有能用的GUI库，虽说有Qt，但其他编译过Qt程序的机友说在显示父窗口时会出现段错误，只能用MessageBox来显示界面；</p>
-<p>而GTK，有人编译成功过，并且编译了能在学习机上运行的GTK版的QQ客户端，但个人不喜欢花时间折腾gtk；</p>
+<p>而GTK，有人编译成功过，并且编译了能在学习机上运行的GTK版的QQ客户端，可是屏幕小，显示的QQ界面只有一部分，以下是截图：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/gtk-qq.jpg"><img class="alignnone" title="GTK QQ" src="http://www.lcui.org/files/images/devlog/gtk-qq.jpg" alt="" width="320" height="240"></a></p>
+<p>但个人不喜欢花时间折腾gtk。</p>
 <p>还有SDL，画图是可以，实现界面还是需要花的功夫，它的一些小问题使我还是放弃了它。</p>
 <p>最终，我还是决定编写一个适合学习机的GUI库，这个库我命名为LCUI，LC就是我的名字拼音LiuChao的首字母，UI即User Interface（用户界面）的简称。</p>
-</div>
+			</div>
 <!-- Duoshuo Comment BEGIN -->
-	<div class="ds-thread" data-thread-key="1" data-title="LCUI 开发之初" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/devlog-lcui-start.html"></div>
-	<script type="text/javascript">
-	var duoshuoQuery = {short_name:"lc-soft-lcui"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = 'http://static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		|| document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
+	<div class="ds-thread" data-thread-key="1" data-title="LCUI 开发之初" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/devlog-lcui-start.html"></div> 
 <!-- Duoshuo Comment END -->
     <!-- 网页底部的内容 -->
     <hr>
@@ -64,7 +55,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2012-10-23
+          最后更新: 2012-10-24
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
