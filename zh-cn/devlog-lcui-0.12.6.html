@@ -250,6 +250,26 @@ q = &amp;src[5];</p>
 <p><a href="https://github.com/lc-soft/LCUI/commit/927e9fa7ffda70299ae921c96ed9385b7e61b80a#L4R1" target="_blank">测试程序已经添加</a>，效果如下图所示：</p>
 <p><img class="alignnone" title="测试widget的dock属性" src="http://www.lcui.org/files/images/devlog/test_widget_dock.gif" alt="" width="320" height="240" /></p>
 <p>计划添加padding和margin属性的处理。</p>
+<h2>2012-10-23</h2>
+<p>想wordpress上的评论同步到静态html网页，合并同一文章的评论，可出了些问题，把评论数据清空了，而 多说 评论的导入工具暂时不能用，只好等了。</p>
+<p>发现一个BUG，拖动窗口到屏幕边缘时，卡住了。</p>
+<h2>2012-10-24</h2>
+<p>只能怀疑问题出在最近修改的代码里了，最有可能的就是与图形处理 + 区域计算 相关的函数了。</p>
+<p>原来是Quote_Graph函数的问题，原来是由于在判断区域为无效后，没有用return退出函数，结果又执行了 引用区域有效时 所做的操作，<a href="https://github.com/lc-soft/LCUI/commit/507fd5929562ccf9a3f5edea595f86c12720bb07#L0R482" target="_blank">现已解决</a>。</p>
+<p>开始实现部件的定位类型处理功能，和css的postion属性类似，有absolute, fixed, relative, static这些值。</p>
+<p>fixed，可以有这么个效果：一个窗口里嵌套个子部件，子部件的定位类型为fixed，拖动这个窗口，子部件不会跟着窗口移动，位置还是屏幕上的绝对位置。</p>
+<p>absolute，部件的位置默认就是相对于父部件的，而&#8221;left&#8221;, &#8220;top&#8221;, &#8220;right&#8221; 以及 &#8220;bottom&#8221; 这四个属性，可以通过设置部件的Pos，或者设置Anlign外加offset，以实现这四个属性的效果，部件就不用添加这四个属性。</p>
+<p>relative，舍去，直接使用static定位类型，然后设置offset即可。位置还是原来的位置，但显示时，如果有几个部件挨着它，它就会覆盖到别的部件。</p>
+<p>static，部件位置由LCUI决定，同属这个定位类型的部件，不会叠加在一起，只会挨个挤在一起。</p>
+<p>&nbsp;</p>
+<h2>2012-10-25</h2>
+<p>查看了与CSS的postion属性相关文章，还是添加relative定位，static定位则不受pos，align，offset的影响，完全由LCUI决定位置布局；而relative定位只是static的支持offset的版本。</p>
+<p>看了下面这张图，发现relative定位的区块都是显示在static定位的区块之上，看来处理部件的堆叠顺序时还需要分组，先处理static定位的部件的显示，再处理其他定位的部件的显示。</p>
+<p><a href="http://pic-server2.byywee.com/M0/S678/678814-0.jpg"><img class="alignnone" title="relative与static" src="http://pic-server2.byywee.com/M0/S678/678814-0.jpg" alt="" width="473" height="367" /></a></p>
+<p>需要纠结定位类型为static的部件的位置处理，具体可看下图：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/block_layout.png"><img class="alignnone" title="区块布局处理" src="http://www.lcui.org/files/images/devlog/block_layout.png" alt="" width="576" height="370" /></a></p>
+<p>该用怎样的算法实现以上的部件布局呢？</p>
+<p>&nbsp;</p>
 </div>
 
 <!-- Duoshuo Comment BEGIN --> 
@@ -277,7 +297,7 @@ q = &amp;src[5];</p>
       </tr>
       <tr>
         <td>
-          最后更新: 2012-10-23
+          最后更新: 2012-10-25
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
