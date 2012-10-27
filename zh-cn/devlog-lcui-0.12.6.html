@@ -287,7 +287,7 @@ q = &amp;src[5];</p>
 <p>如果有上一行记录，那么，就将当前部件区块与上一行的对比，只对比X轴坐标，如果当前部件区块的X轴占用区域与上一行的若干个部件区块重叠，那么，记录这些部件；当前部件区块的Y轴坐标就会根据那几个部件区块来调整，从左至右，当有个Y轴坐标能够不与上一行其它区块重叠时，那么该区块的位置就更新完毕。</p>
 <p>举个例子，当前部件区块如上图中的区块E，在X轴上，它与区块A（ptr[0][0]）和区块B（ptr[0][1]）重叠，先让区块E的Y轴坐标为A.y+A.h，由于区块E使用这个坐标后，不与区块B（ptr[0][1]）重叠，所以区块E的位置更新完毕。</p>
 <p>而X坐标是随着部件位置的更新而更新，在更新区块E时，X坐标就已经到了D.x+D.w。</p>
-<h2> 2012-10-27</h2>
+<h2>2012-10-27</h2>
 <p>若要实现下图所示的部件布局效果，该怎么实现？</p>
 <p><a href="http://www.lcui.org/files/images/devlog/block_layout2.png"><img class="alignnone" title="部件区块布局处理-2" src="http://www.lcui.org/files/images/devlog/block_layout2.png" alt="" width="576" height="370" /></a></p>
 <p>对于B、E这种高度较高的区块，其它区块该怎样确定好位置？</p>
@@ -296,7 +296,18 @@ q = &amp;src[5];</p>
 <p>还有那个区块H，按照之前的方法，区块H会在区块J的位置，那么，加个处理：</p>
 <p>如果当前区块底边的y轴坐标小于上一行区块的底边y轴坐标，那么，就将上一行区块再记录到当前行，因为它的高度足以占用两行（或以上）的区块区域。</p>
 <p>但还是觉得会浪费空间，如果区块B底边的y轴坐标小于当前区块底边的y轴坐标几个像素，按照之前的方法，它当前区块的y轴坐标就等于区块B底边的y轴坐标+1，这样看起来，区块C到H之间，有一块比较大的空区域，若要节省些空区域，还是调整一下，判断条件改为：B.y+B.h &gt; (H.y+H.h)/2.0 ，也就是判断区块B的底边是否超过区块H的一半，这应该好一点了。</p>
-</div>
+<p>好像不需要一个表，只需要两个队列即可，一个队列保存上一行记录部件，一个队列保存当前行正记录的部件。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/47f8d82592ba033946ca61ef8b4bd0ad67490141" target="_blank">删减window部件的多余代码</a>。</p>
+<p>基本代码已经完成，<a href="https://github.com/lc-soft/LCUI/commit/a43ee212aeac11c58817b75a03712a4e06681896#L1R198" target="_blank">点此查看新增的代码</a>。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/a9c7dd855a1a1e80368edbfc714012ad5dc250d9#L4R0" target="_blank">新增测试程序</a>，测试程序效果图如下所示：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-27-18-33-43.png"><img class="alignnone" title="部件区块布局处理效果" src="http://www.lcui.org/files/images/devlog/2012-10-27-18-33-43.png" alt="" width="320" height="240" /></a></p>
+<p>第一个显示的部件居然排后面，明明是按照部件显示的先后顺序处理的，而调试信息表明第一个显示的部件排在队列末尾。</p>
+<p>问题出在部件队列处理函数上，之前为了实现“保持前端显示”的功能，写了个WidgetQueue_Move函数，代码还有BUG，现在暂时不需要“保持前端显示”的功能，就用预处理命令取消（相当于注释掉）这函数的代码，<a href="https://github.com/lc-soft/LCUI/commit/2ab26a8765d290bd5d578befc02e87e7721423ec" target="_blank">改用Queue_Move函数实现</a>，效果图：</p>
+<p><a href="http://www.lcui.org/files/images/devlog/2012-10-27-19-49-18.png"><img class="alignnone" title="部件布局处理效果" src="http://www.lcui.org/files/images/devlog/2012-10-27-19-49-18.png" alt="" width="320" height="240" /></a></p>
+<p>&nbsp;</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/6c31c755e498534c34d151757f7b0e5e256f160e#L0R287" target="_blank"> 已实现分组处理各个定位类型的部件的显示</a>，还未测试。</p>
+<p>padding和margin支持百分比太麻烦了，还是改用整型变量保存。</p>
+<p>正在实现部件内边距的支持。</p>
 
 <!-- Duoshuo Comment BEGIN --> 
 	<a id="blog-comment"></a>
