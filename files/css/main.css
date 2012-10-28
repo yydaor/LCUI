@@ -51,6 +51,7 @@ html {
 }
 .comment_box ul
 {
+	margin: 0px;
 	padding:0px;
 }
 .ds-meta a {
@@ -60,13 +61,18 @@ html {
 .ds-excerpt {
 	font-size: 13px;
 }
-
-.comment_box a:link, .comment_box a:visited  {
+.comment_box a {
+	font-size:13px;
 	text-decoration: none; 
 }
-.comment_box a:hover, .comment_box a:active {
-	text-decoration: none; 
-	color: #D54E21
+.comment_box li {
+	border: 1px solid #CCC;
+	-webkit-border-radius:4px;
+	border-radius: 4px;
+}
+
+.comment_box li:hover, .comment_box li:active{
+	background-color: #B5DEFF
 }
 /***********************************/
 .round_border{

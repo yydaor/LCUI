@@ -126,19 +126,19 @@ q = &amp;src[5];</p>
 <p>之前就想好了一些，LCUI的源码目录结构大致是这样的：<br>
 /<br>
 ../src/<br>
-../…/bmp/ &nbsp;(图片文件的读取/写入)<br>
-../…/draw/ （图形绘制）<br>
-../…/font/ （字体处理）<br>
-../…/gui/ &nbsp;（一些现成的图形界面，例如MessageBox、颜色选择、字体选择等）<br>
-../…/input/ （处理输入设备输入的数据，例如鼠标、触屏、键盘等）<br>
-../…/loadso/ （动态库的操作）<br>
-../…/…../dlopen.c<br>
-../…/output/ （数据输出，一般是图形数据）<br>
-../…/……/framebuffer.c （通过帧缓冲显示图形）<br>
-../…/……/x11.c （通过X Window系统显示图形）<br>
-../…/thread/ （线程支持）<br>
-../…/……/pthread.c<br>
-../…/widget/ （GUI部件）</p>
+../.../bmp/ &nbsp;(图片文件的读取/写入)<br>
+../.../draw/ （图形绘制）<br>
+../.../font/ （字体处理）<br>
+../.../gui/ &nbsp;（一些现成的图形界面，例如MessageBox、颜色选择、字体选择等）<br>
+../.../input/ （处理输入设备输入的数据，例如鼠标、触屏、键盘等）<br>
+../.../loadso/ （动态库的操作）<br>
+../.../....../dlopen.c<br>
+../.../output/ （数据输出，一般是图形数据）<br>
+../.../....../framebuffer.c （通过帧缓冲显示图形）<br>
+../.../....../x11.c （通过X Window系统显示图形）<br>
+../.../thread/ （线程支持）<br>
+../.../....../pthread.c<br>
+../.../widget/ （GUI部件）</p>
 <p>对于LCUI程序，如果在X11环境下运行，那么，就使用X11进行图形输出，也就是创建个窗口，把图形数据输出到窗口里；<br>
 如果是在字符控制台模式下运行，就直接使用FrameBuffer。<br>
 那么，LCUI程序如何知道自己是在哪种环境下运行呢？这个可以参考SDL的源代码。</p>
@@ -308,12 +308,18 @@ q = &amp;src[5];</p>
 <p><a href="https://github.com/lc-soft/LCUI/commit/6c31c755e498534c34d151757f7b0e5e256f160e#L0R287" target="_blank"> 已实现分组处理各个定位类型的部件的显示</a>，还未测试。</p>
 <p>padding和margin支持百分比太麻烦了，还是改用整型变量保存。</p>
 <p>正在实现部件内边距的支持。</p>
-
+<h2>2012-10-28</h2>
+<p><a href="https://github.com/lc-soft/LCUI/commit/eeedc989e656fb4270ff2fc3dae636aa09537899#L0R230" target="_blank">完善了static定位的部件的位置更新处理</a>；</p>
+<p>部件已经支持padding属性；</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/f95c788639cb69809eb8d7def30a715ce417933e" target="_blank">更新window部件的代码</a>；</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/59bbe06e0e3e81841711b0621d5c981af1985fbb#L4R0" target="_blank">添加测试部件padding属性的测试程序</a>，测试效果如下图所示：</p>
+<p><a href="http://lcui.org/files/images/devlog/2012-10-28-10-54-15.png"><img class="alignnone" title="测试部件的padding属性" src="http://lcui.org/files/images/devlog/2012-10-28-10-54-15.png" alt="" width="320" height="240" /></a></p>
+<p>左边距为10px，上边距为15px，右边距和下边距没作用。</p>
 <!-- Duoshuo Comment BEGIN --> 
 	<a id="blog-comment"></a>
 	<div class="ds-thread" data-thread-key="7" data-title="LCUI 0.12.6" data-category="LCUI-Dev"  data-url="http://www.lcui.org/zh-cn/devlog-lcui-0.12.6.html"></div>
 <!-- Duoshuo Comment END -->
-
+</div>
     <!-- 网页底部的内容 -->
     <hr>
     <table class="my_style" width="100%">
@@ -334,7 +340,7 @@ q = &amp;src[5];</p>
       </tr>
       <tr>
         <td>
-          最后更新: 2012-10-27
+          最后更新: 2012-10-28
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
