@@ -1119,6 +1119,35 @@
 <h2> 2012-10-31</h2>
 <p>窗口新风格的测试效果如下：</p>
 <p><a href="http://lcui.org/files/images/devlog/test_window.gif"><img class="alignnone" title="测试窗口新风格" src="http://lcui.org/files/images/devlog/test_window.gif" alt="" width="320" height="240" /></a></p>
+<p>关于那个label部件的问题，是由于更新了字体位图后，没有更新当前文本行的尺寸，导致在后面更新label部件时，获取的文本位图尺寸不正确，现已解决此问题。</p>
+<p>在检查LCUI_Widget.c源文件中的代码的时候，发现Get_Widget_Real_Graph()函数的这两行代码有点怪异：<br />
+Quote_Graph( &amp;temp, &amp;widget-&gt;graph, cut_rect );<br />
+Graph_Mix（ &amp;widget-&gt;graph, &amp;temp, Pos(x, y) );<br />
+引用了自己的一块图形，又将之合成到自己的图形上，这是干什么的？</p>
+<p>修改后，测试多窗口的嵌套，在窗口客户区内拖动子窗口至边缘，结果显示的图形异常。</p>
+<p>原来之前测试滚动条所出现的图形异常也是这个问题。</p>
+<p>刚刚测试，窗口移动到屏幕边缘也有此问题。</p>
+<p>通过分析调试时得到的信息，发现Get_Widget_Valid_Rect()函数有点问题，返回的区域数据异常。</p>
+<h2>2012-11-1</h2>
+<p>当坐标小于0时，由于计算错误，导致出现了上述问题，现已纠正。</p>
+<p>窗口移动还有点小问题，正在解决中。。。</p>
+<p>用了过多的if-else嵌套，缩进的太深，影响美观，现已改用switch-case语句。</p>
+<p>拖动部件所使用的新坐标的计算方法：</p>
+<p>点击时，用鼠标全局坐标 减去 部件的全局坐标，得出偏移坐标。</p>
+<p>拖动过程中，用鼠标全局坐标 减去 偏移坐标，得出部件的新全局坐标，之后，转换成部件当前容器区域的相对坐标。</p>
+<p>在部件处于拖动状态后，每次位置变更都会将部件的新全局坐标转换成相对坐标，交给与拖动事件关联的回调函数处理。这样有个问题，测试窗口移动时，慢速拖动是没问题，快速移动就有问题了，位置异常，xy轴坐标有时是正负几千，不知这计算异常出在哪，自己写的那个全局坐标转相对坐标的函数，看代码也没发现不对的地方。</p>
+<p>改了一下，取消掉每次的坐标转换，让与拖动事件关联的回调函数自己转换成相对坐标，测试正常。</p>
+<p>部件的鼠标事件响应还有待完善，先凑合着用。</p>
+<p>代码已经提交，主要进行了这些修改：<a href="https://github.com/lc-soft/LCUI/commit/d566c5449f6392e855ab614f39f6f0b618cc7c1e" target="_blank">更新鼠标事件处理的代码</a>，<a href="https://github.com/lc-soft/LCUI/commit/90e9b21e08c86a0b29bc9f9cd1d10a15c44bf5f3#L0R977" target="_blank">解决Get_Widget_Valid_Rect()函数存在的BUG</a>，也删减了部分无用代码。其它的修改也就是为了适应新修改的部件处理代码。</p>
+<p>测试文本框时，发现嵌套使用样式标签后，效果不正常，<a href="https://github.com/lc-soft/LCUI/commit/c016ca923ddc8d9919a70082df7fd4bf6a7d11cf#L0R41" target="_blank">现已纠正</a>：原因是由于在为文字获取样式时，没有把样式对应的标志变量赋值为1，从而导致同一样式被覆盖。</p>
+<h2>2012-11-2</h2>
+<p>准备添加定时器。ActiveBox部件播放动态图像需要开线程，文本框的光标闪烁也要开线程，感觉线程不要开太多为好，有点想将用于处理触屏、鼠标、按键这三种输入的三个线程合并为一个。</p>
+<p>说到这个合并，又有了个想法：提供一些函数，用于注册这些处理输入设备的函数，比如：鼠标，注册初始化函数，供LCUI初始化时调用，打开鼠标设备；注册处理函数，让LCUI在输入处理 线程中调用它，当然，只有在初始化函数的返回值为0时，才调用这个回调函数；注册析构函数，在LCUI结束后，就可以关闭鼠标设备，释放资源。</p>
+<p>时间单位是毫秒，定时器还是用单独一个线程来处理。</p>
+<p>测试helloworld时，发现设定缺省字体尺寸为24px后，有自定义样式的文字的尺寸是12px。</p>
+<p><a href="https://github.com/lc-soft/LCUI/commit/f3cd82a5229b180f4e92657a44f747ed0dfa5765" target="_blank">定时器功能已经添加</a>，还有个<a href="https://github.com/lc-soft/LCUI/commit/3c8d1533a411f70831edc4541e423e3c0723bb2e#L2R0" target="_blank">测试程序</a>，以下是测试程序的效果：</p>
+<p><a href="http://lcui.org/files/images/devlog/test_timer.gif"><img class="alignnone" title="测试定时器" src="http://lcui.org/files/images/devlog/test_timer.gif" alt="" width="320" height="240" /></a></p>
+<p>已纠正 自定义样式的文本 不能 使用全局字体尺寸 的问题，<a href="https://github.com/lc-soft/LCUI/commit/c22f20c252869d02ad1af6ab42721a7be0236a51" target="_blank">可到这查看修改的代码</a>。</p>
       </div>
       <!-- Duoshuo Comment BEGIN -->
       <a id="blog-comment">
@@ -1148,7 +1177,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2012-10-31
+          最后更新: 2012-11-02
         </td>
         <td align="right">
           <a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
