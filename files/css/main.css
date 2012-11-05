@@ -7,12 +7,9 @@ html {
 .btn {
   display: inline-block;
   *display: inline;
-  /* IE7 inline-block hack */
-  float: right;
-  right: 0px;
+  /* IE7 inline-block hack */ 
   *zoom: 1;
-  padding: 0px 2px;
-  margin-bottom: 0; 
+  padding: 0px 2px;margin-left: 10px;
   line-height: 20px;
   *line-height: 20px;
   text-align: center;
@@ -49,11 +46,18 @@ html {
 	-webkit-border-radius:4px;
 	border-radius: 4px;
 }
-.comment_box ul
-{
+.comment_box ul {
 	margin: 0px;
 	padding:0px;
 }
+.comment_box img {
+margin-left:3px;
+box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+
 .ds-meta a {
 	color: #D32 !important;
 	text-decoration: none;
@@ -164,7 +168,10 @@ html {
 	-webkit-border-radius:3px;
 	border-radius:3px;
 	border:1px solid #dfdfdf;
-	width:800px
+	width:800px;
+	max-width: 800px;
+	min-width: 500px;
+	width: 80%;
 }
 
 .home_body{
@@ -173,18 +180,18 @@ font-family: "Microsoft YaHei", "Î¢ÈíÑÅºÚ","Verdana", "Arial", "Tahoma", "Segoe 
 }
 
 .home_headerbg{
-float: left;
-left: 0px;
-top: 0px;
-background: white;
-width:100%;
-height: 74px;
-border-bottom:1px solid #DFDFDF;
--moz-box-shadow: 2px 2px 10px #909090;/*firefox*/ 
--webkit-box-shadow: 2px 2px 10px #909090;/*safari»òchrome*/ 
-box-shadow:2px 2px 10px #909090;
-z-index: 10;
-position: fixed;
+	float: left;
+	left: 0px;
+	top: 0px;
+	background: white;
+	width:100%;
+	height: 50px;
+	border-bottom:1px solid #DFDFDF;
+	-moz-box-shadow: 2px 2px 10px #909090;/*firefox*/ 
+	-webkit-box-shadow: 2px 2px 10px #909090;/*safari»òchrome*/ 
+	box-shadow:2px 2px 10px #909090;
+	z-index: 10;
+	position: fixed;
 }
 
 #home_frame
@@ -233,10 +240,9 @@ color: #D54E21;
 }
 
 .home_lang{
-float: right;
-padding-top: 5px;
-line-height: 18px;
-height: 18px;
+	float: right;
+	line-height: 18px;
+	height: 22px;
 }
 
 #main_frame {
@@ -249,10 +255,10 @@ height: 18px;
 }
 		
 .home_menu{
-float: left;
-height:30px;
-width:320px; 
-line-height: 20px;
+	margin: 0 auto;
+	height:30px;
+	width:210px; 
+	line-height: 20px;
 }
 
 
@@ -636,8 +642,7 @@ h1.hpMst_Brand {
 	top: -1px;
 	z-index: 1;
 	margin: 0;
-	padding: 5px;
-	font-size: .75em
+	padding: 5px; 
 }
 .hpBld .msPopup {
 	border: solid 1px #999;
@@ -1543,7 +1548,7 @@ color: white;
 	padding: 12px 0
 }
 .msMnu .msPopup .col {
-	width: 170px;
+	width: 180px;
 	position: relative;
 	padding-left: 10px;
 	padding-right: 10px
@@ -1553,6 +1558,7 @@ color: white;
 	display: block;
 	padding: 3px 5px 3px 5px;
 	margin-bottom: 1px;
+	border-radius: 4px;
 	text-decoration: none
 }
 .msMnu .msPopup .col li a: hover {
@@ -1607,7 +1613,7 @@ color: white;
 	_border-left: 0
 }
 .msMnu_ColWrp1 {
-	width: 190px
+	width: 202px
 }
 .msMnu_ColWrp2 {
 	width: 381px

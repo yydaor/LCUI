@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
 <title>LCUI &#8250; 文档</title>
 <link rel="icon" href="lc-soft.png" type="image/png">
-<meta name="keywords" content="LCSoft,LCUI,Embedded,linux,刘超,开源,C语言" >
-<meta name="description" content="LC-SOFT - 只为兴趣、创意和灵感而生!" >
+<meta name="keywords" content="GUI,LCSoft,LCDT,LCUI,Embedded,linux,liuchao,opensource,freesoft,C" >
+<meta name="description" content="LCUI项目中文主页" >
 <meta name="robots" content="all" >
 <meta name="author" content="LC-Soft" >
 <link type="text/css" rel="stylesheet" href="../files/css/main.css"> 
@@ -37,7 +37,8 @@
 <li>调用LCUI_Main()函数，进入程序主循环。</li>
 <p>有的GUI是让程序进入主循环，等待核心发给它的消息，分析消息并执行相应任务。LCUI 在经过最初的几次版本更新后，LCUI_Main()函数也得到了简化，以前的有很多行代码，用于处理很多东西，代码缩减后，也就是等LCUI发任务给它执行；这个任务，其实就是个回调函数+两个参数，主要应用在事件处理上，事件触发后，已记录的与该事件关联的回调函数，会被LCUI以任务的形式追加至程序任务队列中，让程序在主循环中执行它。</p>
 </ol>
-<img alt="示例图" src="../files/images/example_img.png"></img>
+<img alt="示例图" style="max-width: 800px;
+width: 100%;" src="../files/images/example_img.png"></img>
 <h3>详细说明</h3>
 <ol style="list-style-type: disc;">
 <li><b>鼠标</b></li>
@@ -101,7 +102,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2012-09-11
+          最后更新: 2012-11-04
         </td>
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
