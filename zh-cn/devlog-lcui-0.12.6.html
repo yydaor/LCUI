@@ -1148,6 +1148,23 @@ Graph_Mix（ &amp;widget-&gt;graph, &amp;temp, Pos(x, y) );<br />
 <p><a href="https://github.com/lc-soft/LCUI/commit/f3cd82a5229b180f4e92657a44f747ed0dfa5765" target="_blank">定时器功能已经添加</a>，还有个<a href="https://github.com/lc-soft/LCUI/commit/3c8d1533a411f70831edc4541e423e3c0723bb2e#L2R0" target="_blank">测试程序</a>，以下是测试程序的效果：</p>
 <p><a href="http://lcui.org/files/images/devlog/test_timer.gif"><img class="alignnone" title="测试定时器" src="http://lcui.org/files/images/devlog/test_timer.gif" alt="" width="320" height="240" /></a></p>
 <p>已纠正 自定义样式的文本 不能 使用全局字体尺寸 的问题，<a href="https://github.com/lc-soft/LCUI/commit/c22f20c252869d02ad1af6ab42721a7be0236a51" target="_blank">可到这查看修改的代码</a>。</p>
+<h2> 2012-11-3</h2>
+<p><a href="https://github.com/lc-soft/LCUI/commit/34051e44dd6ca3fb55cf2b2472851efd5a306583" target="_blank">输入设备的统一处理的功能已经完成</a>，<a href="https://github.com/lc-soft/LCUI/commit/27ea891a8ef104fe5f2af2f64c095032af940cf5" target="_blank">头文件也做了修改</a>；</p>
+<p>测试鼠标设备正常，但是，鼠标事件数据用的是全局变量保存的，如果是每次触发事件都分配一块内存，发给回调函数处理，那么怎么释放？让回调函数释放？万一我用一个局部变量保存鼠标事件再发过去，回调函数用free函数释放不会出错吗？暂时先用全局变量，懒得纠结。</p>
+<p>鼠标设备的数据输入处理已修改，剩下的就是触屏和按键了。</p>
+<p>触屏和按键的处理功能已修改完毕。</p>
+<h2>2012-11-4</h2>
+<p>添加1个widget的属性：clickable_area_alpha ，用于指定部件图层中的区域的alpha值大于多少时可被鼠标点击，默认为0，最大为255。比如要实现不规则形状的按钮，设定该属性值为254，点击那些透明区域，该按钮不会被按下，只有点击按钮中完全不透明的区域才能使按钮按下，触发事件。当设置为255后，鼠标就无法点击到该部件。</p>
+<p>文本框中闪烁的光标，还是用widget实现，让它使用上面所说的属性，这样，鼠标点击文本框中的光标，不会影响拖动选中文本。</p>
+<h2> 2012-11-5</h2>
+<p>国内类似GitHub.com的网站有gitcafe.com和gitcd.com，关注进展，个人感觉前者的界面比后者好一些。</p>
+<p>为了减少缩进深度，有些if&#8211;else语句做了修改。</p>
+<p>用按钮来测试clickable_area_alpha属性时，发现鼠标点击按钮后，按钮还处于按下状态，<a href="https://github.com/lc-soft/LCUI/commit/3065bf5e40d9bdaa7f13730d231cbdafac28227f" target="_blank">现已纠正</a>。</p>
+<p>调整了一下项目主页，标题栏区块变窄，更换LOGO。</p>
+<p><a href="http://lcui.org/files/images/devlog/2012-11-05-13-53-29.png"><img class="alignnone" title="网页截图" src="http://lcui.org/files/images/devlog/2012-11-05-13-53-29.png" alt="" width="665" height="184" /></a></p>
+<p>发现有些网页的元素会在浏览器窗口达到一定大小时改变布局，比如谷歌浏览器的官网，宽屏浏览是一个样式，窄屏浏览又是一个样式；</p>
+<p>浏览过 MiniGUI 官方网站，它也实现了这个功能，于是就查看网页源码，发现css样式中有这么一段内容：@media only screen and (max-width: 959px) and (min-width: 768px) ，这个就是规定浏览器窗口大小在某个范围内时，使用里面的样式。</p>
+<p>已应用到项目主页上，默认的样式是让文本摆放在左边，图片摆在右边，而当浏览器窗口变窄时，会改变文本div和图片div的样式，使图片摆在上面，文本摆在下面。</p>
       </div>
       <!-- Duoshuo Comment BEGIN -->
       <a id="blog-comment">
@@ -1177,7 +1194,7 @@ Graph_Mix（ &amp;widget-&gt;graph, &amp;temp, Pos(x, y) );<br />
       </tr>
       <tr>
         <td>
-          最后更新: 2012-11-02
+          最后更新: 2012-11-06
         </td>
         <td align="right">
           <a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">

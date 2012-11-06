@@ -84,7 +84,7 @@ border-radius: 3px;
 	border-radius: 3px;
 }
 
-.home_main{
+.home_main {
 	background-color: #E4F2FD; 
 	border: 1px solid #C6D9E9;
 	-webkit-border-radius:3px;
@@ -94,10 +94,47 @@ border-radius: 3px;
 	height:100%;
 }
 
+.home_left_div {
+	float:left;
+	max-width:295px;
+	width:36%;
+	margin-left:5px;
+}
+.home_left_div p{
+	font-size:13px;
+}
+
+.home_right_div { 
+	float:right;
+	max-width:480px;
+	margin: 5px;
+	width: 60%;
+}
+
+.home_right_div img {
+	max-width:480px;
+	width: 100%;
+}
+
+@media only screen and (max-width: 800px) and (min-width: 0px) {
+	.home_left_div{
+		max-width:100%;
+		width:100%;
+	}
+	.home_left_div p{
+		font-size:13px;
+	}
+	.home_right_div {
+		float:none;
+		margin:5px auto;
+		width:480px;
+	}
+}
+
+
 .home_main img{
 	float: right;
-	border: 1px solid #CCC; 
-	margin: 0 0 5px 5px;
+	border: 1px solid #CCC;
 }
 .dynamic_background {
 	border-collapse:collapse;
@@ -253,11 +290,11 @@ color: #D54E21;
 	-moz-box-sizing: border-box; width:100%; height:100%;
 	box-sizing: border-box; width:100%; height:100%;
 }
-		
+
 .home_menu{
 	margin: 0 auto;
 	height:30px;
-	width:210px; 
+	width: 270px;
 	line-height: 20px;
 }
 
@@ -310,7 +347,7 @@ margin-left: 6px;
 }
 
 .homepage_text{
-padding:10px;
+padding:5px;
 font-size: 10pt;
 line-height: 1.5;
 }
