@@ -1494,6 +1494,38 @@
 					</a>
 					。
 				</p>
+				<h2>
+					2012-11-14
+				</h2>
+				<p>
+					在上图中，仔细看的话会发现一个小问题，当橙色子窗口超出客户区右边边缘时，边缘有残余图形显示，经过调试，还是Get_Widget_Valid_Rect函数的问题，区域计算有误，现已纠正此问题，
+					<a href="https://github.com/lc-soft/LCUI/commit/a34e28fee24b3fb9a5cb9e3d18e7a438d8ca7421"
+					target="_blank">
+						可到此查看代码修改情况
+					</a>
+					。
+				</p>
+				<p>
+					文本框中的光标闪烁，会使原本已失去焦点的窗口又获得焦点，
+					<a href="https://github.com/lc-soft/LCUI/commit/963b5fd4e174c4fbdf629ca81737220e671444cf"
+					target="_blank">
+						修改了一下Show_Widget函数的代码
+					</a>
+					，不支持焦点的部件不会调用Set_Focus函数设定焦点。
+				</p>
+				<p>
+					已
+					<a href="https://github.com/lc-soft/LCUI/commit/e1e2d0ae035b03f6f02f9915e60006e200b8560c"
+					target="_blank">
+						添加部件按键输入事件的关联功能
+					</a>
+					，
+					<a href="https://github.com/lc-soft/LCUI/commit/d99f864bf9b18c01d196426909af0ad10b631de9"
+					target="_blank">
+						文本框做了修改
+					</a>
+					，测试结果表明，当文本框获得焦点后，用键盘进行输入，能够调用之前为文本框关联的回调函数，并打印键值，还需要继续完善文本框。
+				</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1522,7 +1554,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-13
+						最后更新: 2012-11-14
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
