@@ -21,7 +21,11 @@ font-size: 13px;
 }
 
 .entry-content ul {
-list-style: square;
+	list-style: square;
+}
+
+.entry-content ol {
+	list-style-type: decimal;
 }
 
 .wp-caption {
