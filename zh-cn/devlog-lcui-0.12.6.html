@@ -1127,7 +1127,7 @@
 				<p>
 					<a href="http://lcui.org/files/images/devlog/test_window.gif">
 						<img class="alignnone" title="测试窗口新风格" src="http://lcui.org/files/images/devlog/test_window.gif"
-						alt="" width="320" height="240" />
+						alt="" width="320" height="240">
 					</a>
 				</p>
 				<p>
@@ -1135,11 +1135,11 @@
 				</p>
 				<p>
 					在检查LCUI_Widget.c源文件中的代码的时候，发现Get_Widget_Real_Graph()函数的这两行代码有点怪异：
-					<br />
+					<br>
 					Quote_Graph( &amp;temp, &amp;widget-&gt;graph, cut_rect );
-					<br />
+					<br>
 					Graph_Mix（ &amp;widget-&gt;graph, &amp;temp, Pos(x, y) );
-					<br />
+					<br>
 					引用了自己的一块图形，又将之合成到自己的图形上，这是干什么的？
 				</p>
 				<p>
@@ -1236,7 +1236,7 @@
 				<p>
 					<a href="http://lcui.org/files/images/devlog/test_timer.gif">
 						<img class="alignnone" title="测试定时器" src="http://lcui.org/files/images/devlog/test_timer.gif"
-						alt="" width="320" height="240" />
+						alt="" width="320" height="240">
 					</a>
 				</p>
 				<p>
@@ -1303,7 +1303,7 @@
 				<p>
 					<a href="http://lcui.org/files/images/devlog/2012-11-05-13-53-29.png">
 						<img class="alignnone" title="网页截图" src="http://lcui.org/files/images/devlog/2012-11-05-13-53-29.png"
-						alt="" width="665" height="184" />
+						alt="" width="665" height="184">
 					</a>
 				</p>
 				<p>
@@ -1380,7 +1380,7 @@
 				<p>
 					<a href="http://lcui.org/files/images/devlog/textbox_BUG.gif">
 						<img class="alignnone" title="文本框的BUG" src="http://lcui.org/files/images/devlog/textbox_BUG.gif"
-						alt="" width="320" height="240" />
+						alt="" width="320" height="240">
 					</a>
 				</p>
 				<p>
@@ -1483,7 +1483,7 @@
 				<p>
 					<a href="http://lcui.org/files/images/devlog/test_window-1.gif">
 						<img class="alignnone" title="测试窗口" src="http://lcui.org/files/images/devlog/test_window-1.gif"
-						alt="" width="320" height="240" />
+						alt="" width="320" height="240">
 					</a>
 				</p>
 				<p>
@@ -1526,6 +1526,90 @@
 					</a>
 					，测试结果表明，当文本框获得焦点后，用键盘进行输入，能够调用之前为文本框关联的回调函数，并打印键值，还需要继续完善文本框。
 				</p>
+				<h2>
+					2012-11-15
+				</h2>
+				<p>
+					开始添加方向键控制光标移动的功能。
+				</p>
+				<p>
+					光标移动处理相关的函数存在一些小问题，需要进行解决。
+				</p>
+				<p>
+					光标有三个位置：在字符串中的位置，在文本中的位置（多少行，第几个字），相对于文本框的位置（像素坐标）。对于文本中的位置，光标会显示在那个字的前面，而不是后面。
+				</p>
+				<p>
+					<a href="https://github.com/lc-soft/LCUI/commit/d3f7cacddab5a8298d7239dda73755972be518d9"
+					target="_blank">
+						方向键控制光标移动的功能已经完成
+					</a>
+					，存在的问题也
+					<a href="https://github.com/lc-soft/LCUI/commit/26127ce3532d0e80b5771c0eab577b4338199e50"
+					target="_blank">
+						已经解决
+					</a>
+					（之前忘记提交text_layer.c源文件了，显示不了这次问题代码的修改情况）。
+				</p>
+				<p>
+					修改了
+					<a href="https://github.com/lc-soft/LCUI/blob/58ace3552fad8451e15856fe217aee860a9f58b1/README.md"
+					target="_blank">
+						README.md
+					</a>
+					文件，部分内容参考自TextMate的
+					<a href="https://github.com/textmate/textmate/blob/3ca80b90205f58294d9b76d3c4b040ada54a0f90/README.md"
+					target="_blank">
+						README.md
+					</a>
+					文件，而README.zh-cn改为
+					<a href="https://github.com/lc-soft/LCUI/blob/14c0ffa69265c1ac8b6f31d621cce93ecc647244/README.zh-cn.md"
+					target="_blank">
+						README.zh-cn.md
+					</a>
+					，其内容实际是README.md的中文版，翻译TextMate的README.md文件的内容费了点时间，借助谷歌翻译，再结合环境及自己的理解，把英文语句翻译成中文，比如Contributing那段中的第4条，就两句，但很长，纠结了一段时间，看了一下它的Issues，发现这段话是在说代码提交信息的编写格式。
+				</p>
+				<p>
+					现在需要解决的是：
+					<br>
+					光标的文本坐标与源字符串中的一维坐标的对应关系的处理。
+					<br>
+					在启用样式标签的情况下，编辑文本时如何处理这些样式标签，比如主额段字符串：&lt;color=#00ff00&gt;green1&lt;color=#ff0000&gt;red&lt;/color&gt;green2&lt;/color&gt;，删除“green1”后，该如何判断是否需要删除&lt;color=#00ff0000&gt;&lt;/color&gt;这两个样式标签呢？要么，删除完&#8221;green1&#8243;后，在“green2”前面加个&lt;color=#00ff00&gt;，然后删除“green1”前面的&lt;color=#00ff00&gt;。
+				</p>
+				<h2>
+					2012-11-16
+				</h2>
+				<p>
+					开始添加文本删除功能。
+				</p>
+				<p>
+					先完成普通文本的删除功能，暂不考虑样式标签的处理。
+				</p>
+				<p>
+					大致流程就是这样：找到当前光标所在的字的位置，当按下Backspace键后，记录该字及后面的字的所在区域，并标记它们需要重绘，以便重绘时清空之前的残留图形；然后，从
+					源字符串 和 行文本数据 中删除该字的数据；最后，更新Label部件，重绘文本图层中已标记的字符的位图。
+				</p>
+				<p>
+					代码已完成，
+					<a href="https://github.com/lc-soft/LCUI/commit/d4ba53b8cf532be99d925745dcd03900f886285a"
+					target="_blank">
+						修改文本框代码
+					</a>
+					，支持HOME键和END键的光标控制，支持Backspace键删除字符；文本图层处理中，
+					<a href="https://github.com/lc-soft/LCUI/commit/12f4c053f37ac1be58fd7ff2c0671559b5d626c3"
+					target="_blank">
+						添加字符删除功能
+					</a>
+					；以下是效果图：
+				</p>
+				<p>
+					<a href="http://lcui.org/files/images/devlog//test_textbox_backspace.gif">
+						<img class="alignnone" title="测试文本框的字符删除功能" src="http://lcui.org/files/images/devlog//test_textbox_backspace.gif"
+						alt="" width="320" height="240">
+					</a>
+				</p>
+				<p>
+					不能在行尾按Backspace键删除字符，删除字符时，还有残余图形，有待完善。
+				</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1554,7 +1638,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-14
+						最后更新: 2012-11-16
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
