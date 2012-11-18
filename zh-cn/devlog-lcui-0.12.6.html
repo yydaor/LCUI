@@ -1610,6 +1610,74 @@
 				<p>
 					不能在行尾按Backspace键删除字符，删除字符时，还有残余图形，有待完善。
 				</p>
+				<h2>
+					2012-11-17
+				</h2>
+				<p>
+					字符删除功能已经完善，之前字符删除后有残余图形，是因为没有记录删除的字的区域，只记录了它后面的字的区域。删除字符时，偶尔会出现段错误，gdb上已给出问题代码所在行，为指针加个有效性判断即可。连续删除文字时，发现逗号在向左移动后显示不全，鼠标指针移至该逗号上，逗号完全显示，目测是在更新字体位图时没有添加正确的刷新区域，导致刷新不全。
+				</p>
+				<p>
+					上述问题的代码修改情况
+					<a href="https://github.com/lc-soft/LCUI/commit/dee8ddf654306c5be0f42e93596b7ff47381f171"
+					target="_blank">
+						可到这查看
+					</a>
+					。
+				</p>
+				<p>
+					用 git commit &#8211;amend 命令，可修改还未push的commit信息。
+				</p>
+				<p>
+					已经可以从行尾进行字符删除了，接下来就是多行文本的删除，比如：在第二行行首按Backspace键，则删除源字符串中的换行符&#8217;\n&#8217;，并将第二行文本转接第一行行尾上。
+				</p>
+				<p>
+					但是，考虑到以后的自动换行功能，文本的换行，并不一定是因为换行符&#8217;\n&#8217;，而会是该行文本超出限定宽度而自动换行，那么，源字符中不存在换行符&#8217;\n&#8217;，就不能删除换行符&#8217;\n&#8217;。
+				</p>
+				<h2>
+					2012-11-18
+				</h2>
+				<p>
+					TextLayer_Text_Backspace函数和TextLayer_Text_Delete函数都是删除字符，只不过，前者是删除光标之前的N个字符，后者是删除光标之后的N个字符，那么，再加个函数_TextLayer_Text_Delete函数，让这两个函数只负责计算需删除的文字的起点位置，以及删除的字符个数，而字符删除操作都由_TextLayer_Text_Delete函数实现。
+				</p>
+				<p>
+					上述修改已经完成，
+					<a href="https://github.com/lc-soft/LCUI/commit/5fec76204a2e822916dd95725ad8844aa1c1fdc7"
+					target="_blank">
+						可到这
+					</a>
+					查看代码修改情况。
+				</p>
+				<p>
+					<a href="https://github.com/lc-soft/LCUI/commit/10559c4c92c6d499e415a061bf703437083a6105"
+					target="_blank">
+						新增Queue_Cat函数
+					</a>
+					，用于将上一行与下一行文本的拼接，因为每一行的文本是使用各自的队列记录的。
+				</p>
+				<p>
+					<a href="https://github.com/lc-soft/LCUI/commit/35125944e6790016f83d584fd17c93960e2da0fc"
+					target="_blank">
+						已经基本实现 跨行文本删除功能
+					</a>
+					，具体效果如下图所示：
+				</p>
+				<p>
+					<a href="http://lcui.org/files/images/devlog//test_textbox_backspace-1.gif">
+						<img class="alignnone" title="测试跨行文本删除功能" src="http://lcui.org/files/images/devlog//test_textbox_backspace-1.gif"
+						alt="" width="320" height="240" />
+					</a>
+				</p>
+				<p>
+					用方向键移动光标，若光标在最后一行的最后一个字上，再往右移动的话，光标会被移动至行首，
+					<a href="https://github.com/lc-soft/LCUI/commit/a230b324af4b591d2cd6c354d8b6d5d3d25a5314"
+					target="_blank">
+						此问题已经纠正
+					</a>
+					。
+				</p>
+				<p>
+				文本框里显示的文本是看得到的，但和源字符串里的文本不一定相同，还需要完成源字符串中的字符删减功能。
+				</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1638,7 +1706,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-16
+						最后更新: 2012-11-18
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
