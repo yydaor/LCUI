@@ -1676,7 +1676,74 @@
 					。
 				</p>
 				<p>
-				文本框里显示的文本是看得到的，但和源字符串里的文本不一定相同，还需要完成源字符串中的字符删减功能。
+					文本框里显示的文本是看得到的，但和源字符串里的文本不一定相同，还需要完成源字符串中的字符删减功能。
+				</p>
+				<p>
+					原来那个工具叫cygwin，先用用看。
+				</p>
+				<h2>
+					2012-11-19
+				</h2>
+				<p>
+					Cygwin上，cd到lcui源码目录，执行configure，有点慢，linux下，configure打印的信息是刷刷的出来，而在windows下，这速度就慢了很多。
+				</p>
+				<p>
+					编译时发现一些问题，没有删除LCUI.h中的LCUI_TS，touchscreen.c编译失败；Cygwin下没fb.h头文件，那么，应该在configure检测一下，没有则fb.h头文件的话，图形输出方式不用framebuffer，也就不编译framebuffer.c，改为编译dummy.c，dummy是“虚设”的意思，里面虽有函数，但没有实际代码。
+				</p>
+				<p>
+					configure.ac里，添加代码，以检测&#8211;enable-graph-display选项，如果选项等于yes，那么，检测是否有linux/fb.h头文件，有则GRAPH_OUTPUT_DEV_NAME=framebuffer，否则GRAPH_OUTPUT_DEV_NAME=dummy。
+				</p>
+				<p>
+					Makefile.am里的liboutput_la_SOURCES = framebuffer.c graph_display.c 改为 liboutput_la_SOURCES
+					= $(GRAPH_OUTPUT_DEV_NAME).c graph_display.c 。
+				</p>
+				<p>
+					测试出问题，用了./configure &#8211;enable-graph-display=no 命令后，make时说没有dummy.Plo文件，用ls
+					src/output/.deps/ -a命令查看该目录文件列表，的确没有dummy.Plo文件，但有个$(GRAPH_OUTPUT_DEV_NAME).c文件，这是什么情况？
+				</p>
+				<p>
+					在configure.ac里加了echo -e &#8220;GRAPH_OUTPUT_DEV_NAME = $GRAPH_OUTPUT_DEV_NAME&#8221;，再configure一次，打印的是GRAPH_OUTPUT_DEV_NAME
+					= dummy，但为什么创建的.Plo文件是$(GRAPH_OUTPUT_DEV_NAME).Plo而不是dummy.c ？
+				</p>
+				<p>
+					改用宏定义算了。
+				</p>
+				<p>
+					听说有个工具叫MSYS，比Cygmin速度更快、体积更小、功能强大，有空试试。
+				</p>
+				<p>
+					准备实现文本框的源文本的编辑操作，以使文本框上对可见文本的编辑操作能应用在源文本里。
+				</p>
+				<h2>
+					2012-11-20
+				</h2>
+				<p>
+					测试文本框时，字母 i 由于bitmap.left是负值，导致被它后面的字母 j 的字体位图覆盖，需要参考FreeType的文档，以解决字体的跨距问题。
+				</p>
+				<p>
+					找到了，FT_Glyph_Metrics结构体用于保存步进跨距相关的信息，主要利用horiBearingX、horiBearingY 和 horiAdvance
+					这三个成员变量，目前LCUI只考虑水平文本处理，垂直文本以后按照需求再考虑。测试时打印这几个成员变量，发现不是个正常的值，但看见FreeType文档上有这么短代码：slot->advance.x
+					>> 6; 于是修改代码，使之打印向右位移6位后的值，也就是除以64后的值，结果，打印的值是正常的。
+				</p>
+				<p>
+				<a href="https://github.com/lc-soft/LCUI/commit/2e0f27cc3db95861a352039efea0ef5634176fd0" target="_blank">修改了bitmapfont.c里的代码</a>，以获取上述的数据。
+				</p>
+				<p>
+					为了利用上述数据，
+					<a href="https://github.com/lc-soft/LCUI/commit/b4a354ad397a046da5d03ea4bbe896080441255b"
+					target="_blank">
+						text_layer.c的代码也进行了相应的修改
+					</a>
+					，主要是修改字体位图定位的计算方式。
+				</p>
+				<p>
+					文本框的源文本删除操作还需要考虑一下，如何根据rows_data（用于记录每行显示的文字的信息）里的数据，来删除源文本中相应的字符数据？虽然两个地方保存的字符数据指针所指向的地址是同一地址，但是，直接遍历的并对比地址的话，效率不会变低吗？
+				</p>
+				<p>
+					对了，应该让光标在移动后，记录光标前的字符在源文本中的位置，这样，删除字符时，以该位置为起点，开始遍历；若按backspace键来删除字符，就往左边遍历队列中的字符数据，而按delete键，就往右遍历；
+				</p>
+				<p>
+					光标每次移动时，会根据移动的方向，以之前确定的位置为起点，在队列中以相应的方向遍历字符数据的地址，直到地址匹配为止，这样，效率就比较高了。
 				</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
@@ -1706,7 +1773,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-18
+						最后更新: 2012-11-20
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
