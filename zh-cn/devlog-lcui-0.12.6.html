@@ -1750,6 +1750,13 @@
 				</h2>
 				<p>无法登陆sourceforge.net的FTP，数据库在前天就发现无法使用，估计是被删除了。还好github上有网站副本，修改index.html，因为不像之前那样，网站有github.com和sourceforge.net两个镜像可选，现在只能选语言了。
 				</p>
+<p>
+在测试 字符在源文本中的定位 功能时，发现rows_data里记录的字符数据的指针和源文本中记录的不一样；text_layer.c中有以下代码：<br>
+Queue_Insert( &amp;layer-&gt;text_source_data, layer-&gt;current_src_pos, &amp;char_data );<br>
+Queue_Insert( &amp;current_row_data-&gt;string, layer-&gt;current_des_pos.x, &amp;char_data );</p>
+<p>初始化时，current_row_data-&gt;string 这个队列已经使用过Queue_Useing_Pointer函数，以确定该队列用于存放指针，但这只在销毁队列时有用。</p>
+<p>添加队列成员时，由于Queue_Insert函数内部也调用了Queue_Add函数，在队列里新申请了一块内存，保存了char_data的副本。</p>
+<p>添加了个Queue_Insert_Pointer函数，用于添加指定成员的指针。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
