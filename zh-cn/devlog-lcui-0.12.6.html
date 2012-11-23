@@ -1757,6 +1757,13 @@ Queue_Insert( &amp;current_row_data-&gt;string, layer-&gt;current_des_pos.x, &am
 <p>初始化时，current_row_data-&gt;string 这个队列已经使用过Queue_Useing_Pointer函数，以确定该队列用于存放指针，但这只在销毁队列时有用。</p>
 <p>添加队列成员时，由于Queue_Insert函数内部也调用了Queue_Add函数，在队列里新申请了一块内存，保存了char_data的副本。</p>
 <p>添加了个Queue_Insert_Pointer函数，用于添加指定成员的指针。</p>
+
+<h2>2012-11-23</h2>
+<p>行数据结构体中，加入一个成员变量，用于保存行尾的换行符'\n'，也方便在跨行删除文本时，确定换行符'\n'的位置。</p>
+<p>测试同时删除多个文字时，出现问题：字体位图刷新 和 跨行文本删除出现异常。</p>
+<p>OK, 文本框的字符删除功能已经基本实现，重写了_TextLayer_Text_Delete函数的大部分代码，经过一番调试+完善后，基本没什么问题，其它地方添加变量的有效性判断，以正常处理数据。</p>
+<p>代码改动情况<a href="https://github.com/lc-soft/LCUI/commit/720daee0dfa4ed2961c44668a289c75f8a626488">可到这查看</a>。</p>
+
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1785,7 +1792,7 @@ Queue_Insert( &amp;current_row_data-&gt;string, layer-&gt;current_des_pos.x, &am
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-21
+						最后更新: 2012-11-23
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
