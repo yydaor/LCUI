@@ -1726,7 +1726,11 @@
 					>> 6; 于是修改代码，使之打印向右位移6位后的值，也就是除以64后的值，结果，打印的值是正常的。
 				</p>
 				<p>
-				<a href="https://github.com/lc-soft/LCUI/commit/2e0f27cc3db95861a352039efea0ef5634176fd0" target="_blank">修改了bitmapfont.c里的代码</a>，以获取上述的数据。
+					<a href="https://github.com/lc-soft/LCUI/commit/2e0f27cc3db95861a352039efea0ef5634176fd0"
+					target="_blank">
+						修改了bitmapfont.c里的代码
+					</a>
+					，以获取上述的数据。
 				</p>
 				<p>
 					为了利用上述数据，
@@ -1748,15 +1752,58 @@
 				<h2>
 					2012-11-21
 				</h2>
-				<p>无法登陆sourceforge.net的FTP，数据库在前天就发现无法使用，估计是被删除了。还好github上有网站副本，修改index.html，因为不像之前那样，网站有github.com和sourceforge.net两个镜像可选，现在只能选语言了。
+				<p>
+					无法登陆sourceforge.net的FTP，数据库在前天就发现无法使用，估计是被删除了。还好github上有网站副本，修改index.html，因为不像之前那样，网站有github.com和sourceforge.net两个镜像可选，现在只能选语言了。
 				</p>
-<p>
-在测试 字符在源文本中的定位 功能时，发现rows_data里记录的字符数据的指针和源文本中记录的不一样；text_layer.c中有以下代码：<br>
-Queue_Insert( &amp;layer-&gt;text_source_data, layer-&gt;current_src_pos, &amp;char_data );<br>
-Queue_Insert( &amp;current_row_data-&gt;string, layer-&gt;current_des_pos.x, &amp;char_data );</p>
-<p>初始化时，current_row_data-&gt;string 这个队列已经使用过Queue_Useing_Pointer函数，以确定该队列用于存放指针，但这只在销毁队列时有用。</p>
-<p>添加队列成员时，由于Queue_Insert函数内部也调用了Queue_Add函数，在队列里新申请了一块内存，保存了char_data的副本。</p>
-<p>添加了个Queue_Insert_Pointer函数，用于添加指定成员的指针。</p>
+				<h2>
+					2012-11-23
+				</h2>
+				<p>
+					行数据结构体中，加入一个成员变量，用于保存行尾的换行符'\n'，也方便在跨行删除文本时，确定换行符'\n'的位置。
+				</p>
+				<p>
+					测试同时删除多个文字时，出现问题：字体位图刷新 和 跨行文本删除出现异常。
+				</p>
+				<p>
+					OK, 文本框的字符删除功能已经基本实现，重写了_TextLayer_Text_Delete函数的大部分代码，经过一番调试+完善后，基本没什么问题，其它地方添加变量的有效性判断，以正常处理数据。
+				</p>
+				<p>
+					代码改动情况
+					<a href="https://github.com/lc-soft/LCUI/commit/720daee0dfa4ed2961c44668a289c75f8a626488">
+						可到这查看
+					</a>
+					。
+				</p>
+				<h2>
+					2012-11-24
+				</h2>
+				<p>
+					测试文本添加功能时，发现在第一行行首添加字符时，源文本内容和显示的文本都异常，第一个字符没有添加进去。
+				</p>
+				<p>
+					花了几个小时调试，开始是怀疑队列处理有问题，可是单独测试Queue_Insert函数并没出现问题，由于源文本是使用链表方式储存的，在相关函数里加了printf函数打印链表头结点的地址和第一个结点中记录的上个结点（prev指针保存）的地址；
+					<br>
+					结果表明，添加文本前，头结点的地址和第一个结点的prev指针是一致的，添加时，就不一致了。
+					<br>
+					仔细分析之后，恍然大悟，问题出在TextLayer_Merge函数，在处理后期，直接将A源文本赋给B源文本，并未修改数据中的第一个结点的prev指针。
+					<br>
+					为解决此问题，增加了Queue_Quote函数，用于让一个队列引用另一个队列。
+				</p>
+				<p>
+					正修复添加文本时所出现的文字显示问题。
+				</p>
+				<p>
+					修改了Queue_Cat函数，之前以为，如果两个队列的数据储存都是使用链表，那么直接拼接首位结点即可，但现在才发现，队列有已用和未用这两种空间，仅仅是拼接首尾结点是不可行的，还需要将已用空间的后半段链表拼接。
+				</p>
+				<p>
+					断行处理功能已经完成，可以通过按回车使当前行断行，断点后面的字符转移至新行。
+				</p>
+				<p>文本框的纯文本编辑功能已经基本完成，效果如下图所示：<br>
+					<a href="http://lcui.org/files/images/devlog/test_textbox-02.gif">
+						<img class="alignnone" title="测试跨行文本删除功能" src="http://lcui.org/files/images/devlog/test_textbox-02.gif"
+						alt="" width="320" height="240" />
+					</a>
+				</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1785,7 +1832,7 @@ Queue_Insert( &amp;current_row_data-&gt;string, layer-&gt;current_des_pos.x, &am
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-21
+						最后更新: 2012-11-24
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
