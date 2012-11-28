@@ -1819,14 +1819,30 @@
 				<p>看来，需要一个缓冲，存储文本，等绘制文本位图时再更新。</p>
 				<p>删除了TextLayer_Merge函数，之前只是为了减少刷新区域，但现在觉得那点刷新区域不减少也没事，况且测试时添加的区域有问题，导致部分文字被刷没了，懒得解决这问题。</p>
 				<p>TextLayer_Text函数改为直接清空原文本，再添加新文本，并重绘所有字体位图。</p>
+				<p>文本图层的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/9d4dcecb64e35bc614b256288e159e42fb16102f">可查看这里</a>。</p>
 				<p>测试发现，label部件不显示文本，需要更新一次才显示。</p>
 				<p>由于label部件是在绘制文本图层前获取文本位图的尺寸，而添加缓冲功能后，需要在绘制文本图层后才能获得文本图层的尺寸，改一下laebl部件的代码即可解决。</p>
+				<p>Label部件的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/25ce663bddd6024751ca15c56081c9de1fceb872">可查看这里</a>。</p>
 				<h2>2012-11-28</h2>
 				<p>可以将回调函数与滚动条部件连接，在滚动条被滚动时，将会修改label部件上显示的文字。</p>
 				<a href="http://lcui.org/files/images/devlog/test_scrollbar-01.gif">
 					<img class="alignnone" title="测试滚动条" src="http://lcui.org/files/images/devlog/test_scrollbar-01.gif"
 					alt="" width="320" height="240">
 				</a>
+				<p>文本框添加两个滚动条，现在先测试右边的滚动条。</p>
+				<p>为测试文本框的文本滚动功能，加了个定时器，用于定时滚动文本，但测试结果表明，只能用一个定时器，这个定时器用于文本框内的光标闪烁。</p>
+				<p>是Queue_Swap函数问题，导致不能对定时器列表进行排序，<a href="https://github.com/lc-soft/LCUI/commit/57ca1067e29e232dde570a52f55a729409074fc9">已纠正</a>。</p>
+				<p>测试文本框的文本滚动时，发现文本刷新不正常，时不时的还会来个段错误。</p>
+				<p>经过调试后，出错原因是在绘制字体位图时，获取的裁剪区域不正常，区域的高度是负数，导致绘制时使用的下标不正常，从而访问越界，产生段错误。<a href="https://github.com/lc-soft/LCUI/commit/99619309dec9f40345058f206b22cd6394279582">已纠正</a>。</p>
+				<p>解决换行后当前行下面的所有行未被重绘的问题，考虑到会遇到频繁滚动文本图层的情况，更改了文本图层的坐标偏移处理方式。</p>
+				<p>其它细节问题的解决情况就不多说了，下图是目前的文本框的效果：</p>
+				<a href="http://lcui.org/files/images/devlog/test_textbox-03.gif">
+					<img class="alignnone" title="测试文本框" src="http://lcui.org/files/images/devlog/test_textbox-03.gif"
+					alt="" width="320" height="240">
+				</a>
+				<p>移动光标时，浏览区域会不自动调整，以使光标在浏览区域内。</a>
+				<p>滚动条的位置及长度，会根据文本内容自动调整，但是，光标移动后的滚动条更新处理 会与它存在冲突，导致移动光标后，不能正常更新滚动条。</p>
+				<p>经过测试，有时会产生段错误。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
