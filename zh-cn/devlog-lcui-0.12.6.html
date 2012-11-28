@@ -1821,6 +1821,12 @@
 				<p>TextLayer_Text函数改为直接清空原文本，再添加新文本，并重绘所有字体位图。</p>
 				<p>测试发现，label部件不显示文本，需要更新一次才显示。</p>
 				<p>由于label部件是在绘制文本图层前获取文本位图的尺寸，而添加缓冲功能后，需要在绘制文本图层后才能获得文本图层的尺寸，改一下laebl部件的代码即可解决。</p>
+				<h2>2012-11-28</h2>
+				<p>可以将回调函数与滚动条部件连接，在滚动条被滚动时，将会修改label部件上显示的文字。</p>
+				<a href="http://lcui.org/files/images/devlog/test_scrollbar-01.gif">
+					<img class="alignnone" title="测试滚动条" src="http://lcui.org/files/images/devlog/test_scrollbar-01.gif"
+					alt="" width="320" height="240">
+				</a>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1849,7 +1855,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-24
+						最后更新: 2012-11-28
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
