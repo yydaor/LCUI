@@ -1843,6 +1843,37 @@
 				<p>移动光标时，浏览区域会不自动调整，以使光标在浏览区域内。</a>
 				<p>滚动条的位置及长度，会根据文本内容自动调整，但是，光标移动后的滚动条更新处理 会与它存在冲突，导致移动光标后，不能正常更新滚动条。</p>
 				<p>经过测试，有时会产生段错误。</p>
+				<h2>2012-11-29</h2>
+				用C-Free5编译了一个测试程序，程序就是显示个windows窗口。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-11-30-23-23-33.jpg">
+					<img class="alignnone" title="windows测试程序" src="http://lcui.org/files/images/devlog/2012-11-30-23-23-33.jpg"
+					alt="" width="351" height="296">
+				</a>
+				<p>初看测试程序的源代码的时候，感觉很陌生，经过一番修改和测试后，对这代码还算比较熟悉了。</p>
+				<p>就两个函数：WinMain和WndProc，WinMain函数里将WndProc保存至WNDCLASS类中的lpfnWndProc，然后调用RegisterClass函数注册WNDCLASS类，再调用CreateWindow创建窗口，最后进入消息循环。</p>
+				<p>在WndProc函数里，响应WM_PAINT消息，在客户区里绘图，百度过程中，了解到BeginPaint和EndPaint函数要成对使用，矩形区域填充用FillRect函数，参数1指定目标，参数2指定区域，参数3指定填充的颜色。</p>
+				<p>有个InvalidateRect函数，让指定区域无效，等待重绘，这个和我的LCUI中的Add_Screen_Refresh_Area函数、ADD_Widget_Refresh_Area函数一样，记录所需刷新的区域，等待重绘。</p>
+				<h2>2012-11-30</h2>
+				<p>拆分了部分代码至新的函数。</p>
+				<p>添加Exec_TextBox_Resize函数，文本框在尺寸改变时能够调用它，以调整滚动条位置和长度。<br>
+				Exec_TextBox_Update函数，在编辑文本时会被调用，会调整滚动条的长度。<br>
+				TextBox_ViewArea_Update函数，用于更新文本显示区域，调整滚动条的位置。</p>
+				<p>TextBox_Cursor_Move函数，在光标移动时被调用，更新完光标位置后，会调用TextBox_ViewArea_Update函数，以调整文本浏览区域。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/0cf7e3adbe20f4dea46859a7b27fbc2868e2a0ba">文本框的纵向滚动条已经调整完毕</a>，能够完成所需要的基本功能。</p>
+				<p>在优化文本框的文本滚动刷新时，发现如果添加的刷新区域很小（15x15左右），数量很多的话，拖动滚动条时会有卡顿。<br>想出了个解决方法：再加个队列和一个标志变量；<br>标志变量的值只有0和1，为1时，处理的区域刷新会锁住队列1，在锁住的过程中，添加的区域数据都会添加至队列0中,为0时，则相反。这样就不会因为队列被锁住而延迟区域的记录了。</p>
+				<p>优化已经完成，代码改动情况可<a href="https://github.com/lc-soft/LCUI/commit/c85f5dc2dd0ed0c05e0001dc8c50d3024cf21416">到这里查看</a>。</p>
+				<p>测试文本行的删减功能时，发现文本显示区域移动有问题，光标不在文本显示区域内。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/e4050055d6170a8824e98b506fd890c69a2a6329">问题已经解决</a>，源代码加了11行，删了4行，改动并不大，就是修改了文本图层的偏移坐标的计算方式。</p>
+				<p>发现了一个问题：在文本框里按住鼠标左键，快速的移动鼠标，跑几圈，然后停住，调试信息会打印几个屏幕，干的都是重复的事，延续了几秒才停住；个人猜测是添加处理鼠标拖动事件的问题，鼠标每次移动都将关联的函数指针+参数转换成任务，追加至程序任务队列，鼠标移动轨迹有多像素，就加多少次任务，这里需要优化一下，任务添加模式由之前的ADD_MODE_ADD_NEW改为ADD_MODE_REPLACE | AND_ARG_F，也就是使用替换模式，如果队列里有个任务和 新任务的函数指针+参数1指针 一样，那么，直接替换。</p>
+				<p>问题已经解决，代码改动情况可<a href="https://github.com/lc-soft/LCUI/commit/43cf0c8788871adb60de90d0285844f925881b37">到这里查看</a>。</p>
+				<p>文本框的纵向滚动条已经完成，剩下的任务就是：<br>
+				添加横向滚动条<br>
+				文本框可设置成单行<br>
+				完善多文本框内的文本输入功能<br>
+				修改现有测试程序代码<br>
+				对各个源文件中的代码进行检查<br>
+				基本完成后，准备发布0.12.6版本。</p>
+
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1871,7 +1902,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-28
+						最后更新: 2012-11-30
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
