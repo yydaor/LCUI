@@ -1895,9 +1895,25 @@
 					alt="" width="640" height="480">
 				</a>
 				<p>测试时，发现窗口标题栏上的关闭按钮的大小不对，查看了window部件的代码，没什么问题，后来才怀疑是没有禁用按钮部件的自动尺寸调整，再看了一下代码，果真没有禁用，现已修复。让人感到奇怪的是，之前怎么是正常的大小？</p>
-
-
-
+				<h2>2012-12-2</h2>
+				<p>测试进度条时，进度条前景图形不对，感觉是向上下两边拉伸了一样，后来发现是get_PX_P_t函数有时无法将字符串“100%”处理成1.00，<a href="https://github.com/lc-soft/LCUI/commit/112891e40b89b9226d2d8c920d6d463382074afa">已纠正</a>。</p>
+				<p>测试发现，即使不动鼠标，也会刷新屏幕区域，该区域和窗口所在的区域相同。</p>
+				<p>该问题是上次修改Record_WidgetUpdate函数造成的，又改了一下代码。</p>
+				<h2>2012-12-3</h2>
+				<p>测试照片查看器，主循环里执行几个任务后出错，调试+分析后，初步认定是ActiveBox部件的问题。</p>
+				<p>ActiveBox部件代码中，没有初始化LCUI_Func结构体，尤其是destroy_arg这个标志，用于指示参数1和2是否在执行完任务后free掉，由于没赋值，它的值时不确定，从而导致在执行任务后对不能free的参数进行free，产生错误。</p>
+				<p>顺便改了ActiveBox部件的代码，之前是用单独一个线程来处理动画更新，现已改成用定时器。</p>
+				<p>测试ActiveBox部件的动画暂停+播放功能，查看打印的调试信息后，发现每多一次暂停+播放，打印的更新动画条目就会多一条，问题出在Frames_Play函数，每次调用它，不管该动画是否已存在队列中，都进行添加，现已纠正，但是纠正后，两个ActiveBox部件就不能播放同一个动画，必须为该动画重新开辟一个内存来存储。</p>
+				<p>ActiveBox部件的代码提交信息<a href="https://github.com/lc-soft/LCUI/commit/9c156371baa257835b2ff588c8570b5619a0b416">可到这里查看</a>。</a>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/c8bc36d458068c54d17899bfa63299d8b4647ce5">解决无法正常绘制内置字体位图的问题</a>。</p>
+				<p>为滚动条添加横向显示功能，修改了滚动条容器的背景色。</p>
+				<p>为文本框添加横向滚动条，滚动条的尺寸和位置改用两个函数别更新，<a href="https://github.com/lc-soft/LCUI/commit/5b7f28122076db1d8b0d5c266384679d3071d9ac">这是代码提交信息</a>。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/58653aa1b07bd09cb5f2dff336d98cb34ba4dcdc">更新文本框的测试程序</a>，效果如下图所示。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-12-03-17-24-03.png">
+					<img class="alignnone" title="文本框的滚动条" src="http://lcui.org/files/images/devlog/2012-12-03-17-24-03.png"
+					alt="" width="320" height="240">
+				</a>
+				<p>本来是拷贝LCUI_Widget.c文件并提交的，可是拖错了，把LCUI_Queue.c拖进去了，添加commit信息时又没注意，把LCUI_Widget.c文件的commit信息加到了LCUI_Queue.c上。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
