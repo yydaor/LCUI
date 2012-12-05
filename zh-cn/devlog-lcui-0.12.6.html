@@ -1914,6 +1914,31 @@
 					alt="" width="320" height="240">
 				</a>
 				<p>本来是拷贝LCUI_Widget.c文件并提交的，可是拖错了，把LCUI_Queue.c拖进去了，添加commit信息时又没注意，把LCUI_Widget.c文件的commit信息加到了LCUI_Queue.c上。</p>
+				<h2>2012-12-4</h2>
+				<p>测试文本框，在删除当前行唯一的一个字符时出现了错误，调试+分析后，确定BUG来自于队列删除操作上，由于使用的是链表模式，没考虑到只有一个成员的情况，没正常处理好结点，导致在删除该成员时异常，<a href="https://github.com/lc-soft/LCUI/commit/933340ba400b039eb6255b412d84770fd06809d1">现已纠正</a>。</p>
+				<p>文本框内使用TextBox_Text_Add添加文本的话，获取的字体信息异常，一个字的位图的X轴跨距上万，导致在调整部件尺寸时，因无法为大尺寸部件分配内存而异常终止。</p>
+				<p>加了些代码，用于打印信息，仔细对比正常情况和异常情况下输出的内容，得出以下结果：
+				<br>如果TextLayer_Text_GenerateBMP()函数的两次调用是依次调用的话，获取的字体信息是正常的。
+				<br>如果TextLayer_Text_GenerateBMP()函数被两个线程调用，并且在同一时间段内这两次调用都未结束，打印的信息是异常的。</p>
+				<p>话说，FreeType是不是不能在多线程上正常工作？有空再单独测试一下，看看多线程获取字体位图时是否还会出现此问题，如果有，那么FreeType的这个问题，可能 和多线程读写同一个文件所产生的问题类似。</p>
+				<p>完善了文本框的滚动条处理，编辑文本时会自动更新滚动条的位置及长度。</p>
+				<p>启用样式标签支持，并往文本框内添加带样式标签的文本，显示不正常，后来发现，是由于在添加文本时将文本分割掉了，导致样式标签不完整，这个以后再解决。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-12-04-21-30-47.png">
+					<img class="alignnone" title="样式标签无法正常处理" src="http://lcui.org/files/images/devlog/2012-12-04-21-30-47.png"
+					alt="" width="320" height="240">
+				</a>
+				<h2>2012-12-5</h2>
+				<p>修改TextBox_Text_Add函数，它会将文本分割成若干个文本块，等待更新文本框时将该文本块插入至光标处。</p>
+				<p>文本框支持单行模式，所有文字都显示在一行里，并且隐藏滚动条。</p>
+				<p>添加屏蔽字符的支持，可实现密码输入框。</p>
+				<p>可对文本框的内容进行限制，使其在输入时，忽略限制范围外的字符。</p>
+				<p>文本框的代码修改情况，<a href="https://github.com/lc-soft/LCUI/commit/1dc043eec2aaa30e4ca15503fc9e413f6ef45071">可到这查看</a>。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/900c427be207934f21868063896633cd0f2c8f63">修改了文本框的测试程序</a>，效果如下图所示：</p>
+				<a href="http://lcui.org/files/images/devlog/test_textbox-05.gif">
+					<img class="alignnone" title="用户登录界面" src="http://lcui.org/files/images/devlog/test_textbox-05.gif"
+					alt="" width="320" height="240">
+				</a>
+				<p>剩下的任务就是更新测试程序的代码，照片查看器有的小问题，看看重写后是否存在此问题。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1942,7 +1967,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-12-03
+						最后更新: 2012-12-05
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
