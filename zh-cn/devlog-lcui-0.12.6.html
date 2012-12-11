@@ -1938,7 +1938,20 @@
 					<img class="alignnone" title="用户登录界面" src="http://lcui.org/files/images/devlog/test_textbox-05.gif"
 					alt="" width="320" height="240">
 				</a>
+				<h2>2012-12-5 至 2012-12-11</h2>
 				<p>剩下的任务就是更新测试程序的代码，照片查看器有的小问题，看看重写后是否存在此问题。</p>
+				<p>照片查看器的ActiveBox部件无法播放动画，调试发现是定时器记录的程序ID与程序实际ID不同，后来才发现，是因为在创建的线程中添加的定时器。</p>
+				<p>切换查看其它图片时，会卡住。</p>
+				<p>BUG范围已经缩小至PictureBox部件的重绘函数里，在对图形设置锁时，出现了死锁导致程序卡在这里。</p>
+				<p>在LCUI_Graph结构体中加了两个变量，分别记录读和写的次数，又加了个全局指针变量，在创建PictureBox部件后，保存该部件的图形数据的地址。<、p>
+				<p>Graph_Lock函数中，累计次数，而Graph_Unlock函数，用于将当前锁的状态与当前锁住的次数对比，如果不正常，则调用abort函数终止，这样可以用gdb查看函数调用栈。</p>
+				<p>测试结果表明，调用了Graph_Tile函数，raph_Tile函数又调用了Graph_Fill_Alpha函数，在Graph_Fill_Alpha函数前已经对图形数据设置了锁，而Graph_Fill_Alpha函数又对图形数据上了一次锁，因而出现死锁,现已纠正该问题。</p>
+				<p>在为照片查看器设置第三个定时器后，不起作用，按钮没有隐藏，后来发现，该定时器被暂停了。</p>
+				<p>花了一段时间，找到了问题原因：调用pause_timer函数时，本来是要传定时器的ID的，但是还没创建定时器，没有ID，变量保存的是-1，于是把-1传进去了，而pause_timer函数居然还能找到ID为-1的定时器。</p>
+
+				<p>在为照片查看器的部件添加淡出效果时，发现只有父部件的透明度改变了，而子部件没改变，应该加个属性inherit_alpha，用于指示子部件图层透明度是否随着父部件的透明度的改变而改变。</p>
+				<p>完善部分C++头文件，LCUI类改为LCUIApp，而label、window、button等部件，改用继承方式，属性及成员函数继承自LCUIWidget，因为它们都是LCUIWidget部件。</p>
+				<p></p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
