@@ -1819,9 +1819,167 @@
 				<p>看来，需要一个缓冲，存储文本，等绘制文本位图时再更新。</p>
 				<p>删除了TextLayer_Merge函数，之前只是为了减少刷新区域，但现在觉得那点刷新区域不减少也没事，况且测试时添加的区域有问题，导致部分文字被刷没了，懒得解决这问题。</p>
 				<p>TextLayer_Text函数改为直接清空原文本，再添加新文本，并重绘所有字体位图。</p>
+				<p>文本图层的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/9d4dcecb64e35bc614b256288e159e42fb16102f">可查看这里</a>。</p>
 				<p>测试发现，label部件不显示文本，需要更新一次才显示。</p>
 				<p>由于label部件是在绘制文本图层前获取文本位图的尺寸，而添加缓冲功能后，需要在绘制文本图层后才能获得文本图层的尺寸，改一下laebl部件的代码即可解决。</p>
+<<<<<<< HEAD
 				<p>TextLayer代码修改情况可<a href="https://github.com/lc-soft/LCUI/commit/9d4dcecb64e35bc614b256288e159e42fb16102f">到这查看</aa>，label部件的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/25ce663bddd6024751ca15c56081c9de1fceb872">可到这查看</a>。</p>
+=======
+				<p>Label部件的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/25ce663bddd6024751ca15c56081c9de1fceb872">可查看这里</a>。</p>
+				<h2>2012-11-28</h2>
+				<p>可以将回调函数与滚动条部件连接，在滚动条被滚动时，将会修改label部件上显示的文字。</p>
+				<a href="http://lcui.org/files/images/devlog/test_scrollbar-01.gif">
+					<img class="alignnone" title="测试滚动条" src="http://lcui.org/files/images/devlog/test_scrollbar-01.gif"
+					alt="" width="320" height="240">
+				</a>
+				<p>文本框添加两个滚动条，现在先测试右边的滚动条。</p>
+				<p>为测试文本框的文本滚动功能，加了个定时器，用于定时滚动文本，但测试结果表明，只能用一个定时器，这个定时器用于文本框内的光标闪烁。</p>
+				<p>是Queue_Swap函数问题，导致不能对定时器列表进行排序，<a href="https://github.com/lc-soft/LCUI/commit/57ca1067e29e232dde570a52f55a729409074fc9">已纠正</a>。</p>
+				<p>测试文本框的文本滚动时，发现文本刷新不正常，时不时的还会来个段错误。</p>
+				<p>经过调试后，出错原因是在绘制字体位图时，获取的裁剪区域不正常，区域的高度是负数，导致绘制时使用的下标不正常，从而访问越界，产生段错误。<a href="https://github.com/lc-soft/LCUI/commit/99619309dec9f40345058f206b22cd6394279582">已纠正</a>。</p>
+				<p>解决换行后当前行下面的所有行未被重绘的问题，考虑到会遇到频繁滚动文本图层的情况，更改了文本图层的坐标偏移处理方式。</p>
+				<p>其它细节问题的解决情况就不多说了，下图是目前的文本框的效果：</p>
+				<a href="http://lcui.org/files/images/devlog/test_textbox-03.gif">
+					<img class="alignnone" title="测试文本框" src="http://lcui.org/files/images/devlog/test_textbox-03.gif"
+					alt="" width="320" height="240">
+				</a>
+				<p>移动光标时，浏览区域会不自动调整，以使光标在浏览区域内。</a>
+				<p>滚动条的位置及长度，会根据文本内容自动调整，但是，光标移动后的滚动条更新处理 会与它存在冲突，导致移动光标后，不能正常更新滚动条。</p>
+				<p>经过测试，有时会产生段错误。</p>
+				<h2>2012-11-29</h2>
+				用C-Free5编译了一个测试程序，程序就是显示个windows窗口。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-11-30-23-23-33.jpg">
+					<img class="alignnone" title="windows测试程序" src="http://lcui.org/files/images/devlog/2012-11-30-23-23-33.jpg"
+					alt="" width="351" height="296">
+				</a>
+				<p>初看测试程序的源代码的时候，感觉很陌生，经过一番修改和测试后，对这代码还算比较熟悉了。</p>
+				<p>就两个函数：WinMain和WndProc，WinMain函数里将WndProc保存至WNDCLASS类中的lpfnWndProc，然后调用RegisterClass函数注册WNDCLASS类，再调用CreateWindow创建窗口，最后进入消息循环。</p>
+				<p>在WndProc函数里，响应WM_PAINT消息，在客户区里绘图，百度过程中，了解到BeginPaint和EndPaint函数要成对使用，矩形区域填充用FillRect函数，参数1指定目标，参数2指定区域，参数3指定填充的颜色。</p>
+				<p>有个InvalidateRect函数，让指定区域无效，等待重绘，这个和我的LCUI中的Add_Screen_Refresh_Area函数、ADD_Widget_Refresh_Area函数一样，记录所需刷新的区域，等待重绘。</p>
+				<h2>2012-11-30</h2>
+				<p>拆分了部分代码至新的函数。</p>
+				<p>添加Exec_TextBox_Resize函数，文本框在尺寸改变时能够调用它，以调整滚动条位置和长度。<br>
+				Exec_TextBox_Update函数，在编辑文本时会被调用，会调整滚动条的长度。<br>
+				TextBox_ViewArea_Update函数，用于更新文本显示区域，调整滚动条的位置。</p>
+				<p>TextBox_Cursor_Move函数，在光标移动时被调用，更新完光标位置后，会调用TextBox_ViewArea_Update函数，以调整文本浏览区域。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/0cf7e3adbe20f4dea46859a7b27fbc2868e2a0ba">文本框的纵向滚动条已经调整完毕</a>，能够完成所需要的基本功能。</p>
+				<p>在优化文本框的文本滚动刷新时，发现如果添加的刷新区域很小（15x15左右），数量很多的话，拖动滚动条时会有卡顿。<br>想出了个解决方法：再加个队列和一个标志变量；<br>标志变量的值只有0和1，为1时，处理的区域刷新会锁住队列1，在锁住的过程中，添加的区域数据都会添加至队列0中,为0时，则相反。这样就不会因为队列被锁住而延迟区域的记录了。</p>
+				<p>优化已经完成，代码改动情况可<a href="https://github.com/lc-soft/LCUI/commit/c85f5dc2dd0ed0c05e0001dc8c50d3024cf21416">到这里查看</a>。</p>
+				<p>测试文本行的删减功能时，发现文本显示区域移动有问题，光标不在文本显示区域内。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/e4050055d6170a8824e98b506fd890c69a2a6329">问题已经解决</a>，源代码加了11行，删了4行，改动并不大，就是修改了文本图层的偏移坐标的计算方式。</p>
+				<p>发现了一个问题：在文本框里按住鼠标左键，快速的移动鼠标，跑几圈，然后停住，调试信息会打印几个屏幕，干的都是重复的事，延续了几秒才停住；个人猜测是添加处理鼠标拖动事件的问题，鼠标每次移动都将关联的函数指针+参数转换成任务，追加至程序任务队列，鼠标移动轨迹有多像素，就加多少次任务，这里需要优化一下，任务添加模式由之前的ADD_MODE_ADD_NEW改为ADD_MODE_REPLACE | AND_ARG_F，也就是使用替换模式，如果队列里有个任务和 新任务的函数指针+参数1指针 一样，那么，直接替换。</p>
+				<p>问题已经解决，代码改动情况可<a href="https://github.com/lc-soft/LCUI/commit/43cf0c8788871adb60de90d0285844f925881b37">到这里查看</a>。</p>
+				<p>文本框的纵向滚动条已经完成，剩下的任务就是：<br>
+				添加横向滚动条<br>
+				文本框可设置成单行<br>
+				完善多文本框内的文本输入功能<br>
+				修改现有测试程序代码<br>
+				对各个源文件中的代码进行检查<br>
+				基本完成后，准备发布0.12.6版本。</p>
+				<h2>2012-12-1</h2>
+				<p>测试让文本框显示README.md文件内容，载入速度有点慢，看来需要优化一下；
+				<p>对于纯英文文本，就那26个字母，外加其它ASCII码字符，也就百来个可显字符，对于这些重复字符，不必重新获取字符的字体位图，直接引用现存的字体位图即可，这样就省得重新载入字体位图了。<br>
+				<br>主要实现方法：加个队列，队列里保存的字符数据 根据字符编码从小到大排列，在获取字体位图时，会先在队列里查找，使用的是二分法查找，若找到指定编码的字符数据，则在里面找符合当前尺寸、字体族、字体风格的字体位图，如果找到了，就直接引用，否则，重新获取字体位图，并记录至该字符数据里。<br>
+				这个还是放到后续的更新中。</p>
+				<p>测试移动滚动条时，发现个问题，光标在文本末尾，拖动滚动条，移动显示区域，之后，鼠标再点一次滚动条，显示区域居然跳到文本末尾去了。</p>
+
+				<p>修改了Record_WidgetUpdate函数的代码，Queue_Replace函数有点小问题，在拖动滚动条滚动文本框的文本时，有时会出错，出错位置在Queue_Replace函数里，覆盖一个队列成员前，调用free函数释放它就会出错。</p>
+
+				<p>又修改了一次Record_WidgetUpdate函数，在记录部件更新时，如果已经存在2个相同记录，则进行覆盖，否则新增一条记录，这是为了让文本框能够正常分段处理显示文本，而又保证 部件更新时的再次记录更新 不会导致无限添加记录。代码改动情况可<a href="https://github.com/lc-soft/LCUI/commit/b2fe91a1b8d63f15b13752f9556fcec0631a61ed">到这里查看</a>。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/2e80191545e89404b3af67ff6dbe17c5c9245484">修改了TextLayer</a>，支持在末尾追加文本，且不会改变光标位置。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/2367160fdcebfdd2330917e6800712ca9cfe0e5f">文本框做了修改</a>，在为文本框添加文本时，会先将其分成若干个文本块，并添加至缓冲区内，在更新文本框时，会检测缓冲区是否有数据，有则获取一个文本块，追加至当前文本末尾，然后再标记文本框更新，以处理显示剩下的文本块。效果如下图所示：</p>
+				<a href="http://lcui.org/files/images/devlog/test_textbox-04.gif">
+					<img class="alignnone" title="测试文本框的分段文本显示处理" src="http://lcui.org/files/images/devlog/test_textbox-04.gif"
+					alt="" width="320" height="240">
+				</a>
+				<p>窗口设置为640x480，用大文本框显示文本，文本位图的获取速度感觉很慢，拖动滚动条滚动文本，有卡顿，记得以前的照片查看器拖动图片都没这么卡。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-12-01-21-44-42.png">
+					<img class="alignnone" title="测试大文本框" src="http://lcui.org/files/images/devlog/2012-12-01-21-44-42.png"
+					alt="" width="640" height="480">
+				</a>
+				<p>测试时，发现窗口标题栏上的关闭按钮的大小不对，查看了window部件的代码，没什么问题，后来才怀疑是没有禁用按钮部件的自动尺寸调整，再看了一下代码，果真没有禁用，现已修复。让人感到奇怪的是，之前怎么是正常的大小？</p>
+				<h2>2012-12-2</h2>
+				<p>测试进度条时，进度条前景图形不对，感觉是向上下两边拉伸了一样，后来发现是get_PX_P_t函数有时无法将字符串“100%”处理成1.00，<a href="https://github.com/lc-soft/LCUI/commit/112891e40b89b9226d2d8c920d6d463382074afa">已纠正</a>。</p>
+				<p>测试发现，即使不动鼠标，也会刷新屏幕区域，该区域和窗口所在的区域相同。</p>
+				<p>该问题是上次修改Record_WidgetUpdate函数造成的，又改了一下代码。</p>
+				<h2>2012-12-3</h2>
+				<p>测试照片查看器，主循环里执行几个任务后出错，调试+分析后，初步认定是ActiveBox部件的问题。</p>
+				<p>ActiveBox部件代码中，没有初始化LCUI_Func结构体，尤其是destroy_arg这个标志，用于指示参数1和2是否在执行完任务后free掉，由于没赋值，它的值时不确定，从而导致在执行任务后对不能free的参数进行free，产生错误。</p>
+				<p>顺便改了ActiveBox部件的代码，之前是用单独一个线程来处理动画更新，现已改成用定时器。</p>
+				<p>测试ActiveBox部件的动画暂停+播放功能，查看打印的调试信息后，发现每多一次暂停+播放，打印的更新动画条目就会多一条，问题出在Frames_Play函数，每次调用它，不管该动画是否已存在队列中，都进行添加，现已纠正，但是纠正后，两个ActiveBox部件就不能播放同一个动画，必须为该动画重新开辟一个内存来存储。</p>
+				<p>ActiveBox部件的代码提交信息<a href="https://github.com/lc-soft/LCUI/commit/9c156371baa257835b2ff588c8570b5619a0b416">可到这里查看</a>。</a>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/c8bc36d458068c54d17899bfa63299d8b4647ce5">解决无法正常绘制内置字体位图的问题</a>。</p>
+				<p>为滚动条添加横向显示功能，修改了滚动条容器的背景色。</p>
+				<p>为文本框添加横向滚动条，滚动条的尺寸和位置改用两个函数别更新，<a href="https://github.com/lc-soft/LCUI/commit/5b7f28122076db1d8b0d5c266384679d3071d9ac">这是代码提交信息</a>。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/58653aa1b07bd09cb5f2dff336d98cb34ba4dcdc">更新文本框的测试程序</a>，效果如下图所示。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-12-03-17-24-03.png">
+					<img class="alignnone" title="文本框的滚动条" src="http://lcui.org/files/images/devlog/2012-12-03-17-24-03.png"
+					alt="" width="320" height="240">
+				</a>
+				<p>本来是拷贝LCUI_Widget.c文件并提交的，可是拖错了，把LCUI_Queue.c拖进去了，添加commit信息时又没注意，把LCUI_Widget.c文件的commit信息加到了LCUI_Queue.c上。</p>
+				<h2>2012-12-4</h2>
+				<p>测试文本框，在删除当前行唯一的一个字符时出现了错误，调试+分析后，确定BUG来自于队列删除操作上，由于使用的是链表模式，没考虑到只有一个成员的情况，没正常处理好结点，导致在删除该成员时异常，<a href="https://github.com/lc-soft/LCUI/commit/933340ba400b039eb6255b412d84770fd06809d1">现已纠正</a>。</p>
+				<p>文本框内使用TextBox_Text_Add添加文本的话，获取的字体信息异常，一个字的位图的X轴跨距上万，导致在调整部件尺寸时，因无法为大尺寸部件分配内存而异常终止。</p>
+				<p>加了些代码，用于打印信息，仔细对比正常情况和异常情况下输出的内容，得出以下结果：
+				<br>如果TextLayer_Text_GenerateBMP()函数的两次调用是依次调用的话，获取的字体信息是正常的。
+				<br>如果TextLayer_Text_GenerateBMP()函数被两个线程调用，并且在同一时间段内这两次调用都未结束，打印的信息是异常的。</p>
+				<p>话说，FreeType是不是不能在多线程上正常工作？有空再单独测试一下，看看多线程获取字体位图时是否还会出现此问题，如果有，那么FreeType的这个问题，可能 和多线程读写同一个文件所产生的问题类似。</p>
+				<p>完善了文本框的滚动条处理，编辑文本时会自动更新滚动条的位置及长度。</p>
+				<p>启用样式标签支持，并往文本框内添加带样式标签的文本，显示不正常，后来发现，是由于在添加文本时将文本分割掉了，导致样式标签不完整，这个以后再解决。</p>
+				<a href="http://lcui.org/files/images/devlog/2012-12-04-21-30-47.png">
+					<img class="alignnone" title="样式标签无法正常处理" src="http://lcui.org/files/images/devlog/2012-12-04-21-30-47.png"
+					alt="" width="320" height="240">
+				</a>
+				<h2>2012-12-5</h2>
+				<p>修改TextBox_Text_Add函数，它会将文本分割成若干个文本块，等待更新文本框时将该文本块插入至光标处。</p>
+				<p>文本框支持单行模式，所有文字都显示在一行里，并且隐藏滚动条。</p>
+				<p>添加屏蔽字符的支持，可实现密码输入框。</p>
+				<p>可对文本框的内容进行限制，使其在输入时，忽略限制范围外的字符。</p>
+				<p>文本框的代码修改情况，<a href="https://github.com/lc-soft/LCUI/commit/1dc043eec2aaa30e4ca15503fc9e413f6ef45071">可到这查看</a>。</p>
+				<p><a href="https://github.com/lc-soft/LCUI/commit/900c427be207934f21868063896633cd0f2c8f63">修改了文本框的测试程序</a>，效果如下图所示：</p>
+				<a href="http://lcui.org/files/images/devlog/test_textbox-05.gif">
+					<img class="alignnone" title="用户登录界面" src="http://lcui.org/files/images/devlog/test_textbox-05.gif"
+					alt="" width="320" height="240">
+				</a>
+				<h2>2012-12-5</h2>
+				<p>剩下的任务就是更新测试程序的代码，照片查看器有的小问题，看看重写后是否存在此问题。</p>
+				<p>照片查看器的ActiveBox部件无法播放动画，调试发现是定时器记录的程序ID与程序实际ID不同，后来才发现，是因为在创建的线程中添加的定时器。</p>
+				<h2>2012-12-6</h2>
+				<p>切换查看其它图片时，会卡住。</p>
+				<p>BUG范围已经缩小至PictureBox部件的重绘函数里，在对图形设置锁时，出现了死锁导致程序卡在这里。</p>
+				<h2>2012-12-7</h2>
+				<p>在LCUI_Graph结构体中加了两个变量，分别记录读和写的次数，又加了个全局指针变量，在创建PictureBox部件后，保存该部件的图形数据的地址。<、p>
+				<p>Graph_Lock函数中，累计次数，而Graph_Unlock函数，用于将当前锁的状态与当前锁住的次数对比，如果不正常，则调用abort函数终止，这样可以用gdb查看函数调用栈。</p>
+				<p>测试结果表明，调用了Graph_Tile函数，raph_Tile函数又调用了Graph_Fill_Alpha函数，在Graph_Fill_Alpha函数前已经对图形数据设置了锁，而Graph_Fill_Alpha函数又对图形数据上了一次锁，因而出现死锁,现已纠正该问题。</p>
+				<h2>2012-12-8</h2>
+				<p>在为照片查看器设置第三个定时器后，不起作用，按钮没有隐藏，后来发现，该定时器被暂停了。</p>
+				<p>花了一段时间，找到了问题原因：调用pause_timer函数时，本来是要传定时器的ID的，但是还没创建定时器，没有ID，变量保存的是-1，于是把-1传进去了，而pause_timer函数居然还能找到ID为-1的定时器。</p>
+				<h2>2012-12-9</h2>
+				<p>在为照片查看器的部件添加淡出效果时，发现只有父部件的透明度改变了，而子部件没改变，应该加个属性inherit_alpha，用于指示子部件图层透明度是否随着父部件的透明度的改变而改变。</p>
+				<p>照片查看器已经完成，效果如下图所示：<br>
+				<a href="http://lcui.org/files/images/test_LCPV-3.gif">
+					<img class="alignnone" title="照片查看器" src="http://lcui.org/files/images/test_LCPV-3.gif"
+					alt="" width="320" height="240">
+				</a>
+				<br>重新规划了代码，<a href="https://github.com/lc-soft/LCUI/blob/04ead8ad57b3e725a0a274af072f2abf8464c791/test/photoviewer/photoviewer.c">可到这查看目前的代码</a>。</p>
+				<p>猜拳游戏、触屏校正、滑动解锁等程序的代码也做了一些修改。</p>
+				<h2>2012-12-10</h2>
+				<p>把LCUI的源代码放到学习机上编译，本以为这次代码改动较大，不会出现之前的那个SIGTTOU问题，结果，运行进度条的测试程序，直接退出，就连之前可以正常运行的照片查看器也不行了，虽然不带参数运行是可以运行的，但让它打开一个图片文件，程序就会直接退出。</p>
+				<p>这是以前在学习机上用gdb调试时截的图：<br>
+				<a href="http://lcui.org/files/images/devlog/SIGTTOU.jpg">
+					<img class="alignnone" title="SIGTTOU" src="http://lcui.org/files/images/devlog/SIGTTOU.jpg"
+					alt="" width="320" height="240">
+				</a>
+				<br>给的信息是：program received signal SIGTTOU, Stoped(tty output).</p>
+				<p>本来想在stackoverflow.com上提个问题，但不能贴图，翻译出来的英文也感觉有问题，最后还是放弃。</p>
+				<h2>2012-12-11</h2>
+				<p>删除了helloworld2.cpp源文件，把它里面的C++代码加进了helloworld.c，用gcc编译器编译就会编译C代码，用g++编译器编译就会编译C++代码；<a href="https://github.com/lc-soft/LCUI/blob/dc2e89917786e0e22efd485e55d20ad9d4a06a58/test/helloworld.c">可到这查看目前的helloworld代码</a>。</p>
+				<p>完善部分C++头文件，LCUI类改为LCUIApp，而label、window、button等部件的C++类，改用继承方式，属性及成员函数继承自LCUIWidget类，因为它们都是LCUIWidget部件。</p>
+				<p>运行文本框测试程序时，发现单行文本框居然会显示滚动条，记得之前没这问题，哪里搞错了？</p>
+				<p>貌似是因为之前改label部件，让它默认启用多行文本模式，而文本框又是直接用label部件，使得文本框也默认启用多行文本模式，现在已经纠正。</p>
+				<p>在密码框里输入密码，光标的位置不对，没在文本框里，目测是计算文本框尺寸时，不是累计屏蔽符的尺寸，而是累计实际输入的字符的位图尺寸，现已纠正。</p>
+				<p>准备更新程序截图。</p>
+				<p>百度了一下关于SIGTTOU的信息，最后决定试试 signal(SIGTTOU, SIG_IGN);，看能否忽略该信号。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -1850,7 +2008,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-11-24
+						最后更新: 2012-12-11
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
