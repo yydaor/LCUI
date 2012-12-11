@@ -45,8 +45,8 @@
 
         <tr>
           <td align="center">
-            <a href="../files/images/helloworld.png">
-              <img alt="helloworld screenshot" src="../files/images/helloworld.png">
+            <a href="../files/images/helloworld-01.png">
+              <img alt="helloworld screenshot" src="../files/images/helloworld-01.png">
             </a>
           </td>
           <td align="center">
@@ -58,29 +58,28 @@
 
         <tr valign="top">
           <td>
-            <p>标签部件(Label)用来显示文字，可使用不同字体，也可以调整字体大小（单位为像素）。</p>
-			<p>但是，目前能用的且效果好的字体是微软雅黑，由于项目代码的问题，还不能很好的处理其它字体，字体位图的背景尺寸计算不准确，导致使用某些字体后，文字被剃头或者只显示一部分。宋体只有部分能正常显示，英文还好，中文显示不正常。</p>
+            <p>标签部件(Label)用于显示文字，可在文本内使用样式以控制显示的文本的样式，例如：字体大小，字体颜色。</p>
           </td>
           <td>
-            <p>图片框部件(Picture Box)用来显示图片，目前支持的图片格式为：png、jpeg和bmp，可扩展支持更多格式的图片。</p>
+            <p>一个帐号登录界面，主要利用文本框和图片框实现；两个图片框，一个显示头像，一个显示头像背景边框；两个文本框，都设置了最大字数限制，限制帐号框里输入的内容只能为数字、字母、下划线，而密码框设置屏蔽字符，以屏蔽输入的字符。</p>
           </td>
         </tr>
 
         <tr>
           <td align="center">
-            <a href="../files/images/label.png">
-              <img alt="label screenshot" src="../files/images/label.png">
+            <a href="../files/images/label-01.png">
+              <img alt="label screenshot" src="../files/images/label-01.png">
             </a>
           </td>
           <td align="center">
-            <a href="../files/images/picturebox.png">
-              <img alt="picturebox screenshot" src="../files/images/picturebox.png">
+            <a href="../files/images/devlog/test_textbox-05.gif">
+              <img alt="picturebox screenshot" src="../files/images/devlog/test_textbox-05.gif">
             </a>
           </td>
         </tr>
 		<tr valign="top">
           <td>
-            <p>按钮部件(Button)，你可以用鼠标单击它，让程序执行指定操作，该部件利用标签部件显示文字。默认绘制的图形比较简陋，该部件的图形可自定义，你可以使用其它外置图片来替代。</p>
+            <p>文本框部件(TextBox)，可进行简单的文本编辑，目前的功能比较简陋，还不能选中文本，编辑字数较多的文本时，会有卡顿，后续版本的LCUI中会对此进行完善。</p>
           </td>
           <td>
             <p>小游戏--猜拳(Mora)，用了按钮部件、标签部件和图片框部件，自定义了按钮部件在各个状态时使用的图形，自定义了标签部件中文字大小和颜色。</p>
@@ -89,8 +88,8 @@
 
         <tr>
           <td align="center">
-            <a href="../files/images/button.png">
-              <img alt="button screenshot" src="../files/images/button.png">
+            <a href="../files/images/devlog/2012-12-03-17-24-03.png">
+              <img alt="button screenshot" src="../files/images/devlog/2012-12-03-17-24-03.png">
             </a>
           </td>
           <td align="center">
@@ -103,6 +102,7 @@
 		<tr valign="top">
           <td>
             <p>照片查看器，主要使用图片框部件显示图片，用了LCUI自带的图形处理功能：缩放、拉伸、平铺、裁剪。</p>
+            <p>提示框、图片信息框以及按钮在隐藏前的淡出式效果，使用定时器实现，每隔小一段时间调整部件的透明度，直到接近0时，隐藏部件。</p>
           </td>
           <td>
             <p>矩形分割，前景矩形在背景矩形上移动，重叠部分会进行分割，将前景矩形分割成小矩形。这个功能对局部区域刷新处理的优化改进有一定作用。</p>
