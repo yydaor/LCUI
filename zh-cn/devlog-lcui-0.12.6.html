@@ -1821,6 +1821,7 @@
 				<p>TextLayer_Text函数改为直接清空原文本，再添加新文本，并重绘所有字体位图。</p>
 				<p>测试发现，label部件不显示文本，需要更新一次才显示。</p>
 				<p>由于label部件是在绘制文本图层前获取文本位图的尺寸，而添加缓冲功能后，需要在绘制文本图层后才能获得文本图层的尺寸，改一下laebl部件的代码即可解决。</p>
+				<p>TextLayer代码修改情况可<a href="https://github.com/lc-soft/LCUI/commit/9d4dcecb64e35bc614b256288e159e42fb16102f">到这查看</aa>，label部件的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/25ce663bddd6024751ca15c56081c9de1fceb872">可到这查看</a>。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
