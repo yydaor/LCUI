@@ -739,29 +739,14 @@
 					target="_blank">
 						已经添加&lt;size&gt;标签的支持
 					</a>
-					，可以用该标签设定指定段文本的字体大小，效果如图所示：
-				</p>
-				<p>
-					<a href="http://www.lcui.org/files/images/devlog/2012-10-21-20-46-55.png">
-						<img class="alignnone" title="字体粘贴位置有小问题" src="http://www.lcui.org/files/images/devlog/2012-10-21-20-46-55.png"
-						alt="" width="320" height="240">
-					</a>
-				</p>
-				<p>
-					字体位置还有点小问题。
+					，可以用该标签设定指定段文本的字体大小，但字体位置还有点小问题。
 				</p>
 				<p>
 					<a href="https://github.com/lc-soft/LCUI/commit/b088c56b3c287b8c3a56288432ab49507599882e"
 					target="_blank">
 						调整了字体位图粘贴位置
 					</a>
-					，之前是根据当前字体大小最大高度（当前像素+2）计算的，现在改为根据当前文本行最大高度来计算，最终效果图如下所示：
-				</p>
-				<p>
-					<a href="http://www.lcui.org/files/images/devlog/2012-10-21-21-00-42.png">
-						<img class="alignnone" title="正常效果" src="http://www.lcui.org/files/images/devlog/2012-10-21-21-00-42.png"
-						alt="" width="320" height="240">
-					</a>
+					，之前是根据当前字体大小最大高度（当前像素+2）计算的，现在改为根据当前文本行最大高度来计算。
 				</p>
 				<p>
 					&nbsp;
@@ -1980,6 +1965,13 @@
 				<p>在密码框里输入密码，光标的位置不对，没在文本框里，目测是计算文本框尺寸时，不是累计屏蔽符的尺寸，而是累计实际输入的字符的位图尺寸，现已纠正。</p>
 				<p>准备更新程序截图。</p>
 				<p>百度了一下关于SIGTTOU的信息，最后决定试试 signal(SIGTTOU, SIG_IGN);，看能否忽略该信号。</p>
+				<h2>2012-12-12</h2>
+				<p>测试无效，还是有问题，gdb也不好调试，看不到函数调用栈，gdb的backtrace命令结果就是no Stack。</p>
+				<p>修改了README、FAQ和CHANGES文件，除了中文版的，还要翻译成英文版，用谷歌翻译，再自己修改。</p>
+				<h2>2012-12-13</h2>
+				<p>在sourceforge.net上又创建了个项目， name是：GUI toolkit: LC User Interfaces，而unixname是：lc-ui，项目页面地址：<a href="https://sourceforge.net/projects/lc-ui/">https://sourceforge.net/projects/lc-ui/</a>。</p>
+				<p>LCUI的各个版本的源码包都上传至了这个新建项目的文件列表里。</p>
+				<p>用git上传项目源代码至sourceforge.net上，在上面稍微浏览了一下项目代码，感觉sourceforge.net的页面比较粗糙，有些小字占的空间太大，不紧凑，比较零散，打开源文件，中文是乱码的，看来还是用github.com算了，已删除托管在sourceforge.net上面的项目代码。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -2008,7 +2000,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-12-11
+						最后更新: 2012-12-13
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
