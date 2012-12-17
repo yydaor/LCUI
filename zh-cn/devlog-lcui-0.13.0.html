@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>
+			LCUI &#8250; 动态 &#8250; 开发日志
+		</title>
+		<link rel="icon" href="lc-soft.png" type="image/png">
+		<meta name="keywords" content="GUI,LCSoft,LCDT,LCUI,Embedded,linux,liuchao,opensource,freesoft,C">
+		<meta name="description" content="LCUI 0.13.0 开发日志">
+		<meta name="robots" content="all">
+		<meta name="author" content="LC-Soft">
+		<link type="text/css" rel="stylesheet" href="../files/css/main.css">
+		<link type="text/css" rel="stylesheet" href="../files/css/dev_log.css">
+	</head>
+	<body style="margin-top: 100px;" class="my_body">
+		<script type="text/javascript" src="../files/js/jquery-1.8.1.min.js">
+		</script>
+		<script type="text/javascript" src="../files/js/ms-script.jsx">
+		</script>
+		<script type="text/javascript" src="../files/js/menu-effect.js">
+		</script>
+		<script type="text/javascript" src="../files/js/titlemenu.zh-cn.js">
+		</script>
+		<script type="text/javascript" src="../files/audiojs/float_musicplayer.js">
+		</script>
+		<div style="padding-top: 30px;">
+			<!-- 上面是标题栏区域 -->
+			<div class="entry-content">
+				<center> <h1> LCUI 0.13.0 </h1> </center>
+				<hr>
+				<h2> 2012-12-17 </h2>
+				<p>LCUI 0.12.6有点赶脚，发布这个版本后，感觉自己自由了，歇息了几天。</p>
+				<p>现在先写下这次版本更新中需要实现的东西：<br>
+				能够够直接读取图片的信息，之前的版本，都是先读取图片数据，再从图片数据中获取图片信息。<br>
+				实现部件的圆角边框绘制，阴影绘制。<br>
+				文本框添加占位符功能，文本框为空并未处于焦点状态时，显示占位符。<br>
+				图形处理上，为LCUI_Graph结构体添加auto_attr属性（attr是attribute的缩写），用于指示是否在每次修改图形数据后，自动更新该图形的属性；<br>
+				解除每次操作图形时的加锁和解锁操作，因为有时频繁修改图形时，这加锁和解锁的操作，以及图形属性的自动更新，会浪费很多时间。<br>
+				队列处理上，也一样，解除每次操作队列时的加锁和解锁操作，需要加锁时直接调用Queue_Lock或Queue_Using函数即可。<br>
+				以后需要移植到windows上，那么，如何避免与windows的函数库内的函数同名？例如：RGB函数。<br>
+				要么，重新调整函数名，加个LCUI前缀名，再用宏定义，将目前使用简写的函数名替换成原本的函数名，这个以后再考虑，现在懒得纠结。<br>
+				其它的功能，在开发过程中再考虑。</p>
+				<p>
+				有个想法：<br>
+				部件的样式能够像html网页那样用css来定义网页元素的样式，贴个示例代码：<br>
+				char wnd_css[]= {<br>
+				".my_style {"<br>
+				"width:320px;"<br>
+				"height: 240px;"<br>
+				"align:middle-center;"<br>
+				"title-text:测试窗口;"<br>
+				}<br>
+				CSSLib_Add_New( wnd_css );<br>
+				Set_Widget_Class( window, "my_style" );<br>
+				调用CSSLib_Add_New函数把这个样式载入至样式库，然后调用Set_Widget_Class函数将库中的my_style类样式应用到window部件上。<br>
+				CSSLib_Add_New函数是CSSLib模块里的，而Set_Widget_Class函数通过该模块的函数获取相应的样式，并应用到window部件上。<br>
+				每种部件应该关联一个函数，用于处理这些样式。</p>
+			</div>
+			<!-- Duoshuo Comment BEGIN -->
+			<a id="blog-comment">
+			</a>
+			<div class="ds-thread" data-thread-key="8" data-title="LCUI 0.13.0" data-category="LCUI-Dev"
+			data-url="http://www.lcui.org/zh-cn/devlog-lcui-0.13.0.html">
+			</div>
+			<!-- Duoshuo Comment END -->
+			<!-- 网页底部的内容 -->
+			<hr>
+			<table class="my_style" width="100%">
+				<tr>
+					<td align="left">
+						网页由
+						<a href="mailto:lc-soft@live.cn">
+							刘超
+						</a>
+						维护
+					</td>
+					<td align="right">
+						<a target="_blank" href="http://validator.w3.org/check/referer">
+							<img border=0 src="http://www.w3.org/Icons/valid-html401-blue" alt="Valid HTML 4.0!"
+							height=31 width=88>
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						最后更新: 2012-12-17
+					</td>
+					<td align="right">
+						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
+							<img border="0" src="http://wpa.qq.com/imgd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674&amp;pic=45"
+							alt="通过QQ与作者进行交流" title="通过QQ与作者进行交流">
+						</a>
+						<script type="text/javascript" src="../files/js/baidu-code.js">
+						</script>
+						<script src="http://s23.cnzz.com/stat.php?id=4262888&amp;web_id=4262888&amp;show=pic1"
+						type="text/javascript">
+						</script>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</body>
+</html>
+<!-- page-front.tpl -->
