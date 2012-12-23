@@ -63,21 +63,21 @@
 				<p>从textlayer.c中分离出了textstyle.c，主要分离了TextStyle相关的结构体和函数，打算再从textlayer.c中分离出文件样式标签处理模块，转移到textstyle.c里。</p>
 				<p>git居然能够知道我更改了文件名，不错不错，本以为它会把更名后的文件当新文件对待。</p>
 				<h2>2012-12-23</h2>
-				<p>圆形边框绘制有点棘手，写了个测试网页，以下是效果图：<br>
-				<a href="http://lcui.org/files/images/devlog/2012-12-23-16-26-07.png">
+				<p>圆形边框绘制有点棘手，写了个测试网页，以下是效果图：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2012-12-23-16-26-07.png">
 					<img class="alignnone" title="圆角绘制" src="http://lcui.org/files/images/devlog/2012-12-23-16-26-07.png"
 					alt="" width="133" height="113">
-				</a><br>
-				div的样式为：“width:100px; height: 100px; border-left:5px solid #000;border-top-left-radius:45px;"<br>
+				</a></p>
+				<p>div的样式为：“width:100px; height: 100px; border-left:5px solid #000;border-top-left-radius:45px;"<br>
 				宽高都为100px，左边框的大小为5px，实线，黑色，左上角的圆角半径为45px。<br>
 				从左边框开始，线条逐渐变细，直到上边框的左端为止，这是怎么绘制的？
 				</p>
-				<p>完成了左上角的圆角绘制，效果如图所示：<br>
-				<a href="http://lcui.org/files/images/devlog/2012-12-23-20-51-18.png">
+				<p>完成了左上角的圆角绘制，效果如图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2012-12-23-20-51-18.png">
 					<img class="alignnone" title="测试圆角边框" src="http://lcui.org/files/images/devlog/2012-12-23-20-51-18.png"
 					alt="" width="320" height="240">
-				</a><br>
-				只是绘制线条而已，边框以外的图形并未进行透明处理；这线条并不是连续的，不像一个圆滑的曲线，有锯齿。<br>
+				</a></p>
+				<p>只是绘制线条而已，边框以外的图形并未进行透明处理；这线条并不是连续的，不像一个圆滑的曲线，有锯齿。<br>
 				解决线条不连续并且要抗锯齿的话，那就加入线条透明度，像素点的坐标越是接近计算出来的xy的值，那么，该像素的的颜色越深，反之，越淡。<br>
 				说是这样说的，有待继续实验。</p>
 			</div>
