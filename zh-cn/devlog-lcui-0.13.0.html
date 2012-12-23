@@ -56,6 +56,22 @@
 				调用CSSLib_Add_New函数把这个样式载入至样式库，然后调用Set_Widget_Class函数将库中的my_style类样式应用到window部件上。<br>
 				CSSLib_Add_New函数是CSSLib模块里的，而Set_Widget_Class函数通过该模块的函数获取相应的样式，并应用到window部件上。<br>
 				每种部件应该关联一个函数，用于处理这些样式。</p>
+				<h2>2012-12-21</h2>
+				<p>整理了一下头文件，部件的源文件和头文件，文件名都改成小写，并去掉LCUI_前缀名，部件的头文件，都转移至include/LCUI/widget/目录下。</p>
+				<p>LCUI_Font.h头文件也做了修改，一个头文件包含多个源文件中的函数声明、结构体定义、宏定义，维护起来有点麻烦，我把它缩减了。</p>
+				<p>textlayer.c、charset.c、bitmapfont.c等都有自己的头文件，而LCUI_Font.h只是#include这些头文件，它们的头文件都存放在include/LCUI/font/目录下。</p>
+				<p>从textlayer.c中分离出了textstyle.c，主要分离了TextStyle相关的结构体和函数，打算再从textlayer.c中分离出文件样式标签处理模块，转移到textstyle.c里。</p>
+				<p>git居然能够知道我更改了文件名，不错不错，本以为它会把更名后的文件当新文件对待。</p>
+				<h2>2012-12-23</h2>
+				<p>圆形边框绘制有点棘手，写了个测试网页，以下是效果图：<br>
+				<a href="http://lcui.org/files/images/devlog/2012-12-23-16-26-07.png">
+					<img class="alignnone" title="圆角绘制" src="http://lcui.org/files/images/devlog/2012-12-23-16-26-07.png"
+					alt="" width="320" height="240">
+				</a><br>
+				div的样式为：“width:100px; height: 100px; border-left:5px solid #000;border-top-left-radius:45px;"<br>
+				宽高都为100px，左边框的大小为5px，实线，黑色，左上角的圆角半径为45px。<br>
+				从左边框开始，线条逐渐变细，直到上边框的左端为止，这是怎么绘制的？
+				</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -84,7 +100,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-12-17
+						最后更新: 2012-12-23
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
