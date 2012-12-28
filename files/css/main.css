@@ -51,11 +51,15 @@ html {
 	padding:0px;
 }
 .comment_box img {
-margin-left:3px;
-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
--webkit-border-radius: 3px;
--moz-border-radius: 3px;
-border-radius: 3px;
+	margin-left:3px;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.35);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.ds-meta {
+	font-size: 13px;
 }
 
 .ds-meta a {
