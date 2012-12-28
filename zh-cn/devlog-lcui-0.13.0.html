@@ -91,6 +91,13 @@
 					alt="" width="320" height="240">
 				</a></p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/06407d48a0b0fda68e80c15a295ff38689e5c26b/src/draw/border.c#L60">可到这里</a>查看圆的绘制代码，其实在绘制1/4圆的同时，就可以绘制剩下的3/4圆。</p>
+				<p>接下来就是添加区域有效性处理，绘制的圆可能会超出目标图层的范围，应该确保在绘制圆的时候不超出范围，以避免内存访问越界。</p>
+				<p>圆角绘制已经完成，如下图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2012-12-28-15-00-00.png">
+					<img class="alignnone" title="测试圆角边框的绘制" src="http://lcui.org/files/images/devlog/2012-12-28-15-00-00.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/c508bd12fde4a9a728a2213976c7aeddf939b88b/src/draw/border.c#L60">这是修改后的代码</a>，圆角边框的线条粗细不能调整，有待进一步思考，圆外的区域透明处理还算比较简单。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
