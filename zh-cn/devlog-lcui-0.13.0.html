@@ -105,6 +105,24 @@
 					alt="" width="320" height="240">
 				</a></p>
 				<p>边框线条宽度为20px，圆角线条里还有一些点没有被填充，看来真的需要实现之前说的那个 圆的抗锯齿处理了。</p>
+				<h2>2012-12-30</h2>
+				<p>同心圆方法不可行，加了简单的抗锯齿，未填充颜色的点被模糊了，效果不好。</p>
+				<h2>2012-12-31</h2>
+				<p>改用了另一种方法，这是初始效果图：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2012-12-31-13-25-06.png">
+					<img class="alignnone" title="新绘制方法的初始效果" src="http://lcui.org/files/images/devlog/2012-12-31-13-25-06.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p>右半圆比较正常，和之前贴的网页的圆角效果相似，而左半圆有点问题，后来发现是计算公式有问题，纠正后的效果如下图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2012-12-31-13-50-44.png">
+					<img class="alignnone" title="纠正后的圆的绘制效果" src="http://lcui.org/files/images/devlog/2012-12-31-13-50-44.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p>可以看出，线条中间部分较细，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/4eb2e817402e8f169b7fa0e1b73ab17a3e45e792">到这里</a>可查看代码修改情况，但直接绘制线条宽50px、半径为50px的圆，效果有问题，如下图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2012-12-31-13-53-19.png">
+					<img class="alignnone" title="实心圆的绘制效果" src="http://lcui.org/files/images/devlog/2012-12-31-13-53-19.png"
+					alt="" width="320" height="240">
+				</a></p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -133,7 +151,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2012-12-28
+						最后更新: 2012-12-31
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
