@@ -152,6 +152,7 @@
 					alt="" width="320" height="240">
 				</a></p>
 				<p>需要加入抗锯齿处理，以使圆角润滑。</p>
+				<p>有个想法：从LCUI_Widget.c分离出一个模块，名字就这三个：LCUI_Surface.c LCUI_Layer.c LCUI_GraphLayer.c，具体用哪个，有待考虑。反正就是用于处理图层堆叠、显示之类的，而LCUI_Widget.c只用于对widget的图层的位置、尺寸、图形内容等数据进行修改。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
