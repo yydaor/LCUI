@@ -164,9 +164,15 @@
 				</a></p>
 				<h2>2012-1-8</h2>
 				<p>看了DirectFB源码目录中inputdrivers/keyboard/keyboard.c文件，发现里面的函数都是static的，其中driver_get_available、driver_close_device、driver_get_info这三个函数引起了我的注意，还有开头处的DFB_INPUT_DRIVER( keyboard )这个宏，个人猜测，这三个函数是一个驱动模块必须的函数，由DFB_INPUT_DRIVER宏来注册这个驱动模块。</p>
-				<p>keyboard.c的源代码看起来不太困难，没有太多外部模块的函数调用，至于要专注浏览该模块内的代码即可，这就是高内聚低耦合好处，方便了代码阅读，不必在多个模块间切换阅读代码，维护起来也很容易。</p>
+				<p>keyboard.c的源代码看起来不太困难，没有太多外部模块的函数调用，只需要专注浏览该模块内的代码即可，这就是高内聚低耦合好处，方便了代码阅读，不必在多个模块间切换阅读代码，维护起来也很容易。</p>
 				<p>DirectFB的键盘驱动模块是在一个线程上运行的，keyboardEventThread函数中，通过循环读取/dev/tty0设备的数据来获取按键输入，之前看到这段代码：<br>evt.type = ((buf[i] & 0x80) ? DIET_KEYRELEASE : DIET_KEYPRESS);<br>
 				本以为它可以判断按键是“按下”状态还是“释放”状态，参考了源代码，自己写了个测试程序，在终端上运行，结果表明的确可以获取按键的状态，可是，按ctrl+alt+F1切换到字符控制台模式后运行它，却只能获取键值，按键状态没法正常获取，一直是0。</p>
+				<p>GitHub.com网页有改动，具体如下图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2013-01-08-19-09-30.png.png">
+					<img class="alignnone" title="GitHub新版页面" src="http://lcui.org/files/images/devlog/2013-01-08-19-09-30.png.png"
+					alt="" width="700" height="613">
+				</a></p>
+				<p>以前是显示直方图以表示项目变动状态，网页改动后，这个图更加直观了，用绿方块表示活跃度，方块颜色越绿，活跃度越高。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
