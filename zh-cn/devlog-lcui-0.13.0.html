@@ -188,6 +188,12 @@
 				<p>从LCUI_Widget.c中分离出LCUI_GraphLayer.c模块的话，图层之间的关系需要父图层指针+子图层队列保存，因为图层的容器功能、显示顺序需要队列来记录，而子部件从容器A转移至容器B需要用一个指向父图层的指针，从父图层中的队列中移除子图层记录。而部件之间的父子关系也需要父部件指针+子部件队列保存，部件的鼠标、按键事件的响应需要用到。</p>
 				<p>百度搜索时，发现Qt有个函数：widgetAt()，用它可以得到指定点上存在哪个窗口部件，LCUI中同功能的函数是Get_Cursor_Overlay_Widget()，感觉有多余的下划线，函数名太长，可以考虑更名。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/019d45782fa7f98796ee0a157b8dbf3c095018e2">添加了LCUI_GraphLayer.c模块</a>，只设计了一部分函数接口，具体实现代码有待继续编写。</p>
+				<h2>2013-1-14</h2>
+				<p>正纠结是否需要为LCUI_GraphLayer.c模块添加一个缓冲队列，和widget数据更新处理一样，这是避免频繁因更新数据（坐标、尺寸等）而导致处理耗时变长、数据冗余的问题，举个例子：一个图层要在1秒内从坐标（0，0）匀速移动至坐标（300，0），图层在屏幕上绘制需要时间，而这个时间无法预估，目前的做法是，自己手动确定1秒内更新的帧数，然后计算好每次更新画面时移动的距离，假设为60帧/秒，那么移动速度就是5像素/帧，如果是要让每一帧画面全部显示出来，那么，耗时可能不止1秒，机器配置越低，耗时越长；如果是尽量让该图层的位置移动的耗时接近1秒，那么，需要做“跳帧”处理，若前一次的坐标还未更新，那么这次的新坐标将覆盖前一次。除了坐标外，还有尺寸变更、图形重绘。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d55b11fe77efa42f755374b9e61a37980a933fc3">做了些修改</a>，结构体中的int型的x、y，改用LCUI_Pos类型,而成员变量z改名为z_index，反正结构体内已经用了LCUI_Graph、LCUI_Queue结构体，再用个LCUI_Pos结构体也无妨。</p>
+				<p>LCUI_GraphLayer.c模块应该不需要这个，因为它主要是被LCUI_Widget.c模块调用，而LCUI_Widget.c模块已经实现了数据更新缓冲处理，如果还有其它模块需要使用LCUI_GraphLayer.c模块，且需要考虑上述问题，那到时候再来纠结吧。</p>
+				<p>那些3D游戏中的FPS是怎么计算的？如果要我的LCUI实现这个的话，那么就设2个变量：count和fps，分别用于计数和保存FPS，每次对所有部件数据及图形进行更新时，让count自增，再设个定时器，每隔一秒将frame_count赋值给fps，再重置count为0。</p>
+				<p></p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -216,7 +222,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-12
+						最后更新: 2013-1-14
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
