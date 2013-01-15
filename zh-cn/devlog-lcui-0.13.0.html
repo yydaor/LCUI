@@ -193,7 +193,13 @@
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d55b11fe77efa42f755374b9e61a37980a933fc3">做了些修改</a>，结构体中的int型的x、y，改用LCUI_Pos类型,而成员变量z改名为z_index，反正结构体内已经用了LCUI_Graph、LCUI_Queue结构体，再用个LCUI_Pos结构体也无妨。</p>
 				<p>LCUI_GraphLayer.c模块应该不需要这个，因为它主要是被LCUI_Widget.c模块调用，而LCUI_Widget.c模块已经实现了数据更新缓冲处理，如果还有其它模块需要使用LCUI_GraphLayer.c模块，且需要考虑上述问题，那到时候再来纠结吧。</p>
 				<p>那些3D游戏中的FPS是怎么计算的？如果要我的LCUI实现这个的话，那么就设2个变量：count和fps，分别用于计数和保存FPS，每次对所有部件数据及图形进行更新时，让count自增，再设个定时器，每隔一秒将frame_count赋值给fps，再重置count为0。</p>
-				<p></p>
+				<h2>2013-1-15</h2>
+				<p>这是以前提到的simsun.ttc字体的问题：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2013-01-15-10-26-11.png">
+					<img class="alignnone" title="测试simsun.ttc" src="http://lcui.org/files/images/devlog/2013-01-15-10-26-11.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p>12px至16px的汉字显示有问题，不知如何解决。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
