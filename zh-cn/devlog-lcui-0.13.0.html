@@ -203,6 +203,13 @@
 				<p>在写GraphLayer_GetValidRect函数的实现代码时，发现一个问题，图层是否需要添加padding属性支持？不添加该支持的话，虽然用widget可以实现，也就是加个子部件，把所有子部件放进这个子部件，通过调整这个子部件的位置及尺寸，就能实现部件内边距了。但感觉这个有些麻烦，多了几级父子部件关系。</p>
 				<p>哦对了，不用部件，用图层就可以了，一个部件有两个图层：A和B，A作为部件主图层，而B作为主图层的子图层，为部件添加子部件，那就直接将子部件的主图层添加至父部件的B图层内，而父子图层关系的解除操作 需要稍微修改一下。</p>
 				<p>添加了GraphLayer_GetGraph函数的实现代码以及相关的函数，修改了结构体，<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/a0c9ba92025a71d04908eaf38e51ca981dabe706/src/LCUI_GraphLayer.c">点击这里</a>可查看目前的源代码。</p>
+				<h2>2013-1-16</h2>
+				<p>写了个测试程序，在测试过程中，发现了一些细节上存在的BUG，现在已经解决，以下是测试程序输出的图片内容：</p>
+				<p><a href="http://lcui.org/files/images/devlog/output_graph.png">
+					<img class="alignnone" title="output_graph.png" src="http://lcui.org/files/images/devlog/output_graph.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/476b50bd74daec0eb7d370e2a6e4755bc4c5c7b3/test/test_graphlayer.c">点击这里</a>可以查看测试程序的源代码。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -231,7 +238,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-15
+						最后更新: 2013-1-16
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
