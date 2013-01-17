@@ -212,6 +212,9 @@
 				<p>白色的是根图层，图层A是红色，图层B是绿色，图层C是蓝色，图层A和B是根图层的子图层，而图层C是图层B的子图层。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/476b50bd74daec0eb7d370e2a6e4755bc4c5c7b3/test/test_graphlayer.c">点击这里</a>可以查看测试程序的源代码，也可以查看图层的尺寸和坐标。</p>
 				<p>接下来就是修改LCUI_Widget.c模块里的代码，改结构体和相关函数代码。</p>
+				<h2>2013-1-17</h2>
+				<p>纠结了一下，LCUI_GraphLayer不需要记录无效区域，因为图层是在内存中的，图层的位置移动、尺寸改变等，只是改数据，并没改屏幕上显示的内容，没多大关系的东西还是从LCUI_GraphLayer.c模块里分离出去好些。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/85f63ee6e632dab4513bac2c66c67dd91a6e4fd7">修改了一番</a>，已初步完成，能够显示鼠标游标，但不能显示图形界面，有待继续修改。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -240,7 +243,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-16
+						最后更新: 2013-1-17
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
