@@ -215,6 +215,15 @@
 				<h2>2013-1-17</h2>
 				<p>纠结了一下，LCUI_GraphLayer不需要记录无效区域，因为图层是在内存中的，图层的位置移动、尺寸改变等，只是改数据，并没改屏幕上显示的内容，没多大关系的东西还是从LCUI_GraphLayer.c模块里分离出去好些。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/85f63ee6e632dab4513bac2c66c67dd91a6e4fd7">修改了一番</a>，已初步完成，能够显示鼠标游标，但不能显示图形界面，有待继续修改。</p>
+				<h2>2013-1-18</h2>
+				<p>停了一整天的电，用手机看SDL的源代码，在它的html文档中看见union这个词，SDL_Event是个共用体，里面有个type成员变量和其它事件类型结构体，而其它事件类结构体中也有type成员变量，直接对共用体中的type成员变量赋值，该共用体内的其它事件类型的结构体里的type成员变量也会改变，因为它们都是同一块内存空间。</p>
+				<p>LCUI的event还是要改一下，各种类型的事件的结构体，改用一个LCUI_Event共用体来包含它们，相关函数需要更名。</p>
+				<p>部件的client图层高度有问题，经过一番排查后发现问题原因是 -= 写成了 =，导致client图层高度计算错误。</p>
+				<h2>2013-1-19</h2>
+				<p>部件图形能正常显示了，还存在一点问题，例如：helloworld程序运行后一直在刷新屏幕区域，理论上显示后，界面没改动就不会更新屏幕区域，应该是哪里出了点问题。</p>
+				<p>问题出在Set_Widget_Padding函数，它会调用Update_Widget函数应用这次更新，而window部件的更新处理中，也调用了Set_Widget_Padding函数，就这样一直循环下去。</p>
+				<p>看来，应该考虑制定一个规则了：在调用Set_Widget_Padding之类的函数设定部件属性时，需要开发者自己手动调用Update_Widget函数以应用部件属性变化。</p>
+				<p>还有一种解决方法，设置部件内边距后，需要调整部件client图层的位置及尺寸，而这个操作在Exec_Update_Widget函数里执行，那么，撤销Set_Widget_Padding函数里的Update_Widget函数调用，把那个调整client图层的代码剪切粘贴到Set_Widget_Padding函数里，这样就Set_Widget_Padding函数就不会调用Update_Widget函数了。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -243,7 +252,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-17
+						最后更新: 2013-1-19
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
