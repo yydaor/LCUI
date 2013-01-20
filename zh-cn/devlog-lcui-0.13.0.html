@@ -224,6 +224,16 @@
 				<p>问题出在Set_Widget_Padding函数，它会调用Update_Widget函数应用这次更新，而window部件的更新处理中，也调用了Set_Widget_Padding函数，就这样一直循环下去。</p>
 				<p>看来，应该考虑制定一个规则了：在调用Set_Widget_Padding之类的函数设定部件属性时，需要开发者自己手动调用Update_Widget函数以应用部件属性变化。</p>
 				<p>还有一种解决方法，设置部件内边距后，需要调整部件client图层的位置及尺寸，而这个操作在Exec_Update_Widget函数里执行，那么，撤销Set_Widget_Padding函数里的Update_Widget函数调用，把那个调整client图层的代码剪切粘贴到Set_Widget_Padding函数里，这样就Set_Widget_Padding函数就不会调用Update_Widget函数了。</p>
+				<p>添加了FPS计算功能，用定时器，每秒更新一次FPS。</p>
+				<p>运行 矩形裁剪功能的测试程序，看看FPS是多少，结果，平均FPS在90左右，也发现了部件移动后的区域刷新有问题。</p>
+				<h2>2013-1-20</h2>
+				<p>区域刷新问题已经解决，原因是没有将内边距计算在内。</p>
+				<p>鼠标游标移动至按钮区域内，有一部分区域，移过去后按钮不会高亮，估计是获取指定坐标上的部件时出了点问题，看了代码，问题原因和上面的一样。</p>
+				<p>部件的堆叠顺序处理和图层堆叠顺序处理不一致，需要修改。</p>
+				<p>鼠标单机子窗口的标题栏时，窗口会向左上方向移动一定距离，需要修改。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/3ec3e50f613970df742c3d4fc6b8328e43dc1b02">纠正了部件的全局坐标 和 坐标转换中存在的计算错误</a>。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/9c878ede3f33e393a8d6b92cd30e1a33d2824f78">部件图层的堆叠顺序问题已经解决</a>，如果图层已经前置，就不会移动它的位置。之前的算法，忽略了图层自己，直接和其它图层对比z_index的值，导致前置图层又被移至它后面的图层的位置上。</p>
+				<p>窗口第一次显示时，默认居中显示，由于之前是用Exec_Move_Widget函数直接移动部件位置，而窗口的初始位置更新还在队列中等待处理，导致窗口居中显示后不久位置又变为(0,0)，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/e730039c280f427eae9ac84a23e2607df3cbf345">改用Move_Widget函数即可</a>。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -252,7 +262,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-19
+						最后更新: 2013-1-20
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
