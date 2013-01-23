@@ -234,6 +234,12 @@
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/3ec3e50f613970df742c3d4fc6b8328e43dc1b02">纠正了部件的全局坐标 和 坐标转换中存在的计算错误</a>。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/9c878ede3f33e393a8d6b92cd30e1a33d2824f78">部件图层的堆叠顺序问题已经解决</a>，如果图层已经前置，就不会移动它的位置。之前的算法，忽略了图层自己，直接和其它图层对比z_index的值，导致前置图层又被移至它后面的图层的位置上。</p>
 				<p>窗口第一次显示时，默认居中显示，由于之前是用Exec_Move_Widget函数直接移动部件位置，而窗口的初始位置更新还在队列中等待处理，导致窗口居中显示后不久位置又变为(0,0)，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/e730039c280f427eae9ac84a23e2607df3cbf345">改用Move_Widget函数即可</a>。</p>
+				<h2>2013-1-22</h2>
+				<p>完成了基本的样式字符串的解析功能，有待继续完善。</p>
+				<h2>2013-1-23</h2>
+				<p>部件更新的处理顺序有问题，本来是先改变部件坐标、后刷新部件区域内的图形显示，处理时却颠倒了顺序，窗口理论上会居中显示，结果，显示时会先显示在左上角，再居中显示。</p>
+				<p>做了一次修改，解决窗口第一次显示时不居中显示的问题，之前那个Exec_Move_Widget函数改Move_Widget函数的修改，现在又改回来了，子窗口第一次显示时是居中显示的，但是，在调用Update_Widget_Pos函数时，又把子窗口的位置改为了(0,0)，于是决定修改这个函数的代码，加了个条件：只有在部件对齐方式不为ALIGN_NONE，或者计算的坐标不为(0,0)时才更新部件的位置；部件对齐方式为ALIGN_NONE时，不由LCUI自动更新它的位置，而后面的“计算的坐标不为(0,0)”这个条件，是考虑到部件坐标的单位为百分比的情况。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/master/docs/CodingStyle.zh-cn.md">添加了CodingStyle.zh-cn.md文件</a>，主要描述LCUI目前采用的代码风格，看来还需要修改老代码中的代码风格，比如：LCUI_Widget.c里的代码。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -262,7 +268,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-20
+						最后更新: 2013-1-23
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
