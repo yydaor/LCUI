@@ -243,6 +243,9 @@
 				<h2>2013-1-25</h2>
 				<p>准备完善一下事件机制，原先定义的LCUI_Event结构体，主要是用于储存与指定事件关联的回调函数数据，现在更名为LCUI_EventSlot，重新添加新的LCUI_Event结构体，LCUI_Event与LCUI_EventSlot的关系，就像信号（singal）与信号槽（singal slot）。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/61fe2577afb8e2efd7f510cde7cea7dd5783ed01">代码已经初步修改完</a>，需要进一步完善。</p>
+				<p>经过一番纠结，决定将EventLoop放在单独的线程上跑，而程序的MainLoop主要用于处理部件的事件，调用已预先注册的回调函数。</p>
+				<p>鼠标的事件处理已经修改，除了拖动部件时有问题外，其余都正常，有待继续完善。</p>
+				<p>这么一改，感觉源代码还需要重新规划一下。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
