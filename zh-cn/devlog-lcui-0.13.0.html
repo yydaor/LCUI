@@ -240,6 +240,9 @@
 				<p>部件更新的处理顺序有问题，本来是先改变部件坐标、后刷新部件区域内的图形显示，处理时却颠倒了顺序，窗口理论上会居中显示，结果，显示时会先显示在左上角，再居中显示。</p>
 				<p>做了一次修改，解决窗口第一次显示时不居中显示的问题，之前那个Exec_Move_Widget函数改Move_Widget函数的修改，现在又改回来了，子窗口第一次显示时是居中显示的，但是，在调用Update_Widget_Pos函数时，又把子窗口的位置改为了(0,0)，于是决定修改这个函数的代码，加了个条件：只有在部件对齐方式不为ALIGN_NONE，或者计算的坐标不为(0,0)时才更新部件的位置；部件对齐方式为ALIGN_NONE时，不由LCUI自动更新它的位置，而后面的“计算的坐标不为(0,0)”这个条件，是考虑到部件坐标的单位为百分比的情况。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/master/docs/CodingStyle.zh-cn.md">添加了CodingStyle.zh-cn.md文件</a>，主要描述LCUI目前采用的代码风格，看来还需要修改老代码中的代码风格，比如：LCUI_Widget.c里的代码。</p>
+				<h2>2013-1-25</h2>
+				<p>准备完善一下事件机制，原先定义的LCUI_Event结构体，主要是用于储存与指定事件关联的回调函数数据，现在更名为LCUI_EventSlot，重新添加新的LCUI_Event结构体，LCUI_Event与LCUI_EventSlot的关系，就像信号（singal）与信号槽（singal slot）。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/61fe2577afb8e2efd7f510cde7cea7dd5783ed01">代码已经初步修改完</a>，需要进一步完善。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -268,7 +271,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-23
+						最后更新: 2013-1-25
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
