@@ -257,6 +257,7 @@
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/6345fc026035d70f6baf8efdf4dff67c92d9b589">又修改了一番事件机制的代码</a>，与事件关联的回调函数，在处理事件时就会调用，该调用会阻塞整个事件循环。而部件事件的处理，是将回调函数以任务的形式添加至程序任务队列，等待处理。</p>
 				<p>与系统相关的事件处理代码，放在event.c里，而与部件相关的事件处理代码，放在LCUI_Work.c里。</p>
 				<p>接下来需要完善部件的鼠标事件处理。</p>
+				<p>LCUI_Widget结构体需要进行修改。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
