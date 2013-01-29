@@ -223,7 +223,7 @@
 				<p>部件图形能正常显示了，还存在一点问题，例如：helloworld程序运行后一直在刷新屏幕区域，理论上显示后，界面没改动就不会更新屏幕区域，应该是哪里出了点问题。</p>
 				<p>问题出在Set_Widget_Padding函数，它会调用Update_Widget函数应用这次更新，而window部件的更新处理中，也调用了Set_Widget_Padding函数，就这样一直循环下去。</p>
 				<p>看来，应该考虑制定一个规则了：在调用Set_Widget_Padding之类的函数设定部件属性时，需要开发者自己手动调用Update_Widget函数以应用部件属性变化。</p>
-				<p>还有一种解决方法，设置部件内边距后，需要调整部件client图层的位置及尺寸，而这个操作在Exec_Update_Widget函数里执行，那么，撤销Set_Widget_Padding函数里的Update_Widget函数调用，把那个调整client图层的代码剪切粘贴到Set_Widget_Padding函数里，这样就Set_Widget_Padding函数就不会调用Update_Widget函数了。</p>
+				<p>还有一种解决方法，设置部件内边距后，需要调整部件client图层的位置及尺寸，而这个操作在Widget_ExecUpdate函数里执行，那么，撤销Set_Widget_Padding函数里的Update_Widget函数调用，把那个调整client图层的代码剪切粘贴到Set_Widget_Padding函数里，这样就Set_Widget_Padding函数就不会调用Update_Widget函数了。</p>
 				<p>添加了FPS计算功能，用定时器，每秒更新一次FPS。</p>
 				<p>运行 矩形裁剪功能的测试程序，看看FPS是多少，结果，平均FPS在90左右，也发现了部件移动后的区域刷新有问题。</p>
 				<h2>2013-1-20</h2>
@@ -269,6 +269,8 @@
 					<img class="alignnone" title="test_widget_state.gif" src="http://lcui.org/files/images/devlog/test_widget_state.gif"
 					alt="" width="320" height="240">
 				</a></p>
+				<h2>2013-1-29</h2>
+				<p>只是修改了LCUI_Widget.c里的函数命名风格，接下来会完善部件背景处理功能。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
