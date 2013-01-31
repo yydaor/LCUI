@@ -275,6 +275,12 @@
 				<p>设定背景图像时，是该保存图像副本，还是引用源图像？保存副本的话，会占用更多内存，即使源图像被销毁，副本依然可用。引用源图像（用指针保存源LCUI_Graph变量的地址），虽然减少了内存开销，但如果用一个局部LCUI_Graph变量保存图像数据，函数退出后，这个局部变量就无效了，那引用的数据也是无效的。</p>
 				<p>决定还是用另一种方法：保存源LCUI_Graph变量，也就是这个变量赋值给另一个LCUI_Graph副本，虽然销毁源数据后这个副本也会无效，因为图形的像素数据地址是一样的，但节省内存，也不用当心局部LCUI_Graph变量的生存周期问题。</p>
 				<p>圆角绘制有问题，仔细看之前的圆角绘制图，右下角的圆角有一个像素点没有透明化。</p>
+				<h2>2013-1-31</h2>
+				<p>试着在嵌入式设备上编译，gcc编译器不是新版本的，编译LCUI时报错，头文件中的数据结构定义有问题。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/543d7965cf9f654bee164006e9946cf53dba6dbe">修改了一下头文件</a>。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/305d66f73913505d349b901db2a2e48c8dc5074d">修改了部件的背景图绘制方式</a>，绘制部件前，会先对部件进行更新，然后绘制部件。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/8e9878663f46c7be0ddee018c888d8a84a7b5181">修改了button部件和window部件的代码</a>。</p>
+				<p>打算添加 消息框、颜色选择器这两个对话框。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -303,7 +309,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-29
+						最后更新: 2013-1-31
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
