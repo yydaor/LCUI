@@ -281,6 +281,13 @@
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/305d66f73913505d349b901db2a2e48c8dc5074d">修改了部件的背景图绘制方式</a>，绘制部件前，会先对部件进行更新，然后绘制部件。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/8e9878663f46c7be0ddee018c888d8a84a7b5181">修改了button部件和window部件的代码</a>。</p>
 				<p>打算添加 消息框、颜色选择器这两个对话框。</p>
+				<p>这是初始版本的消息框的效果图：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2013-01-31-20-18-52.png">
+					<img class="alignnone" title="消息框" src="http://lcui.org/files/images/devlog/2013-01-31-20-18-52.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p>看来，窗口右上角的关闭按钮需要改了，不能是点击后直接关闭整个程序。</p>
+				<p>需要主循环能够处理任务，但主循环已经在点击按钮后调用MessageBox函数时被阻塞，应该让LCUI支持创建新的主循环，MessageBox函数里继续执行主循环，这样，循环退出后，MessageBox函数就能通过返回值返回按钮编号，虽然不以返回值形式返回按钮编号也可以，但是，MessageBox函数参数是多个函数指针的话，调用起来也麻烦，还要写回调函数，打乱了代码。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
