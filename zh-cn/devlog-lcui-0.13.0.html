@@ -288,6 +288,9 @@
 				</a></p>
 				<p>看来，窗口右上角的关闭按钮需要改了，不能是点击后直接关闭整个程序。</p>
 				<p>需要主循环能够处理任务，但主循环已经在点击按钮后调用MessageBox函数时被阻塞，应该让LCUI支持创建新的主循环，MessageBox函数里继续执行主循环，这样，循环退出后，MessageBox函数就能通过返回值返回按钮编号，虽然不以返回值形式返回按钮编号也可以，但是，MessageBox函数参数是多个函数指针的话，调用起来也麻烦，还要写回调函数，打乱了代码。</p>
+				<h2>2013-2-1</h2>
+				<p>修改了一下主循环代码，添加了LCUI_MainLoop_New、LCUI_MainLoop_Level、LCUI_MainLoop_Run、LCUI_MainLoop_Quit这几个公共函数.</p>
+				<p>在写主循环队列的排序函数时，参考了定时器列表的排序代码，发现一个BUG，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/54ccd734674e00b75bff7182943d15f6c4317b3c#L2R477">具体可看这里</a>，在交换两个位置上的元素后，a_timer指针还是指向原来的元素，而不是交换后的新元素，因此，加了段代码：a_timer = b_timer;更新指针的指向。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -316,7 +319,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-1-31
+						最后更新: 2013-02-01
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
