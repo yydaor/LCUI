@@ -291,6 +291,15 @@
 				<h2>2013-2-1</h2>
 				<p>修改了一下主循环代码，添加了LCUI_MainLoop_New、LCUI_MainLoop_Level、LCUI_MainLoop_Run、LCUI_MainLoop_Quit这几个公共函数.</p>
 				<p>在写主循环队列的排序函数时，参考了定时器列表的排序代码，发现一个BUG，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/54ccd734674e00b75bff7182943d15f6c4317b3c#L2R477">具体可看这里</a>，在交换两个位置上的元素后，a_timer指针还是指向原来的元素，而不是交换后的新元素，因此，加了段代码：a_timer = b_timer;更新指针的指向。</p>
+				<h2>2013-2-2</h2>
+				<p>试着在消息框代码里添加主循环，结果有问题，点击窗口的关闭按钮，退出的不是当前主循环。主循环的列表排序有问题。</p>
+				<p>开始添加部件销毁操作，用Widget_Destroy函数记录需进行销毁操作的部件，在处理该操作时，调用Widget_ExecDestroy函数执行销毁。</p>
+				<p>销毁出现问题，部件的main_glayer和client_glayer指针都为NULL，调用Widget_Destroy函数时可不是NULL，目测是队列处理出了问题。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/796d71697f91178194243be553670e78a371da4d">队列处理问题已经解决</a>，问题原因是调用析构函数前就调用memset函数对该队列成员的空间置零，导致调用析构函数销毁队列成员时，成员数据异常。</p>
+				<p>修改了button部件的图形自定义函数，直接将LCUI_Graph结构体参数赋值过去，而不是调用Graph_Copy函数进行拷贝，删除了button部件的析构函数，因为没什么指针需要手动释放。</p>
+				<p>window部件代码做了修改，设定按钮图形后，不会调用Graph_Free函数进行释放了，否则，这会导致在绘制按钮图形时图形数据访问越界的问题。</p>
+				<p>2个以上的窗口处理有问题，明明是点前面的窗口，响应的却是背面的窗口。</p>
+				<p>消息框有多个的话，该怎么处理？MessageBox函数是阻塞调用，它的返回值用于表示点击的按钮，假设弹出了消息框A和B，进入了两层消息框的主循环，那么，我关闭消息框A，最里面的一层主循环（消息框B的）退出，那么消息框B的MessageBox函数返回值怎么得出来？关闭的不是消息框B，但退出的却是消息框B的主循环，纠结中，看来需要参考别的GUI实现方式了。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -319,7 +328,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-01
+						最后更新: 2013-02-02
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
