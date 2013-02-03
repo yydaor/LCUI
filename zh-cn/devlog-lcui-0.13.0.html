@@ -300,6 +300,12 @@
 				<p>window部件代码做了修改，设定按钮图形后，不会调用Graph_Free函数进行释放了，否则，这会导致在绘制按钮图形时图形数据访问越界的问题。</p>
 				<p>2个以上的窗口处理有问题，明明是点前面的窗口，响应的却是背面的窗口。</p>
 				<p>消息框有多个的话，该怎么处理？MessageBox函数是阻塞调用，它的返回值用于表示点击的按钮，假设弹出了消息框A和B，进入了两层消息框的主循环，那么，我关闭消息框A，最里面的一层主循环（消息框B的）退出，那么消息框B的MessageBox函数返回值怎么得出来？关闭的不是消息框B，但退出的却是消息框B的主循环，纠结中，看来需要参考别的GUI实现方式了。</p>
+				<p><a href="http://lcui.org/files/images/devlog/messagebox-01.gif">
+					<img class="alignnone" title="消息框-02" src="http://lcui.org/files/images/devlog/messagebox-01.gif"
+					alt="" width="320" height="240">
+				</a></p>
+				<h2>2013-2-3</h2>
+				<p>决定了，MessageBox必须根据显示顺序依次关闭，最先显示出来的MessageBox最后关闭，显示后，不能对其它显示出来的MessageBox进行操作，实现类似于模态对话框的功能。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -328,7 +334,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-02
+						最后更新: 2013-02-03
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
