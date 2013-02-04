@@ -308,6 +308,22 @@
 				<p>决定了，MessageBox必须根据显示顺序依次关闭，最先显示出来的MessageBox最后关闭，显示后，不能对其它显示出来的MessageBox进行操作，实现类似于模态对话框的功能。</p>
 				<p>模态部件始终显示在普通部件的前面，一旦该部件处于显示状态，那么，它所在的容器部件里的其它子部件就不能响应操作。</p>
 				<p>部件和图层的显示顺序处理需要调试一段时间。</p>
+				<h2>2013-2-4</h2>
+				<p>部件属性添加了modal，用于指定该部件是否为模态部件，相关模态部件处理代码，需要进一步完善。</p>
+				<p>部件队列中的显示顺序是对的，可图层队列中的显示顺序是错的，而且，前置部件显示后，图层队列貌似没改动。</p>
+				<p>原来问题出在widget的z-index值的设定上，<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/928027c5a119cb1bc9a036350c7051f73570a012/src/LCUI_Widget.c#L2240">可到这查看代码</a>，由于在设定完前置部件的z_index值后忘记进行--z_index，导致下一个部件的z_index值也和它一样，从而使图层显示顺序出问题。</p>
+				<p>MessageBox的尺寸能够自适应内容。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/14f7be61277ed7aa25833dc5ccd743cc718df33f">添加RESIZE部件事件</a>，在部件尺寸变动后，该部件将会触发RESIZE事件，如果有与之关联的回调函数，则会调用。</p>
+				<p>消息框已经完成了一半左右，以下是效果图：</p>
+				<p><a href="http://lcui.org/files/images/devlog/2013-02-04-21-01-08.png">
+					<img class="alignnone" title="消息框-03" src="http://lcui.org/files/images/devlog/2013-02-04-21-01-08.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p><a href="http://lcui.org/files/images/devlog/2013-02-04-21-20-10.png">
+					<img class="alignnone" title="消息框-04" src="http://lcui.org/files/images/devlog/2013-02-04-21-20-10.png"
+					alt="" width="320" height="240">
+				</a></p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/8cf8910e18ac4f3973389e71da546a8b2ed6111a/src/gui/messagebox.c">这里</a>是新增的消息框源代码，头文件在<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/8cf8910e18ac4f3973389e71da546a8b2ed6111a/include/LCUI/gui/messagebox.h">这里</a>。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -336,7 +352,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-03
+						最后更新: 2013-02-04
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
