@@ -310,8 +310,16 @@
 				<p>部件和图层的显示顺序处理需要调试一段时间。</p>
 				<h2>2013-2-4</h2>
 				<p>部件属性添加了modal，用于指定该部件是否为模态部件，相关模态部件处理代码，需要进一步完善。</p>
-				<p>部件队列中的显示顺序是对的，可图层队列中的显示顺序是错的，而且，前置部件显示后，图层队列貌似没改动。</p>
+				<p>部件队列中的显示顺序是对的，可图层队列中的显示顺序是错的，而且，前置部件显示后，图层队列貌似没改动，如下图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/test_windows-02.gif">
+					<img class="alignnone" title="异常的图层堆叠顺序" src="http://lcui.org/files/images/devlog/test_windows-02.gif"
+					alt="" width="320" height="240">
+				</a></p>
 				<p>原来问题出在widget的z-index值的设定上，<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/928027c5a119cb1bc9a036350c7051f73570a012/src/LCUI_Widget.c#L2240">可到这查看代码</a>，由于在设定完前置部件的z_index值后忘记进行--z_index，导致下一个部件的z_index值也和它一样，从而使图层显示顺序出问题。</p>
+				<p><a href="http://lcui.org/files/images/devlog/test_windows-03.gif">
+					<img class="alignnone" title="正常的图层堆叠顺序" src="http://lcui.org/files/images/devlog/test_windows-03.gif"
+					alt="" width="320" height="240">
+				</a></p>
 				<p>MessageBox需要支持自动尺寸调整。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/14f7be61277ed7aa25833dc5ccd743cc718df33f">添加RESIZE部件事件</a>，在部件尺寸变动后，该部件将会触发RESIZE事件，如果有与之关联的回调函数，则会调用。</p>
 				<p>关联消息框中的label部件的RESIZE事件，回调函数里，就根据label部件的尺寸，计算出合适的尺寸。</p>
@@ -325,6 +333,14 @@
 					alt="" width="320" height="240">
 				</a></p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/8cf8910e18ac4f3973389e71da546a8b2ed6111a/src/gui/messagebox.c">这里</a>是新增的消息框源代码，头文件在<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/8cf8910e18ac4f3973389e71da546a8b2ed6111a/include/LCUI/gui/messagebox.h">这里</a>。</p>
+				<h2>2013-2-5</h2>
+				<p>窗口默认居中显示，align = ALIGN_MIDDLE_CENTER,一旦用鼠标点击它进行拖动，窗口则解除居中显示，align = ALIGN_NONE。</p>
+				<p>调整了一下MessageBox的代码，解决些细节问题，MessageBox现已基本完成，效果如下图所示：</p>
+				<p><a href="http://lcui.org/files/images/devlog/messagebox-02.gif">
+					<img class="alignnone" title="消息框-05" src="http://lcui.org/files/images/devlog/messagebox-02.gif"
+					alt="" width="320" height="240">
+				</a></p>
+				<p>MessageBox的测试程序的源代码<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/a76a619294751b562261a0506cb3403540f5465b/test/test_messagebox.c">在这里</a>。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -353,7 +369,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-04
+						最后更新: 2013-02-05
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
