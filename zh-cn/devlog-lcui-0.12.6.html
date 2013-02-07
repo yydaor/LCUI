@@ -570,42 +570,33 @@
 				<p>
 					各种图片在本地上有备份，博客无法使用对我没多大的影响。
 				</p>
-				<p>
-					github上也建了个主页。
-				</p>
-				<p>
-					这段时间内只是研究了高斯模糊算法，这是处理前的图像：
-				</p>
+				<p>github上也建了个主页。 </p>
+				<p>这段时间内只是研究了高斯模糊算法，这是处理前的图像：</p>
 				<p>
 					<a href="http://www.lcui.org/files/images/devlog/gaussian_blur_before.png">
 						<img class="alignnone" title="高斯模糊处理前" src="http://www.lcui.org/files/images/devlog/gaussian_blur_before.png"
 						alt="" width="256" height="256">
 					</a>
 				</p>
-				<p>
-					sigma 设为 20，高斯模糊处理后：
-				</p>
+				<p>sigma 设为 20，高斯模糊处理后：</p>
 				<p>
 					<a href="http://www.lcui.org/files/images/devlog/gaussian_blur_after.png">
 						<img class="alignnone" title="高斯模糊处理后" src="http://www.lcui.org/files/images/devlog/gaussian_blur_after.png"
 						alt="" width="256" height="256">
 					</a>
 				</p>
+				<p>Label部件 和 文本图层的处理做了修改，具体可到github上查看代码提交记录。</p>
+				<p>项目的构建脚本做了修改，./configure执行完后，会有检测结果，具体如下图所示：</p>
 				<p>
-					Label部件 和 文本图层的处理做了修改，具体可到github上查看代码提交记录。
+					<a href="http://www.lcui.org/files/images/devlog/2012-10-10-19-29-49.png">
+						<img class="alignnone" title="configure脚本执行结果" src="http://www.lcui.org/files/images/devlog/2012-10-10-19-29-49.png"
+						alt="" width="320" height="240">
+					</a>
 				</p>
-				<h2>
-					2012-10-14
-				</h2>
-				<p>
-					为了保险起见，已在项目主页上添加开发日志的静态html页面，主页也随之做了些修改。
-				</p>
-				<p>
-					项目主页的音乐播放器中的音乐列表做了修改。
-				</p>
-				<h2>
-					2012-10-15
-				</h2>
+				<h2>2012-10-14</h2>
+				<p>为了保险起见，已在项目主页上添加开发日志的静态html页面，主页也随之做了些修改。</p>
+				<p>项目主页的音乐播放器中的音乐列表做了修改。</p>
+				<h2>2012-10-15</h2>
 				<p>
 					正准备添加滚动条。
 				</p>
@@ -1807,9 +1798,7 @@
 				<p>文本图层的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/9d4dcecb64e35bc614b256288e159e42fb16102f">可查看这里</a>。</p>
 				<p>测试发现，label部件不显示文本，需要更新一次才显示。</p>
 				<p>由于label部件是在绘制文本图层前获取文本位图的尺寸，而添加缓冲功能后，需要在绘制文本图层后才能获得文本图层的尺寸，改一下laebl部件的代码即可解决。</p>
-<<<<<<< HEAD
 				<p>TextLayer代码修改情况可<a href="https://github.com/lc-soft/LCUI/commit/9d4dcecb64e35bc614b256288e159e42fb16102f">到这查看</aa>，label部件的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/25ce663bddd6024751ca15c56081c9de1fceb872">可到这查看</a>。</p>
-=======
 				<p>Label部件的代码修改情况<a href="https://github.com/lc-soft/LCUI/commit/25ce663bddd6024751ca15c56081c9de1fceb872">可查看这里</a>。</p>
 				<h2>2012-11-28</h2>
 				<p>可以将回调函数与滚动条部件连接，在滚动条被滚动时，将会修改label部件上显示的文字。</p>
