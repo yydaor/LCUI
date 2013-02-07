@@ -343,8 +343,10 @@
 				<p>MessageBox的测试程序的源代码<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/a76a619294751b562261a0506cb3403540f5465b/test/test_messagebox.c">在这里</a>。</p>
 				<h2>2013-2-6</h2>
 				<p>修改了一下部件代码中的函数命名。</p>
+				<p>在CSDN上看了一篇帖子，是说编辑器的，文中描述的eclipse的功能不错，我现在用的geany，有些不足，但也勉强能用，就是多文件切换有点麻烦，查看数据类型定义，跳转获取后，不知道怎么跳转回来。计划在跨平台后，在windows上用eclipse试试。</p>
 				<h2>2013-2-7</h2>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/52d67ffb7a5d7992039b0ed20dfdc4e74cfc5781/src/font/fontlibrary.c">添加了fontlibrary.c模块</a>，有待继续完善。该模块主要用于缓冲各种字族、风格和尺寸的字体位图，其它模块若要获取字体位图，只需要调用该模块里的函数即可，这样方便集中管理字体位图，减少内存开销，不必为每个字的字体位图开辟新内存空间以保存数据。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/91efbc0b00f5cdafddfe2affc0dbed7a8dd40f23/src/font/fontlibrary.c">补全了fontlibrary.c模块的代码</a>，剩下的就是投入实际应用了，公开的函数就那么几个，其余的都是static的函数，结构体也不需要放到头文件里。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
