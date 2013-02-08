@@ -347,6 +347,19 @@
 				<h2>2013-2-7</h2>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/52d67ffb7a5d7992039b0ed20dfdc4e74cfc5781/src/font/fontlibrary.c">添加了fontlibrary.c模块</a>，有待继续完善。该模块主要用于缓冲各种字族、风格和尺寸的字体位图，其它模块若要获取字体位图，只需要调用该模块里的函数即可，这样方便集中管理字体位图，减少内存开销，不必为每个字的字体位图开辟新内存空间以保存数据。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/91efbc0b00f5cdafddfe2affc0dbed7a8dd40f23/src/font/fontlibrary.c">补全了fontlibrary.c模块的代码</a>，剩下的就是投入实际应用了，公开的函数就那么几个，其余的都是static的函数，结构体也不需要放到头文件里。</p>
+				<h2>2013-2-8</h2>
+				<p>学习机上编译LCUI，make install没问题，但make test_messagebox时出现问题：<br>
+				/usr/bin/ld: ../src/.libs/libLCUI.so: invalid string offset 273637584 >= 12740 for section '.dynstr'
+				</p>
+				<p>在电脑上交叉编译，也在make test_messagebox时出现问题：<br>
+				./src/.libs/libLCUI.so: undefined reference to `rpl_malloc'<br>
+				collect2: ld returned 1 exit status<br>
+				make: *** [test_messagebox] 错误 1</p>
+				<p>电脑上configure的结果中有这么一条：<br>checking for GNU libc compatible malloc... yes</p>
+				<p>而在电脑上交叉编译时的configure的结果是这样的：<br>checking for GNU libc compatible malloc... no</p>
+				<p>网上搜索的结果，有人说是malloc被替换成了rpl_malloc 的原因。</p>
+				<p>把configure.ac中的AC_FUNC_MALLOC这一项去掉后，重新configure再编译一次，问题没了。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/27982d74bcddf80ccb913a2e5ef11c262313f82b">整理了一下代码</a>，在整理过程中，发现有些地方只有添加，没有删除，在LCUI退出时，有些资源并没释放。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -375,7 +388,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-07
+						最后更新: 2013-02-08
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
