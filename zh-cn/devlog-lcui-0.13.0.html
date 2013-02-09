@@ -360,6 +360,11 @@
 				<p>网上搜索的结果，有人说是malloc被替换成了rpl_malloc 的原因。</p>
 				<p>把configure.ac中的AC_FUNC_MALLOC这一项去掉后，重新configure再编译一次，问题没了。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/27982d74bcddf80ccb913a2e5ef11c262313f82b">整理了一下代码</a>，在整理过程中，发现有些地方只有添加，没有删除，在LCUI退出时，有些资源并没释放。</p>
+				<h2>2013-2-9</h2>
+				<p>解决了文本框的光标显示问题，修改了文本框的边框样式。</p>
+				<p>话说，焦点是啥时候给文本框的？文本框的样式是焦点状态的样式，但输入字符，文本框没响应，非要我点击文本框让它得到焦点，才能输入。</p>
+				<p>原来是在Show的时候就让它得到了焦点，还是取消好了，不自动为部件设置焦点。话说，这个焦点，是当前容器下只能有一个，还是全局只有一个？<p>
+				<p>文本框获得了焦点，可文本框的容器部件的焦点，已经转移至另一部件，这就导致文本框处于焦点状态，但实际的数据输入都传送给另一个焦点部件了。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -388,7 +393,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-08
+						最后更新: 2013-02-09
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
