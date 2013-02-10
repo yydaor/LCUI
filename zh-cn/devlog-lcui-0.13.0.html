@@ -367,6 +367,11 @@
 				<p>文本框获得了焦点，可文本框的容器部件的焦点，已经转移至另一部件，这就导致文本框处于焦点状态，但实际的数据输入都传送给另一个焦点部件了。</p>
 				<h2>2013-2-10</h2>
 				<p>一直在纠结数据结构，也就是该用什么样的结构体好，最后还是决定先设计好API，再考虑数据结构。</p>
+				<p>在搜索FreeType2中译文档时，发现了一篇文章：<a target="_blank" href="http://blog.csdn.net/junglefly/article/details/5340192">http://blog.csdn.net/junglefly/article/details/5340192</a>，正好能解决LCUI的宋体汉字位图异常的问题。</p>
+				<p><a href="http://lcui.org/files/images/devlog/2013-02-10-17-42-31.pngf">
+					<img class="alignnone" title="测试simsun.ttc字体" src="http://lcui.org/files/images/devlog/2013-02-10-17-42-31.png"
+					alt="" width="320" height="240">
+				</a></p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/189a3dcfd5ff9ff341c24ba2342100aaf1072cd2">字体处理模块的源代码已经修改</a>，主要修改字体数据库的数据结构，font_database用于记录已经打开的字体文件信息，fontbitmap_database用于记录各种字体位图。修改了部分函数的参数列表，新增相关处理函数。还存在冗余代码，等调试完后再删除。</p>
 				<p>LCUI_Sys.default_font可以移除了，现在觉得，一个模块里的代码，还是不要过于依赖其它模块里的变量。</p>
 				<p>本来以为这次修改会存在致命BUG，需要进行调试，结果，在编译完后运行helloworld，居然没出现异常，字体能够正常显示，挺让人兴奋的。</p>
