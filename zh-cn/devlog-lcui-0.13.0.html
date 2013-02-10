@@ -379,6 +379,8 @@
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/a0f2c0965c7285410dc5c2194d2f4490b2f3e6df">移除了冗余代码</a>，LCUI_Font结构体和相关函数已经移除。</p>
 				<p>看了Convert_FTGlyph函数，发现里面的局部变量的static的，难道之前的那个字体位图异常的问题就是它导致的？多个线程获取字体位图，调用了这个函数，而这个函数里的局部变量是静态的，导致一个变量同时被多个线程使用，这样就会有线程安全问题。<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c6fda0922045ccf90705247429c9328d4a2f23d9">该函数的局部变量已经取消static定义</a>。</p>
 				<p>测试在无字体文件的情况下运行程序，结果在意料之内，程序异常终止。</p>
+				<p>OK，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/a500d5650ee6a20369089d90e0e0110c27776ae4">问题已经解决</a>，初始化FontLIB时，会添加内置字体的信息至库中，在font_id不大于0时，使用内置的字体位图。</p>
+				<p>内置的图形资源没必要在每次载入时开辟内存空间保存副本，直接引用就行了，这样的话，LCUI_Graph结构体里需要添加一个变量，用于标识该图形数据是否只读，只读的话，Graph_Free函数就不会释放内置图形资源。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
