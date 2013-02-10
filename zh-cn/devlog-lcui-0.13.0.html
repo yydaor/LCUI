@@ -361,10 +361,18 @@
 				<p>把configure.ac中的AC_FUNC_MALLOC这一项去掉后，重新configure再编译一次，问题没了。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/27982d74bcddf80ccb913a2e5ef11c262313f82b">整理了一下代码</a>，在整理过程中，发现有些地方只有添加，没有删除，在LCUI退出时，有些资源并没释放。</p>
 				<h2>2013-2-9</h2>
-				<p>解决了文本框的光标显示问题，修改了文本框的边框样式。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/1cc33c49a81ecd1265b65d257e5c48439b073f6f">解决了文本框的光标显示问题，修改了文本框的边框样式</a>。</p>
 				<p>话说，焦点是啥时候给文本框的？文本框的样式是焦点状态的样式，但输入字符，文本框没响应，非要我点击文本框让它得到焦点，才能输入。</p>
 				<p>原来是在Show的时候就让它得到了焦点，还是取消好了，不自动为部件设置焦点。话说，这个焦点，是当前容器下只能有一个，还是全局只有一个？<p>
 				<p>文本框获得了焦点，可文本框的容器部件的焦点，已经转移至另一部件，这就导致文本框处于焦点状态，但实际的数据输入都传送给另一个焦点部件了。</p>
+				<h2>2013-2-10</h2>
+				<p>一直在纠结数据结构，也就是该用什么样的结构体好，最后还是决定先设计好API，再考虑数据结构。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/189a3dcfd5ff9ff341c24ba2342100aaf1072cd2">字体处理模块的源代码已经修改</a>，主要修改字体数据库的数据结构，font_database用于记录已经打开的字体文件信息，fontbitmap_database用于记录各种字体位图。修改了部分函数的参数列表，新增相关处理函数。还存在冗余代码，等调试完后再删除。</p>
+				<p>LCUI_Sys.default_font可以移除了，现在觉得，一个模块里的代码，还是不要过于依赖其它模块里的变量。</p>
+				<p>本来以为这次修改会存在致命BUG，需要进行调试，结果，在编译完后运行helloworld，居然没出现异常，字体能够正常显示，挺让人兴奋的。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/a0f2c0965c7285410dc5c2194d2f4490b2f3e6df">移除了冗余代码</a>，LCUI_Font结构体和相关函数已经移除。</p>
+				<p>看了Convert_FTGlyph函数，发现里面的局部变量的static的，难道之前的那个字体位图异常的问题就是它导致的？多个线程获取字体位图，调用了这个函数，而这个函数里的局部变量是静态的，导致一个变量同时被多个线程使用，这样就会有线程安全问题。<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c6fda0922045ccf90705247429c9328d4a2f23d9">该函数的局部变量已经取消static定义</a>。</p>
+				<p>测试在无字体文件的情况下运行程序，结果在意料之内，程序异常终止。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
