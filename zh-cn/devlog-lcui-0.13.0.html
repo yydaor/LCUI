@@ -382,10 +382,18 @@
 				<p>OK，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/a500d5650ee6a20369089d90e0e0110c27776ae4">问题已经解决</a>，初始化FontLIB时，会添加内置字体的信息至库中，在font_id不大于0时，使用内置的字体位图。</p>
 				<p>内置的图形资源没必要在每次载入时开辟内存空间保存副本，直接引用就行了，这样的话，LCUI_Graph结构体里需要添加一个变量，用于标识该图形数据是否只读，只读的话，Graph_Free函数就不会释放内置图形资源。</p>
 				<h2>2013-2-11</h2>
-				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/67aac11b28e1f38e983b069d26a175e291ac7b08">解决滚动条的数据计算错误</a>,该错误会导致文本框的滚动条不能正常滚动文本图层。由于没有正确的获取父部件容器尺寸，导致进行除法运算时进行了除0运算，从而时得出来的结果异常。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/67aac11b28e1f38e983b069d26a175e291ac7b08">解决滚动条的数据计算错误</a>,该错误会导致文本框的滚动条不能正常滚动文本图层。由于没有正确的获取父部件容器尺寸，导致进行除法运算时进行了除0运算，从而使得出来的结果异常。</p>
 				<p>本次字体处理模块的更新，文本图层的绘制效率稍有提升，通过那个文本框测试程序就能感觉得到。接下来就是优化文本图层处理。</p>
 				<p>在移动文本框里的光标时，文本图层是滚动了，但文本框的滚动条却没滚动；改了一下滚动条的测试程序，开个线程，循环移动滚动条，测试正常，既然不是滚动条的问题，那就是LCUI_Widget.c里的代码有问题。</p>
-				<p>经过一番调试，问题出在Record_WidgetUpdate函数里，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/cad44a97c407792cbe783606a6b4e5aa9de4e89d#L2R2492">把valid变量置为TRUE就可以了</a>，估计是 “位置移动” 覆盖了 “位置更新”，但valid没置TRUE，导致处理该操作时，把“位置移动”当成“位置更新”来处理。</p>
+				<p>经过一番调试，问题出在Record_WidgetUpdate函数里，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/cad44a97c407792cbe783606a6b4e5aa9de4e89d#L2R2492">把valid变量置为TRUE就可以了</a>，估计是 “位置移动” 覆盖了 “位置更新”，但valid没有设置为TRUE，导致处理该操作时，把“位置移动”当成“位置更新”来处理。</p>
+				<h2>2013-2-13</h2>
+				<p>在移动光标时，会刷新整个文本框区域，需要进行优化。</p>
+				<p>在修改代码的过程中，顺便调整了部分函数的命名。</p>
+				<p>运行文本框的测试程序，打开LCUI_Widget.c文件，载入速度很慢，但没载入完就暂停载入了，用top命令查看，CPU使用率在90%以上，既然已经暂停载入，怎么还占这么高的CPU使用率？</p>
+				<p>估计是由于TextLayer的默认最大字符数限制为5000，导致文本框无法载入过多字符，而字符块队列中还有待追加的字符需要处理，使得CPU使用率占用过高。</p>
+				<p>修改了TextLayer的最大字符数上限，运行测试程序，用top命令看这个测试程序占用的内存，结果发现总已使内存一直在增长，估计是fontlibrary.c模块有BUG，字体位图没有正常记录进去。</p>
+				<p>在fontlibary.c里加一段代码，用于打印当前总记录数，运行文本框测试程序，载入纯英文的文本文件，结果，总记录数超过1000，英文也就26个字母，理论上也就100左右的记录。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/63de9a07f5e566c8f661aa16a11e43c862e098b8">fontlibary.c的BUG已经修复</a>，由于在添加记录时忘记保存字符编码了，导致在获取缓存区中的字体位图时，找不到与目标字符编码对应的字体位图，结果，每次获取字体位图都添加新的字体位图。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -414,7 +422,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-09
+						最后更新: 2013-02-13
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
