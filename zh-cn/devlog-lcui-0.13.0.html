@@ -394,6 +394,27 @@
 				<p>修改了TextLayer的最大字符数上限，运行测试程序，用top命令看这个测试程序占用的内存，结果发现总已使内存一直在增长，估计是fontlibrary.c模块有BUG，字体位图没有正常记录进去。</p>
 				<p>在fontlibary.c里加一段代码，用于打印当前总记录数，运行文本框测试程序，载入纯英文的文本文件，结果，总记录数超过1000，英文也就26个字母，理论上也就100左右的记录。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/63de9a07f5e566c8f661aa16a11e43c862e098b8">fontlibary.c的BUG已经修复</a>，由于在添加记录时忘记保存字符编码了，导致在获取缓存区中的字体位图时，找不到与目标字符编码对应的字体位图，结果，每次获取字体位图都添加新的字体位图。</p>
+				<h2>2013-2-15</h2>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d0182504f07e21423b21c45735fd3baef44f95b8">textlayer.c里的部分源代码已分离至textstyle.c。</a></p>
+				<h2>2013-2-16</h2>
+				<p>经过一番纠结，决定舍弃读写锁，只要互斥锁。</p>
+				<p>之前那个Makefile的问题，configure得到的变量的值，到了子Makefile中用不了该变量，变量名被当成一个字符串。现在知道原因了，是由于没有调用AC_SUBST的缘故。</p>
+				<p>用了AC_SUBST后，autoreconf时出错：<br>
+				configure.ac:185: `LCUI_VIDEO_DRIVER_SOURCES' includes configure substitution `@LCUI_VIDEO_DRIVER_SOURCES@'<br>
+				configure.ac:185: and is referred to from `liboutput_la_SOURCES';<br>
+				configure.ac:185: configure substitutions are not allowed in _SOURCES variables<br>
+				autoreconf: automake failed with exit status: 1<br></p>
+				<p>不用AC_SUBST(LCUI_VIDEO_DRIVER_SOURCES)的话，可以通过，但configure后的Makefile，make时没有把源文件包含进来进行编译，明显LCUI_VIDEO_DRIVER_SOURCES是空的。</p>
+				<p>后来打开Makefile文件，搜索LCUI_VIDEO_DRIVER_SOURCES，有一行的是对的：<br>
+				liboutput_la_SOURCES = $(LCUI_VIDEO_DRIVER_SOURCES) graph_display.c<br>
+				在浏览其它地方时，发现了这一行内容：<br>
+				am_liboutput_la_OBJECTS = graph_display.lo<br>
+				怎么就一个graph_display.lo？是不是因为$(LCUI_VIDEO_DRIVER_SOURCES)问题？导致不能获取$(LCUI_VIDEO_DRIVER_SOURCES)中的文件名并得到.lo后缀的文件名？</p>
+				<p>LCUI_VIDEO_DRIVER_SOURCES更名为LCUI_VIDEO_DRIVER, src/output/目录下的Makefile.am中相应行内容修改为：liboutput_la_SOURCES = $(LCUI_VIDEO_DRIVER).c graph_display.c</p>
+				<p>重新autoreconf，正常通过了。</p>
+				<p>看来，若要跨平台，使用的数据类型也要做改变，比如线程，linux下的pthread，线程ID是pthread_t类型，互斥锁是pthread_mutex_t类型，而在windows下，都是HANDLE类型。</p>
+				<p>config.h也要随其它头文件一同安装，在调用其它模块的函数时，例如线程，根据config.h里的宏定义，决定使用何种数据类型。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/f6500f0d75d4fba55f16989d5e680e856fbfa903">修改了LCUI的线程模块</a>，LCUI_Thread.c转移至src/thread/目录下。函数的命名做了修改，移除了LCUI_System结构体中的thread_tree成员。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -422,7 +443,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-13
+						最后更新: 2013-02-16
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
