@@ -395,7 +395,7 @@
 				<p>在fontlibary.c里加一段代码，用于打印当前总记录数，运行文本框测试程序，载入纯英文的文本文件，结果，总记录数超过1000，英文也就26个字母，理论上也就100左右的记录。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/63de9a07f5e566c8f661aa16a11e43c862e098b8">fontlibary.c的BUG已经修复</a>，由于在添加记录时忘记保存字符编码了，导致在获取缓存区中的字体位图时，找不到与目标字符编码对应的字体位图，结果，每次获取字体位图都添加新的字体位图。</p>
 				<h2>2013-2-15</h2>
-				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d0182504f07e21423b21c45735fd3baef44f95b8">textlayer.c里的部分源代码已分离至textstyle.c。</a></p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d0182504f07e21423b21c45735fd3baef44f95b8">textlayer.c里的部分源代码已分离至textstyle.c</a>。</p>
 				<h2>2013-2-16</h2>
 				<p>经过一番纠结，决定舍弃读写锁，只要互斥锁。</p>
 				<p>之前那个Makefile的问题，configure得到的变量的值，到了子Makefile中用不了该变量，变量名被当成一个字符串。现在知道原因了，是由于没有调用AC_SUBST的缘故。</p>
@@ -415,6 +415,19 @@
 				<p>看来，若要跨平台，使用的数据类型也要做改变，比如线程，linux下的pthread，线程ID是pthread_t类型，互斥锁是pthread_mutex_t类型，而在windows下，都是HANDLE类型。</p>
 				<p>config.h也要随其它头文件一同安装，在调用其它模块的函数时，例如线程，根据config.h里的宏定义，决定使用何种数据类型。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/f6500f0d75d4fba55f16989d5e680e856fbfa903">修改了LCUI的线程模块</a>，LCUI_Thread.c转移至src/thread/目录下。函数的命名做了修改，移除了LCUI_System结构体中的thread_tree成员。</p>
+				<h2>2013-2-17</h2>
+				<p>怎么将自己的项目转换成Windows里的VS2010的项目？</p>
+				<p>参考了FreeType的VS2010工程配置，设置了自己的项目配置。</p>
+				<p>测试生成项目，结果出现警告：<br>
+				warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失<br>
+				warning C4001: 使用了非标准扩展“single line comment”<br>
+				第一个警告，将源文件保存为带BOM的UTF-8编码后，就没了，但我觉得没必要，用C-Free5编译带BOM的UTF-8编码的源文件，编译器会报错，说有3个未知字符。<br>
+				第二个警告，据说是 // 的问题，ASNI标准中，只能用/**/去注释文本，不能用//。
+				</p>
+				<p>无法正常生成，需要把平台相关的函数封装起来，例如：线程。</p>
+				<h2>2013-2-18</h2>
+				<p>封装了一下Windows平台的线程函数，这是测试程序的源代码：<a target="_blank" href="https://gist.github.com/lc-soft/4975334">https://gist.github.com/lc-soft/4975334</a> ，可直接复制出来进行编译并运行，C-Free5上测试通过，主要代码从第713行开始，前面几百行的代码是从现有的代码中复制过来的，主要实现队列处理。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/8e6f183a710d636622fb07f82a539fea188d619f">整理了一下LCUI的线程模块代码</a>，更改了函数命名，部分使用了线程模块的相关代码也进行了修改。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
