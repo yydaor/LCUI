@@ -428,6 +428,12 @@
 				<h2>2013-2-18</h2>
 				<p>封装了一下Windows平台的线程函数，这是测试程序的源代码：<a target="_blank" href="https://gist.github.com/lc-soft/4975334">https://gist.github.com/lc-soft/4975334</a> ，可直接复制出来进行编译并运行，C-Free5上测试通过，主要代码从第713行开始，前面几百行的代码是从现有的代码中复制过来的，主要实现队列处理。</p>
 				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/8e6f183a710d636622fb07f82a539fea188d619f">整理了一下LCUI的线程模块代码</a>，更改了函数命名，部分使用了线程模块的相关代码也进行了修改。</p>
+				<h2>2013-2-19</h2>
+				<p>新增delay.c，主要封装延时函数。</p>
+				<p>修改了keyboard.c模块内的代码，添加LCUIKeyboard_HitKey和LCUIKeyboard_FreeKey函数，前者用于添加指定键值的按键按下事件，后者用于添加指定键值的按键释放事件。这样，在windows平台下，LCUI只需要接收windows的按键消息，并调用这两个函数即可。顺便添加了部分按键的键值的宏定义。</p>
+				<p>mouse.c模块不需要做多大修改，和keyboard.c一样，只需要接收windows的鼠标消息并转为LCUI的鼠标事件即可。</p>
+				<p>graph_display.c、framebuffer.c和dummy.c做了修改，主要改的是函数名，添加win32.c，用于在windows平台下实现图形输出。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/tree/82138649c3ee7f78b8f4bbddb15fef672d62cf1a/src">点击这里</a>可以查看本次修改后的代码。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -456,7 +462,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-16
+						最后更新: 2013-02-19
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
