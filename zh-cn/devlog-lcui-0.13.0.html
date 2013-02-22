@@ -470,12 +470,12 @@
 					alt="" width="432" height="102">
 				</a></p>
 				<h2>2013-2-21</h2>
-				<p>在windows上编译jpeg库，参考了这篇文章：http://www.cppblog.com/stonexin/articles/jpeglib.html</p>
+				<p>在windows上编译jpeg库，参考了这篇文章：<a target="_blank" href="http://www.cppblog.com/stonexin/articles/jpeglib.html">http://www.cppblog.com/stonexin/articles/jpeglib.html</a></p>
 				<p>warning LNK4042: 对象被多次指定;已忽略多余的指定<br>
 				原来是src/draw/in-core/目录下的源文件名与src/widget/目录下的部分源文件重名的问题，VS2012编译时，这些同名的源文件，虽然在不同目录下，但编译后的文件都放在同一文件夹下，导致出现上述警告。</p>
 				<p>已经对src/draw/in-core/目录下的源文件名加了img_前缀。</p>
 				<p>error C2485: “__restrict”: 无法识别的扩展特性<br>
-				<p>需要将png头文件中使用的__restrict通过宏定义改为restrict，才能在VS2012下编译通过。</p>
+				需要将png头文件中使用的__restrict通过宏定义改为restrict，才能在VS2012下编译通过。</p>
 				<h2>2013-2-22</h2>
 				<p>JPEG库有问题，有些jpg图片读不了，png图倒是正常。</p>
 				<p>项目源文件内的换行符要改为windows的CR/LF，不然VS2012报错指示的行数，和实际行数不一样。</p>
