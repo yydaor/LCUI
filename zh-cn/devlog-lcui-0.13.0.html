@@ -525,6 +525,9 @@
 				Label_WText()、Label_AText()、Label_Text()。</p>
 				<p>把源文件改为带BOM的UTF-8编码的话，VisualStudio编译时就不会给警告，部分包含中文的常量字符串也不会给个错误说常量字符串中包含换行符。<br>
 				但是，编译test_textbox.c后运行，汉字是乱码的，源文件是不带BOM的UTF-8编码，改成带BOM的后就会使汉字乱码，这是什么情况？</p>
+				<h2>2013-2-27</h2>
+				<p>charset.c和textbox.c的代码做了修改。</p>
+				<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/4895feb7bd70ca63cb988922fd2edff0adb94f96">修改label部件代码</a>,设置label部件的文本后，等待LCUI更新部件数据时更新文本位图。之前是在主线程设置文本后直接更新文本位图，这会与LCUI线程冲突，导致获取的字体位图异常。</p>
 			</div>
 			<!-- Duoshuo Comment BEGIN -->
 			<a id="blog-comment">
@@ -553,7 +556,7 @@
 				</tr>
 				<tr>
 					<td>
-						最后更新: 2013-02-25
+						最后更新: 2013-02-27
 					</td>
 					<td align="right">
 						<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
