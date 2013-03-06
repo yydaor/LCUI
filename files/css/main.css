@@ -224,13 +224,11 @@ font-family: "Microsoft YaHei", "Î¢ÈíÑÅºÚ","Verdana", "Arial", "Tahoma", "Segoe 
 	float: left;
 	left: 0px;
 	top: 0px;
-	background: white;
 	width:100%;
 	height: 50px;
-	border-bottom:1px solid #DFDFDF;
-	-moz-box-shadow: 2px 2px 10px #909090;/*firefox*/ 
-	-webkit-box-shadow: 2px 2px 10px #909090;/*safari»òchrome*/ 
-	box-shadow:2px 2px 10px #909090;
+	border-bottom: 1px solid #ddd;
+	box-shadow: 0 0 4px #eee;
+	background: rgba(255,255,255,.9);
 	z-index: 10;
 	position: fixed;
 }
