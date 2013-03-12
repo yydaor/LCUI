@@ -38,6 +38,7 @@
 <p>想在windows上搞，但是有个未解决的问题：不能正常读取png图片信息，到底需要修改哪里？</p>
 <p>重新创建了一个VS2012项目，只复制之前的文件列表和筛选器，剩下的配置由自己重新设置。</p>
 <p>写了个png测试程序，程序使用LCUI函数库，测试打开一个图片文件，打印的结果正常：channels=4，color_type=6，但使用graph2array测试程序load_png函数时，打印的结果是：channels=4，color_type=1780891744，什么情况？图片数据能正常读出来。记得在修改png.c文件前的测试中，打印的chnnels也是一个非常大的值，连图片数据都读不出。</p>
+<p>代码已经提交，<a href="https://github.com/lc-soft/LCUI/commit/16964856a3865f3701a5b698483dec01e6ff4c8a" target="_blank">可到这里</a>查看修改情况，只是修改了png.c，看起来代码没多大变化，我想知道这代码与之前的有什么区别？为啥改了后就能正常读png图片了？难道是项目配置的问题？</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
