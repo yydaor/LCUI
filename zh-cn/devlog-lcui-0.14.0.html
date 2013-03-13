@@ -41,7 +41,7 @@
 <p>代码已经提交，<a href="https://github.com/lc-soft/LCUI/commit/16964856a3865f3701a5b698483dec01e6ff4c8a" target="_blank">可到这里</a>查看修改情况，只是修改了png.c，看起来代码没多大变化，我想知道这代码与之前的有什么区别？为啥改了后就能正常读png图片了？难道是项目配置的问题？</p>
 <p>定时器出了点问题，非要鼠标移动时，它才定时器的回调函数才会被调用，个人猜测是GetMessage函数的问题，它在LCUI的主循环里阻塞等待消息，导致LCUI的任务无法及时处理。</p>
 <p>解决方法：用PeekMessage函数代替GetMessage函数即可，可以当成是GetMessage函数的非阻塞版本。</p>
-<p>定时器需要完善，稳定后在调整函数名为LCUITimer开头的。</p>
+<p>额，原来是忘记保存定时器的ID，调用reset_timer和free_timer函数时，传的值是-1，怪不得怎么没用呢。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
