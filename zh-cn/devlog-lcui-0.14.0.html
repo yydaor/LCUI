@@ -49,6 +49,9 @@
 	alt="" width="320" height="240">
 </a></p>
 <p>地图图块 窗口中的各个按钮的定位类型是STATIC，但有点问题，linux下，第7个按钮要在我点窗口时才会显示，而在windows下，只显示4个按钮，奇怪。<p>
+<h2>2013-3-14</h2>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/ee81a7b2651f2f54b7ffae045f7be182e405b41c">解决了一个BUG</a>：主要独立出“位置更新”和“位置改变”这两种不同的操作，该BUG会导致部件位置无法正常调整，在未修改前，这两个操作可以相互覆盖，也就是Widget_Move任务被覆盖掉了。</p>
+<p>修改后，STATIC定位类型的部件的位置处理在linux下是正常了，而在windows上，还是有问题，暂时不用这个功能自动调整部件坐标，自己另外加几段代码算出来。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
@@ -76,7 +79,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-13
+          最后更新: 2013-03-14
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
