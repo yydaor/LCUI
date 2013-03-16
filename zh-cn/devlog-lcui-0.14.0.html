@@ -54,10 +54,19 @@
 <p>修改后，STATIC定位类型的部件的位置处理在linux下是正常了，而在windows上，还是有问题，暂时不用这个功能自动调整部件坐标，自己另外加几段代码算出来。</p>
 <h2>2013-3-15</h2>
 <p>每次关闭LCUI的窗口时，程序都会出现“已停止工作”，无视也不是办法，还是先解决这个问题，调试时VisualStudio中有函数调用栈，能够定位BUG大致位置。</p>
-<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/979d2645a51dc5a565ab56a6504a0e2f2bbeb9fb>修改了一下主循环的代码。</a><p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/979d2645a51dc5a565ab56a6504a0e2f2bbeb9fb">修改了一下主循环的代码。</a></p>
 <p>改了后，LCUI程序一运行就会出现“已停止工作”，刚开始以为是偶然的问题，试了几次后，都是这问题，函数调用栈中表明是set_timer函数的问题，看了一下代码，唯一能引起问题的是LCUIApp_GetSelf()->id这段代码了，如果LCUIApp_GetSelf()得到的指针为NULL或无效，那么后面的->id就会出问题，数据访问越界。<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/efe74bb154550205fe18c3988a7302bf92e90990">于是就改成LCUIApp_GetSelfID()</a>。</p>
-<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/33bccd15bfc4dbd3613bba3996a8e776f51b3735>修复win32线程支持模块中存在的BUG</a>：该BUG会导致在调用LCUIThread_Join函数时无法得到正确的线程句柄，访问了非法的内存地址。
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/33bccd15bfc4dbd3613bba3996a8e776f51b3735">修复win32线程支持模块中存在的BUG</a>：该BUG会导致在调用LCUIThread_Join函数时无法得到正确的线程句柄，访问了非法的内存地址。
 现在，已经能够在Win32平台下正常退出程序了。</p>
+<h2>2013-3-16</h2>
+<p>新写的MapBox部件无法显示地图块，正打算往MapBox_CreateMap里添加Graph_PrintInfo函数调用，发现该函数居然对MapBox的地图资源进行初始化，这个操作应该在MapBox_ExecInit里执行的，这里居然也有，怪不得怎么不能绘制出地图。</p>
+<p>还有问题，一绘制地图就会导致程序崩溃。</p>
+<p>折腾了一段时间，发现下标异常，绘制第一张地图块，下标不是0，而是个很大的数。在添加用于调试的代码时，发现了问题原因，问题出在block[i]->id = 0上，编译器在编译时居然没给警告，改正后为：block[i][j]->id = 0。</p>
+<p>改了一下窗口在未获得焦点时使用的背景色。</p>
+<p><a href="http://lcui.org/files/images/game/2013-03-16-20-15-12.png">
+	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-03-16-20-15-12.png"
+	alt="" width="802" height="602">
+</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
