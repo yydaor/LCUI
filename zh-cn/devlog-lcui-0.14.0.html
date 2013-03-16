@@ -67,7 +67,14 @@
 	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-03-16-20-15-12.png"
 	alt="" width="802" height="602">
 </a></p>
-<p>地图编辑器的源代码已经上传至GitHub：<a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor">https://github.com/lc-soft/LCUI-2DMapEditor</a>,Makefile之类的就没写了，直接gcc编译每个.c文件，最后在链接时把LCUI函数库链接进去就行了。</p>
+<p>地图编辑器的源代码已经上传至GitHub：<a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor">https://github.com/lc-soft/LCUI-2DMapEditor</a>,Makefile之类的就没写了，直接gcc编译每个.c文件，最后在链接时把LCUI函数库链接进去就行了，Windows下的话，创建新项目，把它们添加进去，设置好头文件及库的目录位置，就能进行编译。</p>
+<p>现在的地图编辑器还需要进行完善，具体功能需求如下：<br>
+<ul>
+<li>能响应鼠标移动和鼠标单击，当鼠标移动时，在鼠标游标覆盖的地图块上显示高亮边框，当点击鼠标左键时，更改该地图块的内容。</li>
+<li>对于大地图，能响应鼠标拖动，移动地图显示区域。</li>
+<li>需要添加一些按钮，以对地图块进行旋转和翻转。</li>
+<li>能够载入地图文件中的数据，也能将地图数据写入至文件中。</li>
+</ul>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
