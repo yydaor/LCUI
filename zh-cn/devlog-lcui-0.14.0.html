@@ -75,6 +75,13 @@
 <li>需要添加一些按钮，以对地图块进行旋转和翻转。</li>
 <li>能够载入地图文件中的数据，也能将地图数据写入至文件中。</li>
 </ul>
+<h2>2013-3-16</h2>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/611911aed18d5a94728ed74de345a70c993a8e6d">完成了MapBox部件的鼠标移动事件的响应功能</a>，鼠标游标移动至一块地图块上，该地图块就会有红色边框显示。调试过程中遇到的问题不难解决，在以前就遇到过不少次，只不过需要些时间罢了。</p>
+<p><a href="http://lcui.org/files/images/game/2013-03-17-17-14-08.png">
+	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-03-17-17-14-08.png"
+	alt="" width="320" height="240">
+</a></p>
+<p>但是，坐标判断不准确，地图是菱形的，而判断时使用的是矩形，即使不在地图块菱形区域内，只要在该地块的矩形范围内，该地图块还是会显示红色边框。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
@@ -102,7 +109,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-15
+          最后更新: 2013-03-17
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
