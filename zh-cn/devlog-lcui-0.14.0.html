@@ -28,6 +28,8 @@
 <ul>
 <li>为部件添加过渡效果，位置变化、尺寸变化、图形重绘、显示、隐藏都支持该效果。</li>
 <li>bmp目录下，添加jpeg、bmp图片文件的写入函数,调整图片文件的读写函数。</li>
+<li>完成StyleLibrary.c模块。</li>
+<li>完善windows平台的按键输入处理。</li>
 <li>(待添加)</li>
 </ul>
 </p>
@@ -108,6 +110,14 @@
 	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-03-19-13-22-15.png"
 	alt="" width="802" height="602">
 </a></p>
+<h2>2013-3-20</h2>
+<p>按钮调整至标题栏，添加了地图尺寸调整窗口，但由于LCUI暂不能在windows下响应按键输入，因此不能往文本框里输入内容。</p>
+<p>添加了队列锁操作以保护程序任务队列，经测试，LCUI程序已经没之前那种时不时崩溃的问题了，至少不会很频繁。</p>
+<p>鼠标输入处理模块需要调整，拖动窗口时释放左键后，并不会立刻停止窗口拖动。</p>
+<p><a href="http://lcui.org/files/images/game/2013-03-20-15-37-44.png">
+	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-03-20-15-37-44.png"
+	alt="" width="320" height="240">
+</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
@@ -135,7 +145,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-19
+          最后更新: 2013-03-20
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
