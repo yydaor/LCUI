@@ -111,8 +111,9 @@
 	alt="" width="802" height="602">
 </a></p>
 <h2>2013-3-20</h2>
-<p>按钮调整至标题栏，添加了地图尺寸调整窗口，但由于LCUI暂不能在windows下响应按键输入，因此不能往文本框里输入内容。</p>
-<p>添加了队列锁操作以保护程序任务队列，经测试，LCUI程序已经没之前那种时不时崩溃的问题了，至少不会很频繁。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/616ffe2867a11b35f9d9c954a99ba19256af9482">按钮调整至标题栏，添加了地图尺寸调整窗口</a>，但由于LCUI暂不能在windows下响应按键输入，因此不能往文本框里输入内容。</p>
+<p>想把窗口搞成模态的，和MessageBox那样，但是，创建了个主循环后运行，整个程序就卡住了，奇怪，需要找问题原因。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c9c996e098a6a1b5a1f4e913f60275d68fa81a54">添加了队列锁操作以保护程序任务队列</a>，经测试，LCUI程序已经没之前那种时不时崩溃的问题了，至少不会很频繁。</p>
 <p>鼠标输入处理模块需要调整，拖动窗口时释放左键后，并不会立刻停止窗口拖动。</p>
 <p><a href="http://lcui.org/files/images/game/2013-03-20-15-37-44.png">
 	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-03-20-15-37-44.png"
