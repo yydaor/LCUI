@@ -120,7 +120,8 @@
 	alt="" width="320" height="240">
 </a></p>
 <h2>2013-3-21</h2>
-<p>新建的MainLoop进入后卡住，其原因是之前加了任务队列锁，执行任务前没有解锁，而执行任务时进入主循环又对任务队列设置互斥锁，导致出现死锁，主循环就卡住了，BUG已修复。</p>
+<p>新建的MainLoop进入后卡住，其原因是之前加了任务队列锁，执行任务前没有解锁，而执行任务时进入主循环又对任务队列设置互斥锁，导致出现死锁，主循环就卡住了，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/dcb5e4c29bc049293a7f4578b89cc4f6b69d81f0">BUG已修复</a>。</p>
+<p>完善按键输入的话，感觉需要搞个输入法接口，参考了这篇文章：<a target="_blank" href="http://code.google.com/p/windows-config/wiki/Win32IME">http://code.google.com/p/windows-config/wiki/Win32IME</a>。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
