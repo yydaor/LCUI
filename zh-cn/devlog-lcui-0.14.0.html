@@ -122,6 +122,8 @@
 <h2>2013-3-21</h2>
 <p>新建的MainLoop进入后卡住，其原因是之前加了任务队列锁，执行任务前没有解锁，而执行任务时进入主循环又对任务队列设置互斥锁，导致出现死锁，主循环就卡住了，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/dcb5e4c29bc049293a7f4578b89cc4f6b69d81f0">BUG已修复</a>。</p>
 <p>完善按键输入的话，感觉需要搞个输入法接口，参考了这篇文章：<a target="_blank" href="http://code.google.com/p/windows-config/wiki/Win32IME">http://code.google.com/p/windows-config/wiki/Win32IME</a>。</p>
+<h2>2013-3-22</h2>
+<p>由于C盘没有足够的可用空间供更新程序下载补丁包，又考虑到编译的程序与XP的兼容性，于是决定卸载了VS2012，改装VS2010，反正VS2012的很多功能用不到，浪费了C盘可用空间。有现成的VS2010的iso镜像文件，直接装就是了，而VS2012的iso镜像文件在之前被我不小心彻底删除了，非常蛋疼。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
@@ -149,7 +151,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-20
+          最后更新: 2013-03-22
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
