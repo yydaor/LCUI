@@ -133,7 +133,11 @@
 <p>在CygWin下运行configure脚本，很慢，先暂时不考虑用CygWin之类工具编译LCUI。</p>
 <p>好吧，要么让VS2010的代码生成速度变快，要么切换到linux环境下开发LCUI，等准备发布时，再到windows下测试编译。</p>
 <p>试用了Eclipse，还行，但感觉比VS2010难折腾，不知道怎么设置让它编译每一个源文件，并链接成动态库。</p>
-<p></p>
+<h2>2013-3-24</h2>
+<p>有了个想法：用宏定义封装main函数，windows下用WinMain，linux下用main，而main函数的参数列表也用宏定义代替，这样就方便多了，不必自己再判断LCUI_BUILD_IN_WIN32宏，定义不同的main函数。</p>
+<p>调整LCUI_Init函数的参数列表，用一个参数用于记录LCUI的运行模式，共4种：自动模式、窗口模式、全屏模式和LCUI模式。</p>
+<p>自动模式，就是自动选择一个合适的模式；窗口模式，LCUI的图形将输出至系统创建的窗口内；全屏模式，使用整个屏幕进行图形显示；LCUI模式，结合操作系统现有GUI系统，实现图形界面，比如windows下用windows API，linux下用GTK、Xwindow什么的。</p>
+<p>但有个问题，如何设定窗口在显示时的尺寸？在LCUI初始化后如何动态修改窗口尺寸？windows下，LCUI在创建windows窗口时就使用固定的尺寸，要改的话，必须在初始化时通过传递参数来改，那么，LCUI_Init函数还要添加一个参数。要使LCUI在初始化后也能改变窗口尺寸，就需要再添加一个函数来来实现。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
@@ -161,7 +165,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-23
+          最后更新: 2013-03-24
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
