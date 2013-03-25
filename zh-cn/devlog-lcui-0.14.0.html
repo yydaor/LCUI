@@ -137,10 +137,10 @@
 <p>有了个想法：用宏定义封装main函数，windows下用WinMain，linux下用main，而main函数的参数列表也用宏定义代替，这样就方便多了，不必自己再判断LCUI_BUILD_IN_WIN32宏，定义不同的main函数。</p>
 <p>调整LCUI_Init函数的参数列表，用一个参数用于记录LCUI的运行模式，共4种：自动模式、窗口模式、全屏模式和LCUI模式。</p>
 <p>自动模式，就是自动选择一个合适的模式；窗口模式，LCUI的图形将输出至系统创建的窗口内；全屏模式，使用整个屏幕进行图形显示；LCUI模式，结合操作系统现有GUI系统，实现图形界面，比如windows下用windows API，linux下用GTK、Xwindow什么的。</p>
-<p>但有个问题，如何设定窗口在显示时的尺寸？在LCUI初始化后如何动态修改窗口尺寸？windows下，LCUI在创建windows窗口时就使用固定的尺寸，要改的话，必须在初始化时通过传递参数来改，那么，LCUI_Init函数还要添加一个参数。要使LCUI在初始化后也能改变窗口尺寸，就需要再添加一个函数来来实现。</p>
+<p>但有个问题，如何设定窗口在显示时的尺寸？在LCUI初始化后如何动态修改窗口尺寸？windows下，LCUI在创建windows窗口时就使用固定的尺寸，要改的话，必须在初始化时通过传递参数来改，那么，LCUI_Init函数还要添加一个参数。要使LCUI在初始化后也能改变窗口尺寸，就需要再添加一个函数来实现。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/ca1a37ccaa8caf1bfb915adb00e9e5bd60618e11/src/kernel/main.c#L451">LCUI_Init函数修改完毕</a>，目前是两个参数，以后可能会添加更多参数。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/18eca182139c8b26a94f8681c8ea56ff8fd3c3d6/include/LCUI_Build.h#L89">已经添加宏定义</a>，写LCUI程序时，就不用写WinMain或main了，直接写：int LCUIMainFunc( LCUI_ARGLIST )，而初始化LCUI就写：LCUI_Init( LCUI_DEFAULT_CONFIG ); 用默认的配置来初始化LCUI。</p>
-<p>可以看看本次修改的<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/ffcadf7db04e6880b792f6fdbce0cb711ff2e48d/test/helloworld.c">helloworld测试程序源代码</p>，了解具体应用效果。</p>
+<p>可以看看本次修改的<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/ffcadf7db04e6880b792f6fdbce0cb711ff2e48d/test/helloworld.c">helloworld测试程序源代码</a>，了解具体应用效果。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
