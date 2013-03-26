@@ -141,6 +141,9 @@
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/ca1a37ccaa8caf1bfb915adb00e9e5bd60618e11/src/kernel/main.c#L451">LCUI_Init函数修改完毕</a>，目前是两个参数，以后可能会添加更多参数。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/18eca182139c8b26a94f8681c8ea56ff8fd3c3d6/include/LCUI_Build.h#L89">已经添加宏定义</a>，写LCUI程序时，就不用写WinMain或main了，直接写：int LCUIMainFunc( LCUI_ARGLIST )，而初始化LCUI就写：LCUI_Init( LCUI_DEFAULT_CONFIG ); 用默认的配置来初始化LCUI。</p>
 <p>可以看看本次修改的<a target="_blank" href="https://github.com/lc-soft/LCUI/blob/ffcadf7db04e6880b792f6fdbce0cb711ff2e48d/test/helloworld.c">helloworld测试程序源代码</a>，了解具体应用效果。</p>
+<h2>2013-3-26</h2>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/bdfb632108e79fb9cb0ba93048d23414936773e5">为widget添加了EVENT_INPUT事件</a>，为之后的输入法支持做准备。输入法在对widget输入文本时，会触发EVENT_INPUT事件，并把输入的文本传给该widget的相应回调函数进行处理。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/65cd2a4b27463f2c61d9780125499fd0caed1466/src/LCUI_InputMethod.c">完成了输入法接口模块的部分代码</a>，按键A~Z和0~9的键值就是它的ASCII码，其它键(例如：-=[]\;',./这10个)的键值的宏定义还需要查找。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="blog-comment"></a>
@@ -168,7 +171,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-24
+          最后更新: 2013-03-26
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
