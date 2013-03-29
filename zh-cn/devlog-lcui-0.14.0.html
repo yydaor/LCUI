@@ -155,6 +155,9 @@
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/65fb26036f581462fbea7060a9afc30f49ff35d8">修改了文本框的输入限制功能</a>，函数名由TextBox_Text_Limit改为TextBox_LimitInput，只要将限制范围内的字符保存至一个字符串，把这个字符串传给这个函数，就能将文本框内输入的内容限定为该字符串内的字符。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/7f76b518ef78d79ced406870934ab56d62393125">修改边框绘制代码</a>，边框线条的绘制由Graph_DrawVertiLine和Graph_DrawHorizLine函数完成。</p>
 <p>文本框测试程序有问题，运行它后没有显示windows窗口，任务管理器里的进程列表中也只存在一会就消失了，但是，加上显示控制台的代码后就变正常了，不知问题出自何处。</p>
+<h2>2013-3-29</h2>
+<p>想让LCUI的FPS计数功能支持win32平台，但由于图形绘制不在 屏幕刷新线程里，FPS计数不好弄，起初的想法是：在Win32_LCUI_WndProc里，每接收到一次WM_PAINT消息，则累加这次区域重绘的耗时，并让帧数自增，每隔1秒，就用1000÷(总耗时÷帧数)，得到这一秒的FPS，并重置 总耗时 和 帧数；但有个问题，如果不做任何操作，LCUI就没有区域重绘任务，也就无法累加当前帧数，计算出的FPS也就完全不可靠了。</p>
+<p>用test_rect_cut测试程序测试FPS计数效果，由于更新频率较高，导致鼠标无法移动窗口，windows窗口也无法快速响应鼠标拖动。去掉test_rect_cut里的延迟代码，重新编译并运行，一运行程序就直接崩溃，原因是Label部件的文本设置与label部件的重绘操作有冲突。注释掉label部件代码中的文本设置代码，没了文本显示，虽然能运行，但矩形中各个子区域的位置和尺寸的更新不同步，完全乱了。看来需要重新设计LCUI的部件处理机制了。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -182,7 +185,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-03-27
+          最后更新: 2013-03-29
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
