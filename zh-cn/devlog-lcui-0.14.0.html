@@ -187,6 +187,12 @@
 	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-04-04-17-53-34.png"
 	alt="" width="809" height="609">
 </a></p>
+<p>在测试MapBox_ResizeMap函数时，发现地图块的坐标计算有问题，如果行数和列数相同，坐标是正常的，否则，地图图块的坐标会有偏移，<a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/ae9a76978af0e1a0410a5453dafde0319ef9473e">现已纠正</a>。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/3826c0b9129627c30093e3769687667502dd83e5">添加地图框的拖动功能</a>，添加地图框的位置调整功能，地图框的位置会根据地图框的尺寸进行相应调整。</p>
+<p>剩下的就是地图数据的读取和保存功能了。</p>
+<h2>2013-4-5</h2>
+<p>地图保存功能已经实现，但读取功能有问题，在读取地图数据时，会使程序崩溃，函数调用栈表明，这是由于主线程与另一个线程使用同一数据导致的。在主线程中，读取地图时会重新分配内存，保存地图块的数据，而在另一个线程中，LCUI要重绘MapBox部件，会读取地图块数据以进行重绘。</p>
+<p>解决方法，可以把这个任务放到部件的更新队列里，在对部件进行更新时，判断是否需要读取地图数据。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -214,7 +220,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-04
+          最后更新: 2013-04-05
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
