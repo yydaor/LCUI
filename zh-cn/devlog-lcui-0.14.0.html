@@ -30,6 +30,7 @@
 <li>bmp目录下，添加jpeg、bmp图片文件的写入函数,调整图片文件的读写函数。</li>
 <li>完成StyleLibrary.c模块。</li>
 <li>完善windows平台的按键输入处理。</li>
+<li>完善部件的堆叠顺序处理。</li>
 <li>(待添加)</li>
 </ul>
 </p>
@@ -200,6 +201,10 @@
 <p>GraphLayer模块中各个图层的层叠顺序由图层的z-index值决定，要实现模态部件的图层前端显示，还是加个设定：
 模态部件的z-index值为10000，不能被修改成其它值，普通部件默认的z-index值为0，能够设置的最大值为9999。不想再往GraphLayer模块添加多余的东西，还是原始点好。</p>
 <p>部件更新队列改成部件消息队列好些，定义消息ID，及相应数据，然后添加至部件的消息队列，然后由一个函数统一处理所有部件的消息队列中的消息。</p>
+<h2>2013-4-9</h2>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/7911f6cfd8cd9b49af5b5fc15424fac231d1a053#L1R1994">已经完善了部件的堆叠顺序处理</a>，现在可以调用Widget_SetZIndex函数手动为部件设定z-index值。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/f87611ff7354c50fe2413afff7694d607304bd84">地图编辑器的地图资源改为外置</a>，启动程序后，会载入外置地图资源文件，若无法载入则显示错误消息框。</p>
+<p>准备添加地图对象编辑功能，使用子部件作为地图对象的显示介质，设置子部件的z-index值以调整子部件的堆叠顺序，z-index值由地图对象所在地图的坐标来决定，暂时不需要考虑占多个地图块的地图对象。还需要花点时间思考一下所需的数据结构及算法。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -227,7 +232,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-08
+          最后更新: 2013-04-09
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
