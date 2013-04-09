@@ -196,6 +196,10 @@
 <p>还有一种方法，就是先用临时指针保存已载入的地图块数据的内存地址，载入完后，再直接修改MapBox部件里的数据，更新地图大小和地图块数据，只需要赋3次值。</p>
 <p>载入地图后，绘制的地图块中，有的没有进行翻转，<a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/5218c152214eb6abcbbdfd32256d61090e35e1cd">现已完善MapBox部件的重绘代码</a>。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/dc1d2134efd5a9989995fab5c17fb2cdcf94916d">地图编辑器的地图数据的保存和载入功能已经完成</a>，除了地图块，还需要为地图添加一些对象，比如树木、建筑物、石头之类的，这些东西显示在地图块之上。</p>
+<h2>2013-4-8</h2>
+<p>GraphLayer模块中各个图层的层叠顺序由图层的z-index值决定，要实现模态部件的图层前端显示，还是加个设定：
+模态部件的z-index值为10000，不能被修改成其它值，普通部件默认的z-index值为0，能够设置的最大值为9999。不想再往GraphLayer模块添加多余的东西，还是原始点好。</p>
+<p>部件更新队列改成部件消息队列好些，定义消息ID，及相应数据，然后添加至部件的消息队列，然后由一个函数统一处理所有部件的消息队列中的消息。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -223,7 +227,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-05
+          最后更新: 2013-04-08
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
