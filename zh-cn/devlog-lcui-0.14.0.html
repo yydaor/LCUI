@@ -205,6 +205,12 @@
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/7911f6cfd8cd9b49af5b5fc15424fac231d1a053#L1R1994">已经完善了部件的堆叠顺序处理</a>，现在可以调用Widget_SetZIndex函数手动为部件设定z-index值。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/f87611ff7354c50fe2413afff7694d607304bd84">地图编辑器的地图资源改为外置</a>，启动程序后，会载入外置地图资源文件，若无法载入则显示错误消息框。</p>
 <p>准备添加地图对象编辑功能，使用子部件作为地图对象的显示介质，设置子部件的z-index值以调整子部件的堆叠顺序，z-index值由地图对象所在地图的坐标来决定，暂时不需要考虑占多个地图块的地图对象。还需要花点时间思考一下所需的数据结构及算法。</p>
+<h2>2013-4-10</h2>
+<p>部件的堆叠顺序处理还存在一些问题，在完善地图编辑器的地图文件读写功能时，测试一下MessageBox显示，结果，窗口的堆叠顺序不正常，修改了一番代码，再测试，问题更大了，打印的测试信息表明根容器内的window部件没有进行过排序。</p>
+<p>屏幕上明明是部件A显示在部件B的前面，而用鼠标点击部件A后，却是部件B在响应，要使部件队列和图层队列的排序保持一致，还有点麻烦。</p>
+<p>源码目录需要考虑修改，把LCUI_Widget.c和LCUI_Work.c分割成widget_base.c、widget_lib.c、widget_msg.c、widget_event.c，并存放至src/gui目录里；而src/下的widget目录，转移至src/gui/目录下；src/gui目录下的messagebox.c转移至src/gui/dialog目录下。</p>
+<h2>2013-4-11</h2>
+<p><a target="_blank" href="">部件堆叠顺序处理上的问题已经解决</a>。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -232,7 +238,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-09
+          最后更新: 2013-04-11
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
