@@ -210,7 +210,9 @@
 <p>屏幕上明明是部件A显示在部件B的前面，而用鼠标点击部件A后，却是部件B在响应，要使部件队列和图层队列的排序保持一致，还有点麻烦。</p>
 <p>源码目录需要考虑修改，把LCUI_Widget.c和LCUI_Work.c分割成widget_base.c、widget_lib.c、widget_msg.c、widget_event.c，并存放至src/gui目录里；而src/下的widget目录，转移至src/gui/目录下；src/gui目录下的messagebox.c转移至src/gui/dialog目录下。</p>
 <h2>2013-4-11</h2>
-<p><a target="_blank" href="">部件堆叠顺序处理上的问题已经解决</a>。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/f5903eb6293f23d6a9d8efcd88ba73a1c4f2e564">部件堆叠顺序处理上的问题已经解决</a>。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/2c818a0d9c8b79c315c6cef9ced73ae8c9b04222">地图文件头 以及 地图块 的数据结构已经修改</a>，地图文件头前8个字节用于保存字符串"LCUIMAP"以标识文件，后面的4个字节用于表示文件版本。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/29b149265309b99675ee80799fb5a4aef3ebcf37">完善了MapBox部件的地图块的内存分配功能</a>，在进行地图创建、地图载入、尺寸调整这几个操作时，会对之前分配的内存进行释放，用新分配的内存代替。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
