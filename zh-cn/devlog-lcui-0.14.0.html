@@ -213,6 +213,8 @@
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/f5903eb6293f23d6a9d8efcd88ba73a1c4f2e564">部件堆叠顺序处理上的问题已经解决</a>。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/2c818a0d9c8b79c315c6cef9ced73ae8c9b04222">地图文件头 以及 地图块 的数据结构已经修改</a>，地图文件头前8个字节用于保存字符串"LCUIMAP"以标识文件，后面的4个字节用于表示文件版本。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/29b149265309b99675ee80799fb5a4aef3ebcf37">完善了MapBox部件的地图块的内存分配功能</a>，在进行地图创建、地图载入、尺寸调整这几个操作时，会对之前分配的内存进行释放，用新分配的内存代替。</p>
+<h2>2013-4-12</h2>
+<p>虚拟机我选择了VirtualBox，在上面装了个Kubuntu 12.10。增强工具不能正常安装，百度搜索了一番后找到了问题解决方法，Kubuntu中没有预装gcc，需要先把编译环境弄好，用命令行sudo apt-get install biuld-essential即可，然后还需要用命令行sudo apt-get install dkms以安装DKMS(Dynamic Kernel Module Support)，因为Guest Additions安裝过程中会编译相关模块，需要这些东西。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
