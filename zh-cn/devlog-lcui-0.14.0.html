@@ -215,6 +215,19 @@
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/29b149265309b99675ee80799fb5a4aef3ebcf37">完善了MapBox部件的地图块的内存分配功能</a>，在进行地图创建、地图载入、尺寸调整这几个操作时，会对之前分配的内存进行释放，用新分配的内存代替。</p>
 <h2>2013-4-12</h2>
 <p>虚拟机我选择了VirtualBox，在上面装了个Kubuntu 12.10。增强工具不能正常安装，百度搜索了一番后找到了问题解决方法，Kubuntu中没有预装gcc，需要先把编译环境弄好，用命令行sudo apt-get install biuld-essential即可，然后还需要用命令行sudo apt-get install dkms以安装DKMS(Dynamic Kernel Module Support)，因为Guest Additions安裝过程中会编译相关模块，需要这些东西。</p>
+<p>虚拟机上的Kubuntu出了点问题，启动速度和反应速度变慢。</p>
+<p>用了EasyBCD修改启动菜单，硬盘安装了Kubuntu 12.10，在上面安装了中文语言包、Chromium浏览器，输入法问题没解决，无法输入汉字，用的是网页版的搜狗云输入法。</p>
+<p>Kubuntu的视觉特效不错，但是，重启几次后，系统变得特别卡，之前倒是蛮流畅的，现在拖动一个窗口就卡住，未响应，被逼无奈只好修改设置，把OpenGL改为Xrender，然后就变得流畅了，难道是OpenGL存在问题？</p>
+<p>准备在上面编译LCUI，已经有现成的源码包：libpng-1.6.1、jpeg-9、freetype-2.4.11，jpeg的有问题，报错提示中我看到了"^M"这两个字符，估计是换行符的问题，于是用了dos2unix -f 强制转换源码目录下的所有文件，能够正常make了。</p>
+<p>freetype2的头文件问题，解决方法有两种：一种是将freetpye/freetype2/目录里的内容移动至freetype/下，之后删除freetype2目录。一种是修改ft2build.h中的路径为freetype2/config/ftheaders.h，然后将freetpye/目录下的freetype2目录移动至include目录，并以吃freetype目录，之后，修改freetype2/config/ftheaders.h，将里面的"&glfreetype/"字符串全部替换为"&glfreetype2/"字符串。</p>
+<p>运行LCUI的configure脚本时出现问题，直接autoreconf，再运行configure脚本，正常。</p>
+<p>编译过程中出错，打印得错误信息中，有'Need thread implementation for this platform'这行内容，该内容在LCUI_Thread.h中有，是因为没有检测到LCUI_THREAD_PTHREAD宏的问题，那么说明没有#include LC_CONFIG_H，看了LCUI_Build.h的内容，原来是在#include LC_CONFIG_H时，LC_CONFIG_H宏还没定义。<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d9a82ac11d45eedc14643b050211a78bb18863f7">此问题已经纠正</a>。</p>
+<p>编译到png.c时报错，打印错误信息的代码有点问题，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/a9473e53c56319b7bfa210311c54f9493b88fb69">现在已经改正</a>。</p>
+<p>编译到jepg.c时又报错，问题出在jpeg的头文件里，花了些时间，找到了问题原因：jmorecfg.h 里面的boolean是这样定义的：typedef enum { FALSE = 0, TRUE = 1 } boolean;其中的FALSE和TRUE宏已经在LCUI.h中定义，解决方法就是<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/a30a13cbcff28f8f1923eff5410717388b06737c">在#include <jpeglib>前用#undef取消LCUI的这两个宏</a>。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/7cfc4071a2aabb5f85c7d0902b323167f40e4ad8">更新TextLayer_GetText函数声明，保持与源文件中的原型一致</a>。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/ece9f00a2bf52a819a06bf47ba494bb517f186f4">添加LCUIKEY_CAPITAL和LCUIKEY_SHIFT宏定义</a>，这两个宏暂时定义为-1。</p>
+<p>在Makefile中添加了LCUI_InputMethod.c和LCUI_InputMethod.h这两个文件。</p>
+<p>编译完了后，make install，之后ctrl+F1切换至控制台模式，用sudo -i切换到root，cd到LCUI源码目录里的test目录，make helloworld编译helloworld程序，编译成功，程序运行正常，只不过没有字体文件。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -242,7 +255,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-11
+          最后更新: 2013-04-12
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
