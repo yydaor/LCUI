@@ -230,6 +230,19 @@
 <p>在Makefile中添加了LCUI_InputMethod.c和LCUI_InputMethod.h这两个文件。</p>
 <p>编译完了后，make install，之后ctrl+F1切换至控制台模式，用sudo -i切换到root，cd到LCUI源码目录里的test目录，make helloworld编译helloworld程序，编译成功，程序运行正常，只不过没有字体文件。</p>
 <p>VisualStudio工程文件就没进行更新了。</p>
+<h2>2013-4-14</h2>
+<p>GlobalPos_ConvTo_RelativePos函数更名为Widget_ToRelPos。</p>
+<p>想实现鼠标右键单击事件的响应，在LCUI_WidgetEvent联合体中添加了LCUI_WidgetClickedEvent结构体，该结构体中记录了点击的鼠标按钮、点击处的相对坐标。</p>
+<p>但是，要这样改的话，之前的各个程序的按钮鼠标左键响应函数，连鼠标右键也能响应，怎么办？加个判断？但是，感觉修改量比较大。</p>
+<p>可以用这种办法：再添加个EVENT_MOUSEBUTTON事件，在LCUI_WidgetEvent联合体中添加LCUI_WidgetMouseButtonEvent结构体，通过关联该事件，可直接处理部件的鼠标按钮事件，那么EVENT_CLICKED事件主要由鼠标左键触发。</p>
+<p>既然有了EVENT_MOUSEBUTTON事件，应该还要有EVENT_MOUSEMOTION事件,可以用于实现鼠标右键拖动。</p>
+<p>修改了Graph_Init函数和Graph_Copy函数，Graph_Init函数没有对源图像指针赋初始值。Graph_Copy函数增加对引用图像的拷贝，直接用Graph_Replace函数把源图像数据拷贝至目标内存中。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/89d1eb540ce5db3c8215315f22525d55f48fe4d8">修改Widget_ToRelPos函数</p>，之前的Widget_ToRelPos函数，是将全局坐标转换成相对于指定部件所在容器的坐标，现在已经改为转换成相对于指定部件的坐标。</p>
+<p>地图编辑器的地图对象显示和编辑功能已经基本完成，中途解决了几个BUG。</p>
+<p><a href="http://lcui.org/files/images/game/2013-04-14-21-30-07.png">
+	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-04-14-21-30-07.png"
+	alt="" width="809" height="609">
+</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -257,7 +270,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-12
+          最后更新: 2013-04-15
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
