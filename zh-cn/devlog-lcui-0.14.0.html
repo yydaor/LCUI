@@ -237,7 +237,7 @@
 <p>可以用这种办法：再添加个EVENT_MOUSEBUTTON事件，在LCUI_WidgetEvent联合体中添加LCUI_WidgetMouseButtonEvent结构体，通过关联该事件，可直接处理部件的鼠标按钮事件，那么EVENT_CLICKED事件主要由鼠标左键触发。</p>
 <p>既然有了EVENT_MOUSEBUTTON事件，应该还要有EVENT_MOUSEMOTION事件,可以用于实现鼠标右键拖动。</p>
 <p>修改了Graph_Init函数和Graph_Copy函数，Graph_Init函数没有对源图像指针赋初始值。Graph_Copy函数增加对引用图像的拷贝，直接用Graph_Replace函数把源图像数据拷贝至目标内存中。</p>
-<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/89d1eb540ce5db3c8215315f22525d55f48fe4d8">修改Widget_ToRelPos函数</p>，之前的Widget_ToRelPos函数，是将全局坐标转换成相对于指定部件所在容器的坐标，现在已经改为转换成相对于指定部件的坐标。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/89d1eb540ce5db3c8215315f22525d55f48fe4d8">修改Widget_ToRelPos函数</a></p>，之前的Widget_ToRelPos函数，是将全局坐标转换成相对于指定部件所在容器的坐标，现在已经改为转换成相对于指定部件的坐标。</p>
 <p>地图编辑器的地图对象显示和编辑功能已经基本完成，中途解决了几个BUG。</p>
 <p><a href="http://lcui.org/files/images/game/2013-04-14-21-30-07.png">
 	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-04-14-21-30-07.png"
