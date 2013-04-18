@@ -254,15 +254,15 @@
 <h2>2013-4-17</h2>
 <p>感觉没必要通过循环来计算每行每列的地图块的区域，并判断点是否在该区域内，效率较低，应该要直接计算出来。</p>
 <p>想到一种方法，先看图：</p>
+<p><a href="http://lcui.org/files/images/game/rhombus_pos_convert.png">
+	<img class="alignnone" title="坐标系" src="http://lcui.org/files/images/game/rhombus_pos_convert.png"
+	alt="" width="479" height="363">
+</a></p>
 <p>需要做的，就是将x2y2坐标系的坐标转换成x3y3坐标系的坐标。用点到菱边D的距离作为y3轴的坐标，用点到菱边A的距离作为x3轴的坐标。</p>
 <p>忘记考虑到地图的尺寸了，地图不一定是菱形，那么，x3y3坐标系的位置需要调整，X轴平分矩形，而Y轴坐标的X轴坐标是地图左上角顶点的坐标。</p>
 <p>传入的坐标是以左上角为原点，是x1y1坐标系的坐标，需要转换成x2y2坐标系的坐标。</p>
 <p>怎么感觉自己计算出的结果有问题？把地图尺寸设为1x1，地图块菱边长度就是sprt(pow((w/2,2)+ pow(h/2,2))，约等于24.5，但实际上，鼠标移动至菱边末端，计算出的长度也就18左右。</p>
 <p>忽略一点，地图块菱边不垂直，点到直线的距离，是垂直距离。那么，需要确定点所在的与菱边A平行的直线，然后求出该直线与菱边D的焦点，之后求出该点与焦点的距离，作为在x3y3坐标系的Y轴坐标，X轴坐标计算方法也一样。</p>
-<p><a href="http://lcui.org/files/images/game/rhombus_pos_convert.png">
-	<img class="alignnone" title="坐标系" src="http://lcui.org/files/images/game/rhombus_pos_convert.png"
-	alt="" width="479" height="363">
-</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
