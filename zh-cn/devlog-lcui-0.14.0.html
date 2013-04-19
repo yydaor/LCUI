@@ -269,6 +269,10 @@
 <p>怀疑是用于保存距离的x和y变量在后面的计算中被过赋值，该用了单独的变量px和py，再次测试，结果正常。</p>
 <p>加了坐标有效性判断，因为点不管在边的左方还是右方，距离都是正数，就算点不在地图区域内也会被判断成在区域内。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/7203a33e7bb8186fcca58c14ca5acda6b91f7752#L0R126">已经提交新的地图块坐标定位算法</a>。</p>
+<h2>2013-4-19</h2>
+<p>修改了一下地图对象的结构体，加了一个变量，用于记录坐标偏移量。测试时，根据打印的信息，发现地图对象的ID被篡改，部分地图对象没显示出图形。</p>
+<p>点击"地图大小调整"的按钮后，程序崩溃，但根据VS给出的堆栈信息，看不出什么问题，在Graph_GetQuote函数处崩溃，传入的指针指向不正确的地址，但在调用该函数的Graph_IsValid函数里，传给它的指针所指向的地址却是正常的，地址与Graph_GetQuote函数里得到不同。</p>
+<p>需要到linux环境下测试一下，看看用gdb能得到什么不一样的结果。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -296,7 +300,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-18
+          最后更新: 2013-04-19
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
