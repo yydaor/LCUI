@@ -273,6 +273,14 @@
 <p>修改了一下地图对象的结构体，加了一个变量，用于记录坐标偏移量。测试时，根据打印的信息，发现地图对象的ID被篡改，部分地图对象没显示出图形。</p>
 <p>点击"地图大小调整"的按钮后，程序崩溃，但根据VS给出的堆栈信息，看不出什么问题，在Graph_GetQuote函数处崩溃，传入的指针指向不正确的地址，但在调用该函数的Graph_IsValid函数里，传给它的指针所指向的地址却是正常的，地址与Graph_GetQuote函数里得到不同。</p>
 <p>需要到linux环境下测试一下，看看用gdb能得到什么不一样的结果。</p>
+<h2>2013-4-20</h2>
+<p>gdb给的信息中表明，是在记录坐标偏移量时出现访问越界，导致调用malloc函数时使程序崩溃，但直接malloc(100)就没这问题。</p>
+<p>修改了一下，添加记录时，不手动分配内存并用Queue_AddPoniter函数添加内存地址至队列；改用Queue_Add函数，先用结构体变量记录好数据，然后调用Queue_AddPointer函数，让它分配内存，拷贝数据至里面，并添加至队列。再次测试，问题没了。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI-2DMapEditor/commit/2a519afc80b22300318ca83bcca733b1ed06be67">更新了地图块/地图对象的编辑功能</p>，标题栏上的两个按钮已经取消，在点击地图对象或者地图块时会显示相应的编辑按钮。</p>
+<p><a href="http://lcui.org/files/images/game/2013-04-20-15-51-30.png">
+	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-04-20-15-51-30.png"
+	alt="" width="809" height="609">
+</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -300,7 +308,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-19
+          最后更新: 2013-04-20
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
