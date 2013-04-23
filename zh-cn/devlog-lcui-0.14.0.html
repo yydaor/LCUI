@@ -281,6 +281,11 @@
 	<img class="alignnone" title="地图编辑器" src="http://lcui.org/files/images/game/2013-04-20-15-51-30.png"
 	alt="" width="809" height="609">
 </a></p>
+<h2>2013-4-23</h2>
+<p>游戏暂时就不打算搞了，还是写应用程序，应用LCUI的各个GUI部件，根据需求来完善各个GUI部件及LCUI的功能。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/da85850fce832edbbb39298b238731ab1d037680">修改ALPHA_BLENDING宏</a>，ALPHA_BLENDING宏更名为ALPHA_BLEND，添加RGB_FROM_RGB565、RGB_FROM_RGB555、RGB_FROM_RGB888等宏。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/33d5d2823fdb93e68e85c8ee107dee510f61c26c">修改Graph_Mix和Graph_Replace函数</a>，应用ALPHA_BLEND宏。</p>
+<p>修改前，运行test_lcui_graph_mix程序，对1640x1480尺寸的两个图像的像素数据进行255次alpha混合，平均每次耗时117ms，修改后，平均每次耗时67ms。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -308,7 +313,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-04-20
+          最后更新: 2013-04-23
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
