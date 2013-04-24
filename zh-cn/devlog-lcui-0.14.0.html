@@ -288,9 +288,9 @@
 <p>修改前，运行test_lcui_graph_mix程序，对1640x1480尺寸的两个图像的像素数据进行255次alpha混合，平均每次耗时117ms，修改后，平均每次耗时67ms。</p>
 <h2>2013-4-24</h2>
 <p>感觉有些函数还是弄成宏定义好些。</p>
-<p>图层的排序有问题，感觉就像没排序一样，后来发现Widget_ExecSortChild函数中，传给GraphLayer_Sort函数的参数有问题，本来是传部件的客户区图层的，实际上是把主图层传进去了，子图层记录在客户区图层里，而主图层中只有客户区图层这一子图层。</p>
-<p>添加了TextBox_Text_SetDefaultStyle函数，用于设置文本框内文本的缺省样式。</p>
-<p>设置缺省样式后，占位符的字体大小没被影响，屏蔽符的大小也不是缺省的大小。问题已经纠正。</p>
+<p>图层的排序有问题，感觉就像没排序一样，后来发现Widget_ExecSortChild函数中，传给GraphLayer_Sort函数的参数有问题，本来是传部件的客户区图层的，实际上是把主图层传进去了，子图层记录在客户区图层里，而主图层中只有客户区图层这一子图层。<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/d112e1c71f514fc7b31ce18e3f9661be3044d7c3">问题已经纠正</a>。</p>
+<p>需要加个TextBox_Text_SetDefaultStyle函数，用于设置文本框内文本的缺省样式。</p>
+<p>设置缺省样式后，占位符的字体大小没被影响，屏蔽符的大小也不是缺省的大小。<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/5508004c5cb9fba8e63d85c77209e383d38327d8">问题已经纠正</a>。</p>
 <p>需要添加个功能，能够设置文本框内文本的对齐方式。</p>
 <p>字体位图处理需要改进，看下图：</p>
 <p><a href="http://lcui.org/files/images/game/2013-04-24-22-38-06.png">
