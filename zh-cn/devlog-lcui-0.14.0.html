@@ -307,7 +307,7 @@
 <p>鼠标在移动时，老区域先刷新，新区域后刷新，会让人感觉鼠标在闪烁。问题出在LCUI的矩形分割上，与老区域相交的新区域，会被分割成若干个矩形，并追加到队列后面，导致先刷新老区域，后刷新新区域。解决方法很简单，先添加新区域，后添加老区域。</p>
 <p>改了后，还是有这问题，windows平台下不好测试，需要到linux平台下测试，根据打印的信息分析问题原因。</p>
 <h2>2013-5-1</h2>
-<p>启用矩形分割处理时，有时会出现无效区域被遗漏的情况，导致屏幕上有残余图形，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c587e8ec5773fc13d5455b12e97e585f0f39e5fb#L0R557">现在先暂时不对相交的矩形进行分割</p>。</p>
+<p>启用矩形分割处理时，有时会出现无效区域被遗漏的情况，导致屏幕上有残余图形，<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c587e8ec5773fc13d5455b12e97e585f0f39e5fb#L0R557">现在先暂时不对相交的矩形进行分割</a>。</p>
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/1e8811c5b552efc9eaaae7cbbd3c8168b55a3bbb">更新了LCUI的图像输出功能</a>，在测试期间，发现windows会把之前记录的无效区域合并，比如我鼠标移动了一圈，添加了若干个无效区域，用BeginPaint函数时，获取到的会是该若干个区域合并后的区域。</p>
 <p>之前是将LCUI记录的无效区域交给windows处理，在处理WM_PAINT消息时绘制图像；但存在一个问题：若鼠标一直在移动，LCUI就会一直添加无效区域，直到鼠标停止移动时，才会处理WM_PAINT消息，导致的现象就是，在鼠标移动期间，LCUI的屏幕重绘操作会被暂停。</p>
 <p>现在，windows平台下的屏幕重绘操作，也和linux平台上一样，在一个线程（LCUIScreen_Update函数）里进行，而处理WM_PAINT消息时，只是将windows给的无效区域，添加至LCUI的无效区域记录中，并不会直接重绘无效区域。</p>
