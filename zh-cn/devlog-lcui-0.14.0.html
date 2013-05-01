@@ -313,6 +313,17 @@
 <p>现在，windows平台下的屏幕重绘操作，也和linux平台上一样，在一个线程（LCUIScreen_Update函数）里进行，而处理WM_PAINT消息时，只是将windows给的无效区域，添加至LCUI的无效区域记录中，并不会直接重绘无效区域。</p>
 <p>添加了LCUIScreen_SyncFrameBuffer函数，用于将LCUI的帧缓冲同步至windows窗口客户区内进行显示，linux平台下，该函数并没有实际代码，因为linux的帧缓冲本身就是自动同步至屏幕的。</p>
 <p>但是，互斥锁有问题，会打印Couldn't wait on mutex和Couldn't release mutex这两个信息。静止时，LCUI程序占用的CPU使用率为20%左右，有待完善。</p>
+<p>想完善LCUI的字体处理，测试不同load标志和render标志，但显示出来的字体的效果不怎么满意，改用宋体，又想让LCUI能够显示宋体的点阵位图，去掉FT_LOAD_NO_BITMAP标志，搜索了一番，结果发现bitmap.pixel_mode是表示该字体位图的像素模式，LCUI默认是以FT_PIXEL_MODE_GRAY模式来处理位图数据的，1个像素1占8个字节，而点阵位图是FT_PIXEL_MODE_MONO模式，1个像素占1个字节。</p>
+<p>本来想自己写代码实现单色位图转8位灰度图的，但后来在FreeType的文档中发现有个FT_Bitmap_Convert函数，是用来转换字体位图的，于是就用它了。</p>
+<p>已经更新LCUI的字体处理代码，以下是 微软雅黑 和 宋体 的显示效果：</p>
+<p><a href="http://lcui.org/files/images/devlog/2013-05-01-20-15-54.png">
+	<img class="alignnone" title="微软雅黑的显示效果" src="http://lcui.org/files/images/devlog/2013-05-01-20-15-54.png" 
+	alt="" width="320" height="240">
+</a></p>
+<p><a href="http://lcui.org/files/images/devlog/2013-05-01-20-16-59.png">
+	<img class="alignnone" title="宋体的显示效果" src="http://lcui.org/files/images/devlog/2013-05-01-20-16-59.png" 
+	alt="" width="320" height="240">
+</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
