@@ -333,7 +333,8 @@
 </a></p>
 <h2>2013-5-6</h2>
 <p>准备实现部件样式库，部件的样式可从外置文件中载入，文件内容格式类似于CSS，LCUI_StyleLibrary.c里的代码用于解析文件内容，之前就已经实现了一点功能，现在继续进行完善。</p>
-<p>用sscanf函数从字符串中获取RGB三个数（16进制），结果导致程序崩溃，估计是它访问越界了，于是自己写了个函数实现了这个功能。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/9a946fb7e94672cc2d92cdb5e0923d66bec9d33a">修改了LCUI_StyleLibrary.c</a>，主要是调整StyleLib_AddStyleFromString函数内的代码。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/4282aa7016584786863da520b4a0a408867b2112">添加了部件样式处理功能</a>，还需要继续完善。起初是用sscanf函数从字符串中获取RGB三个数（16进制），结果导致程序崩溃，估计是它访问越界了，于是自己写了个str_scan_hex_number函数实现了这个功能。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
