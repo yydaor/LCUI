@@ -337,6 +337,11 @@
 <p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/4282aa7016584786863da520b4a0a408867b2112">添加了部件样式处理功能</a>，还需要继续完善。起初是用sscanf函数从字符串中获取RGB三个数（16进制），结果导致程序崩溃，估计是它访问越界了，于是自己写了个str_scan_hex_number函数实现了这个功能。</p>
 <h2>2013-5-7</h2>
 <p>已经实现部件背景样式的设定，测试时纠正了background-color的RGB色彩值的解析错误，现在可通过设定background-color、background-image、background-transparent、background-layout这4项属性的值 以分别设定部件的背景色、背景图、背景是否透明、背景图布局。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/blob/1e2248dbf7ae972a38b7d4371003a011c7287e6a/test/test_widget_style.c">可到这里看测试程序的源代码</a>，以下是效果图：</p>
+<p><a href="http://lcui.org/files/images/devlog/2013-05-07-19-57-27.png">
+	<img class="alignnone" title="部件样式自定义" src="http://lcui.org/files/images/devlog/2013-05-07-19-57-27.png" 
+	alt="" width="510" height="347">
+</a></p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
