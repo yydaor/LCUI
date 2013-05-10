@@ -1010,7 +1010,7 @@ dl.section dd {
 #projectlogo
 {
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: bottom;
 	border-collapse: separate;
 }
  
