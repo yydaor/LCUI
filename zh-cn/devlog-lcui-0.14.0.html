@@ -343,7 +343,13 @@
 	alt="" width="510" height="347">
 </a></p>
 <h2>2013-5-8</h2>
-<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c736f35c4e4576db633f09a84c962b1b81bdc8ac">已经实现从文件载入样式数据的功能</a>，添加StyleLib_ScanStyle函数和style_scan_status数据类型，在打开文件后会分段读取，并调用StyleLib_ScanStyle函数对读取出来的字符串进行处理，StyleLib_ScanStyle函数处理的状态会记录至style_scan_status类型变量里，到下次调用时，会根据之前记录的状态继续进行处理。文件内的空白符已经能够被忽略，比如 '\r' '\t' '\n'。
+<p>
+<a target="_blank" href="https://github.com/lc-soft/LCUI/commit/c736f35c4e4576db633f09a84c962b1b81bdc8ac">已经实现从文件载入样式数据的功能</a>，添加StyleLib_ScanStyle函数和style_scan_status数据类型，在打开文件后会分段读取，并调用StyleLib_ScanStyle函数对读取出来的字符串进行处理，StyleLib_ScanStyle函数处理的状态会记录至style_scan_status类型变量里，到下次调用时，会根据之前记录的状态继续进行处理。文件内的空白符已经能够被忽略，比如 '\r' '\t' '\n'。</p>
+<h2>2013-5-9</h2>
+<p>PX_P_t更名为IntOrFloat_t，相关的函数也进行了更名，已添加部件尺寸样式的解析，在文件中指定width和height即可自定义部件的宽和高，单位可以为 百分比(%) 和 像素(px)。</p>
+<h2>2013-5-10</h2>
+<p>决定使用Doxygen来生成文档，但项目源代码中的注释需要进行修改，以让Doxygen正常生成文档。</p>
+<p><a target="_blank" href="https://github.com/lc-soft/LCUI/commit/8d0d56f960faf66d1b54dec3e598085920c34c26">修改了LCUI_GraphLayer.c和LCUI_GraphLayer.h</a>，源文件中就不写函数注释了，函数注释都写在头文件中，<a target="_blank" href="http://lcui.org/zh-cn/doc/index.html">点击这里</a>可以查看用Doxygen生成的文档网页。但有个奇怪的问题，本来存在的html网页，访问时github却给出404。</p>
 </div>
 <!-- Duoshuo Comment BEGIN -->
 	<a id="comments"></a>
@@ -371,7 +377,7 @@
       </tr>
       <tr>
         <td>
-          最后更新: 2013-05-08
+          最后更新: 2013-05-10
         </td> 
         <td align="right">
 		<a target="_blank" href="http://sighttp.qq.com/authd?IDKEY=af7bcac3a71b6cf237e715c4f3beffc6e53bdf1075cb4674">
